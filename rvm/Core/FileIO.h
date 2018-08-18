@@ -14,9 +14,9 @@
 #include "FileData.h"
 
 #define PRESENTATION_STAGE 0
-#define ZONE_STAGE = 1
-#define BONUS_STAGE = 2
-#define SPECIAL_STAGE = 3
+#define ZONE_STAGE 1
+#define BONUS_STAGE 2
+#define SPECIAL_STAGE 3
 
 extern unsigned char fileBuffer[8192];
 extern uint bufferPosition;
@@ -25,6 +25,7 @@ extern uint readSize;
 extern uint readPos;
 extern bool useRSDKFile;
 extern bool useByteCode;
+extern bool useOldSdkLayout;
 extern uint vFileSize;
 extern uint virtualFileOffset;
 extern int saveRAM[8192];

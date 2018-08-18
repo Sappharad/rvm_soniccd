@@ -12,6 +12,7 @@ uint readSize;
 uint readPos;
 bool useRSDKFile;
 bool useByteCode;
+bool useOldSdkLayout;
 uint vFileSize;
 uint virtualFileOffset;
 int saveRAM[8192];
@@ -42,6 +43,7 @@ void Init_FileIO()
     readPos = 0u;
     useRSDKFile = false;
     useByteCode = false;
+    useOldSdkLayout = false;
     vFileSize = 0u;
     virtualFileOffset = 0u;
 }
@@ -276,11 +278,15 @@ bool FileIO_CheckRSDKFile()
     useByteCode = false;
     fclose(fileReader);
     
-    //TODO: Version 1.0 used GS000.bin. But Version 2.0 uses GlobalCode.bin
-    //if (FileIO_LoadFile("Data/Scripts/ByteCode/GS000.bin", &fData))
-    
     if (FileIO_LoadFile("Data/Scripts/ByteCode/GlobalCode.bin", &fData))
     {
+        useByteCode = true;
+        FileIO_CloseFile();
+        return true;
+    }
+    else if (FileIO_LoadFile("Data/Scripts/ByteCode/GS000.bin", &fData))
+    {
+        useOldSdkLayout = true;
         useByteCode = true;
         FileIO_CloseFile();
         return true;
@@ -370,28 +376,28 @@ bool FileIO_CheckCurrentStageFolder(int sNumber)
 {
     switch (activeStageList)
     {
-        case 0:
+        case PRESENTATION_STAGE:
             if (FileIO_StringComp(currentStageFolder, pStageList[sNumber].stageFolderName))
             {
                 return true;
             }
             FileIO_StrCopy(currentStageFolder, sizeof(currentStageFolder), pStageList[sNumber].stageFolderName, sizeof(pStageList[sNumber].stageFolderName));
             return false;
-        case 1:
+        case ZONE_STAGE:
             if (FileIO_StringComp(currentStageFolder, zStageList[sNumber].stageFolderName))
             {
                 return true;
             }
             FileIO_StrCopy(currentStageFolder, sizeof(currentStageFolder), zStageList[sNumber].stageFolderName, sizeof(zStageList[sNumber].stageFolderName));
             return false;
-        case 2:
+        case BONUS_STAGE:
             if (FileIO_StringComp(currentStageFolder, bStageList[sNumber].stageFolderName))
             {
                 return true;
             }
             FileIO_StrCopy(currentStageFolder, sizeof(currentStageFolder), bStageList[sNumber].stageFolderName, sizeof(bStageList[sNumber].stageFolderName));
             return false;
-        case 3:
+        case SPECIAL_STAGE:
             if (FileIO_StringComp(currentStageFolder, sStageList[sNumber].stageFolderName))
             {
                 return true;
@@ -413,16 +419,16 @@ bool FileIO_LoadStageFile(char* filePath, int sNumber, struct FileData *fData)
     FileIO_StrCopy(filePath2, sizeof(filePath2), tempPath, (int)strlen(tempPath));
     switch (activeStageList)
     {
-        case 0:
+        case PRESENTATION_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), pStageList[sNumber].stageFolderName, sizeof(pStageList[sNumber].stageFolderName));
             break;
-        case 1:
+        case ZONE_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), zStageList[sNumber].stageFolderName, sizeof(zStageList[sNumber].stageFolderName));
             break;
-        case 2:
+        case BONUS_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), bStageList[sNumber].stageFolderName, sizeof(bStageList[sNumber].stageFolderName));
             break;
-        case 3:
+        case SPECIAL_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), sStageList[sNumber].stageFolderName, sizeof(sStageList[sNumber].stageFolderName));
             break;
     }
@@ -438,16 +444,16 @@ bool FileIO_LoadActFile(char* filePath, int sNumber, struct FileData *fData)
     FileIO_StrCopy(filePath2, sizeof(filePath2), tempPath, (int)strlen(tempPath));
     switch (activeStageList)
     {
-        case 0:
+        case PRESENTATION_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), pStageList[sNumber].stageFolderName, sizeof(pStageList[sNumber].stageFolderName));
             break;
-        case 1:
+        case ZONE_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), zStageList[sNumber].stageFolderName, sizeof(zStageList[sNumber].stageFolderName));
             break;
-        case 2:
+        case BONUS_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), bStageList[sNumber].stageFolderName, sizeof(bStageList[sNumber].stageFolderName));
             break;
-        case 3:
+        case SPECIAL_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), sStageList[sNumber].stageFolderName, sizeof(sStageList[sNumber].stageFolderName));
             break;
     }
@@ -455,19 +461,19 @@ bool FileIO_LoadActFile(char* filePath, int sNumber, struct FileData *fData)
     FileIO_StrAdd(filePath2, sizeof(filePath2), tempPath, (int)strlen(tempPath));
     switch (activeStageList)
     {
-        case 0:
+        case PRESENTATION_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), pStageList[sNumber].actNumber, sizeof(pStageList[sNumber].actNumber));
             FileIO_ConvertStringToInteger(pStageList[sNumber].actNumber, sizeof(pStageList[sNumber].actNumber), &actNumber);
             break;
-        case 1:
+        case ZONE_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), zStageList[sNumber].actNumber, sizeof(zStageList[sNumber].actNumber));
             FileIO_ConvertStringToInteger(zStageList[sNumber].actNumber, sizeof(zStageList[sNumber].actNumber), &actNumber);
             break;
-        case 2:
+        case BONUS_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), bStageList[sNumber].actNumber, sizeof(bStageList[sNumber].actNumber));
             FileIO_ConvertStringToInteger(bStageList[sNumber].actNumber, sizeof(bStageList[sNumber].actNumber), &actNumber);
             break;
-        case 3:
+        case SPECIAL_STAGE:
             FileIO_StrAdd(filePath2, sizeof(filePath2), sStageList[sNumber].actNumber, sizeof(sStageList[sNumber].actNumber));
             FileIO_ConvertStringToInteger(sStageList[sNumber].actNumber, sizeof(sStageList[sNumber].actNumber), &actNumber);
             break;
@@ -479,7 +485,7 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
 {
     char desiredDirectory[64];
     char desiredFile[64];
-    char array3[64];
+    char actualPath[64];
     int num = 0;
     int i = 0;
     virtualFileOffset = 0u;
@@ -529,10 +535,10 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
         b = FileIO_ReadByte();
         for (i = 0; i < (int)b; i++)
         {
-            array3[i] = (char)(FileIO_ReadByte() ^ 255 - b);
+            actualPath[i] = (char)(FileIO_ReadByte() ^ 255 - b);
         }
-        array3[i] = '\0';
-        if (FileIO_StringComp(desiredDirectory, array3))
+        actualPath[i] = '\0';
+        if (FileIO_StringComp(desiredDirectory, actualPath))
         {
             b = 1;
         }
@@ -573,6 +579,7 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
     readPos = 0u;
     virtualFileOffset = (uint)(num + num2);
     j = 0;
+    num = 0; //Using this for number of attempts tracking
     while (j < 1)
     {
         b = FileIO_ReadByte();
@@ -580,14 +587,14 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
         i = 0;
         while (i < (int)b)
         {
-            array3[i] = (char)(FileIO_ReadByte() ^ 255);
+            actualPath[i] = (char)(FileIO_ReadByte() ^ 255);
             i++;
             virtualFileOffset += 1u;
         }
-        array3[i] = '\0';
-        if (FileIO_StringComp(desiredFile, array3))
+        actualPath[i] = '\0';
+        if (FileIO_StringComp(desiredFile, actualPath))
         {
-            j = 1;
+            j = 1; //Found file, break out of loop
             b = FileIO_ReadByte();
             i = (int)b;
             b = FileIO_ReadByte();
@@ -598,7 +605,9 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
             i += (int)b << 24;
             virtualFileOffset += 4u;
             vFileSize = (uint)i;
-            fseek(fileReader, (long)(virtualFileOffset), SEEK_SET);
+            if(fseek(fileReader, (long)(virtualFileOffset), SEEK_SET) != 0){
+                return false; //FAILED
+            }
             bufferPosition = 0u;
             readSize = 0u;
             readPos = virtualFileOffset;
@@ -615,10 +624,17 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
             i += (int)b << 24;
             virtualFileOffset += 4u;
             virtualFileOffset += (uint)i;
-            fseek(fileReader, (long)(virtualFileOffset), SEEK_SET);
+            if(fseek(fileReader, (long)(virtualFileOffset), SEEK_SET) != 0){
+                return false; //FAILED
+            }
             bufferPosition = 0u;
             readSize = 0u;
             readPos = virtualFileOffset;
+            num++;
+            if(num==256){
+                //There are never 256 files in a directory, we know we failed to find this file so bail out instead of looping forever.
+                return false;
+            }
         }
     }
     eStringNo = (uint8_t)((vFileSize & 0x1FC) >> 2);

@@ -428,37 +428,56 @@ void ObjectSystem_LoadByteCodeFile(int fileType, int scriptNum)
     struct FileData fileDatum;
     char charArray[] = "Data/Scripts/ByteCode/";
     char chrArray[] = ".bin";
-    char charArray1[] = "GlobalCode.bin";
     FileIO_StrCopy(scriptText, sizeof(scriptText), charArray, sizeof(charArray));
     switch (fileType)
     {
-        case 0:
+        case PRESENTATION_STAGE:
         {
-            FileIO_StrAdd(scriptText, sizeof(scriptText), pStageList[stageListPosition].stageFolderName, sizeof(pStageList[stageListPosition].stageFolderName));
-            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            if(useOldSdkLayout){
+                sprintf(scriptText,"%sPS%03d.bin",scriptText,stageListPosition);
+            }
+            else{
+                FileIO_StrAdd(scriptText, sizeof(scriptText), pStageList[stageListPosition].stageFolderName, sizeof(pStageList[stageListPosition].stageFolderName));
+                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            }
             break;
         }
-        case 1:
+        case ZONE_STAGE:
         {
-            FileIO_StrAdd(scriptText, sizeof(scriptText), zStageList[stageListPosition].stageFolderName, sizeof(zStageList[stageListPosition].stageFolderName));
-            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            if(useOldSdkLayout){
+                sprintf(scriptText,"%sRS%03d.bin",scriptText,stageListPosition);
+            }
+            else{
+                FileIO_StrAdd(scriptText, sizeof(scriptText), zStageList[stageListPosition].stageFolderName, sizeof(zStageList[stageListPosition].stageFolderName));
+                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            }
             break;
         }
-        case 2:
+        case BONUS_STAGE:
         {
             FileIO_StrAdd(scriptText, sizeof(scriptText), bStageList[stageListPosition].stageFolderName, sizeof(bStageList[stageListPosition].stageFolderName));
             FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
             break;
         }
-        case 3:
+        case SPECIAL_STAGE:
         {
-            FileIO_StrAdd(scriptText, sizeof(scriptText), sStageList[stageListPosition].stageFolderName, sizeof(sStageList[stageListPosition].stageFolderName));
-            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            if(useOldSdkLayout){
+                sprintf(scriptText,"%sSS%03d.bin",scriptText,stageListPosition);
+            }
+            else{
+                FileIO_StrAdd(scriptText, sizeof(scriptText), sStageList[stageListPosition].stageFolderName, sizeof(sStageList[stageListPosition].stageFolderName));
+                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            }
             break;
         }
         case 4:
         {
-            FileIO_StrAdd(scriptText, sizeof(scriptText), charArray1, sizeof(charArray1));
+            if(useOldSdkLayout){
+                sprintf(scriptText,"%sGS000.bin", scriptText);
+            }
+            else{
+                sprintf(scriptText,"%sGlobalCode.bin", scriptText);
+            }
             break;
         }
     }

@@ -2101,22 +2101,22 @@ void StageSystem_LoadStageFiles()
         }
         if (numArray[0] == 1 && FileIO_LoadFile("Data/Game/GameConfig.bin", &fileDatum))
         {
-            numArray[0] = FileIO_ReadByte();
+            numArray[0] = FileIO_ReadByte(); //Length of game title
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte();
+            numArray[0] = FileIO_ReadByte(); //Data folder
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte();
+            numArray[0] = FileIO_ReadByte(); //File credits
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte();
+            numArray[0] = FileIO_ReadByte(); //Number of object definitions
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
@@ -2128,7 +2128,7 @@ void StageSystem_LoadStageFiles()
             {
                 FileIO_GetFileInfo(&fileDatum);
                 FileIO_CloseFile();
-                ObjectSystem_LoadByteCodeFile(4, num);
+                ObjectSystem_LoadByteCodeFile(4, num); //Reload GlobalCode.bin
                 num = num + numArray[0];
                 FileIO_SetFileInfo(&fileDatum);
             }
