@@ -6,7 +6,7 @@
 #ifndef Quad2D_h
 #define Quad2D_h
 
-#import "Vertex2D.h"
+#include "Vertex2D.h"
 
 struct Quad2D {
     struct Vertex2D vertex[4];
