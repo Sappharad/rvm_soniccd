@@ -5,6 +5,7 @@
 
 #ifndef GifDecoder_h
 #define GifDecoder_h
+#include "SDL.h"
 
 struct GifDecoder {
     int depth;

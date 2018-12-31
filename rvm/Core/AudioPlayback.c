@@ -10,7 +10,7 @@ const int MUSIC_PLAYING = 1;
 const int MUSIC_PAUSED = 2;
 const int MUSIC_LOADING = 3;
 const int MUSIC_READY = 4;
-const int NUM_CHANNELS = 8;
+#define NUM_CHANNELS 8
 int numGlobalSFX;
 int numStageSFX;
 Mix_Chunk* sfxSamples[256];

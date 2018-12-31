@@ -4,9 +4,15 @@
 //
 
 #include "RenderDevice.h"
+#if WINDOWS
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/glext.h>
+#else
 #include <OpenGL/gl.h>
+#endif
 
-const int NUM_TEXTURES = 6;
+#define NUM_TEXTURES 6
 const int TEXTURE_SIZE = 1024*1024*2;
 int orthWidth;
 int viewWidth;
@@ -23,6 +29,7 @@ void HandleGlError(){
         if (boo == GL_INVALID_OPERATION){
             printf("Invalid operation\n");
         }
+#ifndef WINDOWS
         else if(boo == GL_INVALID_FRAMEBUFFER_OPERATION){
             boo = glCheckFramebufferStatus(GL_FRAMEBUFFER);
             if(boo == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT){
@@ -32,6 +39,7 @@ void HandleGlError(){
                 printf("Invalid framebuffer operation\n");
             }
         }
+#endif
         else{
             printf("An error!\n");
         }

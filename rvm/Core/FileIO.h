@@ -9,9 +9,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#ifndef WINDOWS
 #include <unistd.h>
+#else
+#define uint unsigned int
+#endif
 #include "StageList.h"
 #include "FileData.h"
+#include "SDL.h"
 
 #define PRESENTATION_STAGE 0
 #define ZONE_STAGE 1

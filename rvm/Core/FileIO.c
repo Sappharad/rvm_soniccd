@@ -316,7 +316,11 @@ bool FileIO_LoadFile(char* filePath, struct FileData *fData)
         i++;
     }
     //Start of code to handle files outside of Data.rsdk
-    if(access(filePath, F_OK) != -1)
+#if WINDOWS
+	if (_access(filePath, 0) != -1)
+#else
+	if (access(filePath, F_OK) != -1)
+#endif
     {
         useRSDKFile = false;
         if (fileReader != NULL)
@@ -984,7 +988,11 @@ const char* SAVE_GAME_FILE = "SGame.bin";
 uint8_t FileIO_ReadSaveRAMData()
 {
     //TODO: This should probably go into the appropriate platform specific directory instead.
+#if WINDOWS
+	if (_access(SAVE_GAME_FILE, 0) != -1)
+#else
     if(access(SAVE_GAME_FILE, F_OK) != -1)
+#endif
     {
         FILE *sramReader = fopen(SAVE_GAME_FILE, "rb");
         fseek(sramReader, 0, SEEK_SET);

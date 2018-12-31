@@ -5,6 +5,7 @@
 
 #ifndef DrawVertex_h
 #define DrawVertex_h
+#include "SDL.h"
 
 struct Vector2 {
     short X;

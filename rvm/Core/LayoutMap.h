@@ -5,6 +5,9 @@
 
 #ifndef LayoutMap_h
 #define LayoutMap_h
+#ifdef WINDOWS
+#define ushort unsigned short
+#endif
 
 struct LayoutMap {
     ushort tileMap[0x10000];

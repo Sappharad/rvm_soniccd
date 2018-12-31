@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\rvm\Core\AnimationSystem.c" />
+    <ClCompile Include="..\rvm\Core\AudioPlayback.c" />
+    <ClCompile Include="..\rvm\Core\EngineCallbacks.c" />
+    <ClCompile Include="..\rvm\Core\FileIO.c" />
+    <ClCompile Include="..\rvm\Core\GifLoader.c" />
+    <ClCompile Include="..\rvm\Core\GlobalAppDefinitions.c" />
+    <ClCompile Include="..\rvm\Core\GraphicsSystem.c" />
+    <ClCompile Include="..\rvm\Core\InputSystem.c" />
+    <ClCompile Include="..\rvm\Core\ObjectSystem.c" />
+    <ClCompile Include="..\rvm\Core\PlayerSystem.c" />
+    <ClCompile Include="..\rvm\Core\RenderDevice.c" />
+    <ClCompile Include="..\rvm\Core\Scene3D.c" />
+    <ClCompile Include="..\rvm\Core\StageSystem.c" />
+    <ClCompile Include="..\rvm\Core\TextSystem.c" />
+    <ClCompile Include="SDL_win32_main.c" />
+    <ClCompile Include="win_main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\rvm\Core\AnimationFileList.h" />
+    <ClInclude Include="..\rvm\Core\AnimationSystem.h" />
+    <ClInclude Include="..\rvm\Core\AudioPlayback.h" />
+    <ClInclude Include="..\rvm\Core\CollisionBox.h" />
+    <ClInclude Include="..\rvm\Core\CollisionMask16x16.h" />
+    <ClInclude Include="..\rvm\Core\CollisionSensor.h" />
+    <ClInclude Include="..\rvm\Core\DrawVertex.h" />
+    <ClInclude Include="..\rvm\Core\DrawVertex3D.h" />
+    <ClInclude Include="..\rvm\Core\EngineCallbacks.h" />
+    <ClInclude Include="..\rvm\Core\Face3D.h" />
+    <ClInclude Include="..\rvm\Core\FileData.h" />
+    <ClInclude Include="..\rvm\Core\FileIO.h" />
+    <ClInclude Include="..\rvm\Core\FontCharacter.h" />
+    <ClInclude Include="..\rvm\Core\FunctionScript.h" />
+    <ClInclude Include="..\rvm\Core\GfxSurfaceDesc.h" />
+    <ClInclude Include="..\rvm\Core\GifDecoder.h" />
+    <ClInclude Include="..\rvm\Core\GifLoader.h" />
+    <ClInclude Include="..\rvm\Core\GlobalAppDefinitions.h" />
+    <ClInclude Include="..\rvm\Core\GraphicsSystem.h" />
+    <ClInclude Include="..\rvm\Core\InputResult.h" />
+    <ClInclude Include="..\rvm\Core\InputSystem.h" />
+    <ClInclude Include="..\rvm\Core\LayoutMap.h" />
+    <ClInclude Include="..\rvm\Core\LineScrollParallax.h" />
+    <ClInclude Include="..\rvm\Core\Mappings128x128.h" />
+    <ClInclude Include="..\rvm\Core\MusicTrackInfo.h" />
+    <ClInclude Include="..\rvm\Core\ObjectDrawList.h" />
+    <ClInclude Include="..\rvm\Core\ObjectEntity.h" />
+    <ClInclude Include="..\rvm\Core\ObjectScript.h" />
+    <ClInclude Include="..\rvm\Core\ObjectSystem.h" />
+    <ClInclude Include="..\rvm\Core\PaletteEntry.h" />
+    <ClInclude Include="..\rvm\Core\PlayerObject.h" />
+    <ClInclude Include="..\rvm\Core\PlayerStatistics.h" />
+    <ClInclude Include="..\rvm\Core\PlayerSystem.h" />
+    <ClInclude Include="..\rvm\Core\Quad2D.h" />
+    <ClInclude Include="..\rvm\Core\RenderDevice.h" />
+    <ClInclude Include="..\rvm\Core\Scene3D.h" />
+    <ClInclude Include="..\rvm\Core\ScriptEngine.h" />
+    <ClInclude Include="..\rvm\Core\SortList.h" />
+    <ClInclude Include="..\rvm\Core\SpriteAnimation.h" />
+    <ClInclude Include="..\rvm\Core\SpriteFrame.h" />
+    <ClInclude Include="..\rvm\Core\StageList.h" />
+    <ClInclude Include="..\rvm\Core\StageSystem.h" />
+    <ClInclude Include="..\rvm\Core\TextMenu.h" />
+    <ClInclude Include="..\rvm\Core\TextSystem.h" />
+    <ClInclude Include="..\rvm\Core\Vertex2D.h" />
+    <ClInclude Include="..\rvm\Core\Vertex3D.h" />
+    <ClInclude Include="include\SDL.h" />
+    <ClInclude Include="include\SDL_main.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{194E2F81-BE68-44CE-A1DA-FAA3A71FB8CB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RvmWin64</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\Users\Paul\Documents\Rvm_Win64\Rvm_Win64\references;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\Paul\Documents\Rvm_Win64\rvm\Core;C:\Users\Paul\Documents\Rvm_Win64\Rvm_Win64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Paul\Documents\Rvm_Win64\Rvm_Win64\references;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\Paul\Documents\Rvm_Win64\rvm\Core;C:\Users\Paul\Documents\Rvm_Win64\Rvm_Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;OpenGL32.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

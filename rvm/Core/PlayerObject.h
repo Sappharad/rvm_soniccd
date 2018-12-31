@@ -6,6 +6,7 @@
 #ifndef PlayerObject_h
 #define PlayerObject_h
 
+#include "SDL.h"
 #include "PlayerStatistics.h"
 #include "AnimationFileList.h"
 #include "ObjectEntity.h"

@@ -5,6 +5,7 @@
 
 #ifndef Face3D_h
 #define Face3D_h
+#include "SDL.h"
 
 struct Face3D {
     int a;
