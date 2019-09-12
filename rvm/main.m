@@ -190,10 +190,10 @@ void Init_RetroVM(){
     Init_StageSystem();
     Init_Scene3D();
     //RenderDevice_SetScreenDimensions(800, 480);
-    RenderDevice_SetScreenDimensions(864, 480);
+    RenderDevice_SetScreenDimensions(854, 480);
     //RenderDevice_SetScreenDimensions(1040, 480);
     EngineCallbacks_StartupRetroEngine();
-    gameLanguage = 0;
+    gameLanguage = RETRO_EN;
     gameTrialMode = GAME_FULL;
 }
 
