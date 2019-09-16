@@ -14,7 +14,7 @@ unsigned char fadeB;
 unsigned char fadeA;
 unsigned char paletteMode;
 unsigned char colourMode;
-unsigned char texBuffer2[0x200000];
+unsigned char texBuffer[0x100000];
 unsigned char texBufferMode;
 unsigned char tileGfx[0x40000];
 unsigned char graphicData[GRAPHIC_DATASIZE];
@@ -122,9 +122,11 @@ void GraphicsSystem_LoadPalette(char* fileName, int paletteNum, int destPoint, i
                 tilePalette[destPoint].red = array2[0];
                 tilePalette[destPoint].green = array2[1];
                 tilePalette[destPoint].blue = array2[2];
+                pvr_set_pal_entry(destPoint, GraphicsSystem_RGB_16BIT5551(array2[0], array2[1], array2[2], 1));
                 destPoint++;
             }
             tilePalette16_Data[0][0] = GraphicsSystem_RGB_16BIT5551(array2[0], array2[1], array2[2], 0);
+            pvr_set_pal_entry(0, GraphicsSystem_RGB_16BIT5551(array2[0], array2[1], array2[2], 0));
         }
         else
         {
@@ -269,7 +271,6 @@ void GraphicsSystem_SetupPolygonLists()
 }
 void GraphicsSystem_UpdateTextureBufferWithTiles()
 {
-    unsigned short* texBuffer = (unsigned short*)texBuffer2;
     int num = 0;
     int num3;
     if (texBufferMode == 0)
@@ -285,14 +286,15 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
                 {
                     for (int l = 0; l < 16; l++)
                     {
-                        if (tileGfx[num2] > 0)
+                        texBuffer[num3] = tileGfx[num2];
+                        /*if (tileGfx[num2] > 0)
                         {
                             texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                         }
                         else
                         {
                             texBuffer[num3] = 0;
-                        }
+                        }*/
                         num3++;
                         num2++;
                     }
@@ -314,29 +316,34 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
                     num = 1023;
                 }
                 num3 = j + (i << 10);
-                if (tileGfx[num2] > 0)
+                texBuffer[num3] = tileGfx[num2];
+                /*if (tileGfx[num2] > 0)
                 {
                     texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                 }
                 else
                 {
                     texBuffer[num3] = 0;
-                }
+                }*/
                 num3++;
                 for (int l = 0; l < 15; l++)
                 {
-                    if (tileGfx[num2] > 0)
+                    texBuffer[num3] = tileGfx[num2];
+                    /*if (tileGfx[num2] > 0)
                     {
                         texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                     }
                     else
                     {
                         texBuffer[num3] = 0;
-                    }
+                    }*/
                     num3++;
                     num2++;
                 }
-                if (tileGfx[num2] > 0)
+                texBuffer[num3] = tileGfx[num2];
+                num3++;
+                texBuffer[num3] = tileGfx[num2];
+                /*if (tileGfx[num2] > 0)
                 {
                     texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                     num3++;
@@ -347,35 +354,40 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
                     texBuffer[num3] = 0;
                     num3++;
                     texBuffer[num3] = 0;
-                }
+                }*/
                 num3++;
                 num2 -= 15;
                 num3 += 1006;
                 for (int k = 0; k < 16; k++)
                 {
-                    if (tileGfx[num2] > 0)
+                    texBuffer[num3] = tileGfx[num2];
+                    /*if (tileGfx[num2] > 0)
                     {
                         texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                     }
                     else
                     {
                         texBuffer[num3] = 0;
-                    }
+                    }*/
                     num3++;
                     for (int l = 0; l < 15; l++)
                     {
-                        if (tileGfx[num2] > 0)
+                        texBuffer[num3] = tileGfx[num2];
+                        /*if (tileGfx[num2] > 0)
                         {
                             texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                         }
                         else
                         {
                             texBuffer[num3] = 0;
-                        }
+                        }*/
                         num3++;
                         num2++;
                     }
-                    if (tileGfx[num2] > 0)
+                    texBuffer[num3] = tileGfx[num2];
+                    num3++;
+                    texBuffer[num3] = tileGfx[num2];
+                    /*if (tileGfx[num2] > 0)
                     {
                         texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                         num3++;
@@ -386,35 +398,40 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
                         texBuffer[num3] = 0;
                         num3++;
                         texBuffer[num3] = 0;
-                    }
+                    }*/
                     num3++;
                     num2++;
                     num3 += 1006;
                 }
                 num2 -= 16;
-                if (tileGfx[num2] > 0)
+                texBuffer[num3] = tileGfx[num2];
+                /*if (tileGfx[num2] > 0)
                 {
                     texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                 }
                 else
                 {
                     texBuffer[num3] = 0;
-                }
+                }*/
                 num3++;
                 for (int l = 0; l < 15; l++)
                 {
-                    if (tileGfx[num2] > 0)
+                    texBuffer[num3] = tileGfx[num2];
+                    /*if (tileGfx[num2] > 0)
                     {
                         texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                     }
                     else
                     {
                         texBuffer[num3] = 0;
-                    }
+                    }*/
                     num3++;
                     num2++;
                 }
-                if (tileGfx[num2] > 0)
+                texBuffer[num3] = tileGfx[num2];
+                num3++;
+                texBuffer[num3] = tileGfx[num2];
+                /*if (tileGfx[num2] > 0)
                 {
                     texBuffer[num3] = tilePalette16_Data[texPaletteNum][tileGfx[num2]];
                     num3++;
@@ -425,7 +442,7 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
                     texBuffer[num3] = 0;
                     num3++;
                     texBuffer[num3] = 0;
-                }
+                }*/
                 num3++;
                 num3 += 1006;
             }
@@ -436,7 +453,7 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
     {
         for (int l = 0; l < 16; l++)
         {
-            texBuffer[num3] = GraphicsSystem_RGB_16BIT5551(255, 255, 255, 1);
+            texBuffer[num3] = 0; //GraphicsSystem_RGB_16BIT5551(255, 255, 255, 1);
             num3++;
         }
         num3 += 1008;
@@ -444,7 +461,6 @@ void GraphicsSystem_UpdateTextureBufferWithTiles()
 }
 void GraphicsSystem_UpdateTextureBufferWithSortedSprites()
 {
-    unsigned short* texBuffer = (unsigned short*)texBuffer2;
     uint8_t b = 0;
     uint8_t array[NUM_SPRITESHEETS];
     bool flag = true;
@@ -574,14 +590,15 @@ void GraphicsSystem_UpdateTextureBufferWithSortedSprites()
             {
                 for (int k = 0; k < gfxSurface[(int)b2].width; k++)
                 {
-                    if (graphicData[num] > 0)
+                    texBuffer[num2] = graphicData[num];
+                    /*if (graphicData[num] > 0)
                     {
                         texBuffer[num2] = tilePalette16_Data[texPaletteNum][graphicData[num]];
                     }
                     else
                     {
                         texBuffer[num2] = 0;
-                    }
+                    }*/
                     num2++;
                     num++;
                 }
@@ -592,7 +609,7 @@ void GraphicsSystem_UpdateTextureBufferWithSortedSprites()
 }
 void GraphicsSystem_UpdateTextureBufferWithSprites()
 {
-    unsigned short* texBuffer = (unsigned short*)texBuffer2;
+    //unsigned short* texBuffer = (unsigned short*)texBuffer2;
     for (int i = 0; i < 24; i++)
     {
         if (gfxSurface[i].texStartY + gfxSurface[i].height <= 1024 && gfxSurface[i].texStartX > -1)
@@ -603,14 +620,15 @@ void GraphicsSystem_UpdateTextureBufferWithSprites()
             {
                 for (int k = 0; k < gfxSurface[i].width; k++)
                 {
-                    if (graphicData[num] > 0)
+                    texBuffer[num2] = graphicData[num];
+                    /*if (graphicData[num] > 0)
                     {
                         texBuffer[num2] = tilePalette16_Data[texPaletteNum][graphicData[num]];
                     }
                     else
                     {
                         texBuffer[num2] = 0;
-                    }
+                    }*/
                     num2++;
                     num++;
                 }
@@ -757,6 +775,9 @@ void GraphicsSystem_LoadStageGIFFile(int zNumber)
             tilePalette[i].green = array[1];
             tilePalette[i].blue = array[2];
             tilePalette16_Data[texPaletteNum][i] = GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 1);
+            if(texPaletteNum < 4){
+                pvr_set_pal_entry((texPaletteNum<<8)+i, GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 1));
+            }
         }
         array[0] = FileIO_ReadByte();
         if (array[0] == 44)
@@ -1703,10 +1724,16 @@ void GraphicsSystem_SetPaletteEntry(uint8_t entryPos, uint8_t cR, uint8_t cG, ui
     if (entryPos > 0)
     {
         tilePalette16_Data[texPaletteNum][(int)entryPos] = GraphicsSystem_RGB_16BIT5551(cR, cG, cB, 1);
+        if(texPaletteNum < 4){
+            pvr_set_pal_entry((texPaletteNum<<8)+entryPos, GraphicsSystem_RGB_16BIT5551(cR, cG, cB, 1));
+        }
     }
     else
     {
         tilePalette16_Data[texPaletteNum][(int)entryPos] = GraphicsSystem_RGB_16BIT5551(cR, cG, cB, 0);
+        if(texPaletteNum < 4){
+            pvr_set_pal_entry((texPaletteNum<<8)+entryPos, GraphicsSystem_RGB_16BIT5551(cR, cG, cB, 0));
+        }
     }
     tilePalette[(int)entryPos].red = cR;
     tilePalette[(int)entryPos].green = cG;
@@ -1744,8 +1771,10 @@ void GraphicsSystem_SetLimitedFade(uint8_t paletteNum, uint8_t clrR, uint8_t clr
             array[1] = (uint8_t)(((ushort)tilePalette[i].green * (255 - clrA) + clrA * (ushort)clrG) >> 8);
             array[2] = (uint8_t)(((ushort)tilePalette[i].blue * (255 - clrA) + clrA * (ushort)clrB) >> 8);
             tilePalette16_Data[0][i] = GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 1);
+            pvr_set_pal_entry(i, GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 1));
         }
         tilePalette16_Data[0][0] = GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 0);
+        pvr_set_pal_entry(0, GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 0));
     }
 }
 void GraphicsSystem_SetActivePalette(uint8_t paletteNum, int minY, int maxY)
