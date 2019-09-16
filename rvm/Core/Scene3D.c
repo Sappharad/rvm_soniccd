@@ -5,10 +5,10 @@
 
 #include "Scene3D.h"
 
-struct Vertex3D vertexBuffer[4096];
-struct Vertex3D vertexBufferT[4096];
-struct Face3D indexBuffer[1024];
-struct SortList drawList[1024];
+struct Vertex3D vertexBuffer[256]; //4096
+struct Vertex3D vertexBufferT[256]; //4096
+struct Face3D indexBuffer[64]; //1024
+struct SortList drawList[64]; //1024
 int numVertices;
 int numFaces;
 int projectionX;
@@ -257,7 +257,7 @@ void Scene3D_TransformVertices(int* m, int vStart, int vEnd)
 }
 void Scene3D_Sort3DDrawList()
 {
-    for (int i = 0; i < numFaces; i++)
+    /*for (int i = 0; i < numFaces; i++)
     {
         drawList[i].z = (vertexBufferT[indexBuffer[i].a].z + vertexBufferT[indexBuffer[i].b].z + vertexBufferT[indexBuffer[i].c].z + vertexBufferT[indexBuffer[i].d].z) >> 2;
         drawList[i].index = i;
@@ -276,11 +276,11 @@ void Scene3D_Sort3DDrawList()
                 drawList[j - 1].z = z;
             }
         }
-    }
+    }*/
 }
 void Scene3D_Draw3DScene(int surfaceNum)
 {
-    struct Quad2D quad2D;
+    /*struct Quad2D quad2D;
     for (int i = 0; i < numFaces; i++)
     {
         struct Face3D* face3D = &indexBuffer[drawList[i].index];
@@ -353,5 +353,5 @@ void Scene3D_Draw3DScene(int surfaceNum)
                 GraphicsSystem_DrawQuad(&quad2D, face3D->color);
                 break;
         }
-    }
+    }*/
 }

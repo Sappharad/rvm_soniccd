@@ -174,19 +174,25 @@ void EngineCallbacks_StartupRetroEngine()
 {
     if (!engineInit)
     {
+        printf("GlobalAppDefinitions_CalculateTrigAngles\n");
         GlobalAppDefinitions_CalculateTrigAngles();
+        printf("GraphicsSystem_GenerateBlendLookupTable\n");
         GraphicsSystem_GenerateBlendLookupTable();
+        printf("Checking RSDK file\n");
         if (FileIO_CheckRSDKFile())
         {
             GlobalAppDefinitions_LoadGameConfig("Data/Game/GameConfig.bin");
         }
         InitAudioPlayback();
+        printf("Init first stage\n");
         StageSystem_InitFirstStage();
         //StageSystem_InitStageSelectMenu(); //Init this instead of first stage for Retro Engine dev menu.
+        printf("ObjectSystem_ClearScriptData\n");
         ObjectSystem_ClearScriptData();
         engineInit = true;
         return;
     }
+    printf("Update hardware textures.\n");
     RenderDevice_UpdateHardwareTextures();
 }
 void EngineCallbacks_ProcessMainLoop()

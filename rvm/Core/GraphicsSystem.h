@@ -20,7 +20,7 @@
 #include "Quad2D.h"
 
 #define NUM_SPRITESHEETS 24
-#define GRAPHIC_DATASIZE 0x200000
+#define GRAPHIC_DATASIZE 0x100000 //0x200000
 #define VERTEX_LIMIT 0x2000
 #define INDEX_LIMIT 0xC000
 
@@ -32,14 +32,14 @@ extern unsigned char fadeB;
 extern unsigned char fadeA;
 extern unsigned char paletteMode;
 extern unsigned char colourMode;
-extern unsigned short texBuffer[0x100000];
+extern unsigned char texBuffer2[0x200000];
 extern unsigned char texBufferMode;
 extern unsigned char tileGfx[0x40000];
 extern unsigned char graphicData[GRAPHIC_DATASIZE];
 extern struct GfxSurfaceDesc gfxSurface[NUM_SPRITESHEETS];
 extern unsigned int gfxDataPosition;
 extern struct DrawVertex gfxPolyList[VERTEX_LIMIT];
-extern struct DrawVertex3D polyList3D[6404];
+//extern struct DrawVertex3D polyList3D[6404];
 extern unsigned short gfxPolyListIndex[INDEX_LIMIT];
 extern unsigned short gfxVertexSize;
 extern unsigned short gfxVertexSizeOpaque;

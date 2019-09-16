@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include "GlobalAppDefinitions.h"
 #include "SpriteFrame.h"
 #include "ScriptEngine.h"
 #include "ObjectScript.h"
@@ -24,8 +25,11 @@
 #include "FileData.h"
 #include "FileIO.h"
 #include "StageSystem.h"
-#include "GlobalAppDefinitions.h"
+#ifdef DREAMCAST
+#include "AudioPlayback_dc.h"
+#else
 #include "AudioPlayback.h"
+#endif
 #include "Scene3D.h"
 #include "GraphicsSystem.h"
 #include "TextSystem.h"

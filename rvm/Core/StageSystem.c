@@ -100,10 +100,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     unsigned short* numArray2 = stageLayouts[activeTileLayers[layerNum]].tileMap;
     vertexSize3D = 0;
     indexSize3D = 0;
-    polyList3D[vertexSize3D].position.X = 0.0f;
+    /*polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 0.5f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -113,7 +113,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
+    polyList3D[vertexSize3D].texCoord.X = 1.0f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -123,8 +123,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 0.5f;
+    polyList3D[vertexSize3D].texCoord.Y = 0.5f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
@@ -133,8 +133,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 1.0f;
+    polyList3D[vertexSize3D].texCoord.Y = 0.5f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
@@ -592,7 +592,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
             sinValue512 = sinValue512 - 0x140;
             cosValue512 = cosValue512 + 16;
         }
-    }
+    }*/
     floor3DPos.X = (float)(stageLayouts[activeTileLayers[layerNum]].xPos >> 8) * -0.00390625f;
     floor3DPos.Y = (float)(stageLayouts[activeTileLayers[layerNum]].yPos >> 8) * 0.00390625f;
     floor3DPos.Z = (float)(stageLayouts[activeTileLayers[layerNum]].zPos >> 8) * -0.00390625f;
@@ -1590,15 +1590,18 @@ void StageSystem_InitFirstStage()
 {
     xScrollOffset = 0;
     yScrollOffset = 0;
+    printf("Music Init from StageSystem\n");
     AudioPlayback_StopMusic();
     AudioPlayback_StopAllSFX();
     AudioPlayback_ReleaseStageSFX();
     fadeMode = 0;
     playerMenuNum = 0;
+    printf("ClearData\n");
     GraphicsSystem_ClearGraphicsData();
     AnimationSystem_ClearAnimationData();
+    printf("Load master palette\n");
     GraphicsSystem_LoadPalette("MasterPalette.act", 0, 0, 0, 0x100);
-    activeStageList = PRESENTATION_STAGE; //0 - Presentation, 1 - Zone, 2 - Bonus (Desert Dazzle), 3 - Special Stage
+    activeStageList = 0;
     stageMode = 0;
     gameMode = 1;
     stageListPosition = 0;
@@ -2101,22 +2104,22 @@ void StageSystem_LoadStageFiles()
         }
         if (numArray[0] == 1 && FileIO_LoadFile("Data/Game/GameConfig.bin", &fileDatum))
         {
-            numArray[0] = FileIO_ReadByte(); //Length of game title
+            numArray[0] = FileIO_ReadByte();
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte(); //Data folder
+            numArray[0] = FileIO_ReadByte();
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte(); //File credits
+            numArray[0] = FileIO_ReadByte();
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
             }
-            numArray[0] = FileIO_ReadByte(); //Number of object definitions
+            numArray[0] = FileIO_ReadByte();
             for (i = 0; i < numArray[0]; i++)
             {
                 numArray[1] = FileIO_ReadByte();
@@ -2128,7 +2131,7 @@ void StageSystem_LoadStageFiles()
             {
                 FileIO_GetFileInfo(&fileDatum);
                 FileIO_CloseFile();
-                ObjectSystem_LoadByteCodeFile(4, num); //Reload GlobalCode.bin
+                ObjectSystem_LoadByteCodeFile(4, num);
                 num = num + numArray[0];
                 FileIO_SetFileInfo(&fileDatum);
             }
@@ -2302,10 +2305,10 @@ void StageSystem_ProcessStage()
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16; //0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;// 0.015625f;
+                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1) * 0.0009765625f;
+                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1) * 0.0009765625f;
+                    tileUVArray[i + 2] = tileUVArray[i] + 0.015625f;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 0.015625f;
                 }
                 tileUVArray[0xffc] = 0.475585938f;
                 tileUVArray[0xffd] = 0.475585938f;
@@ -2316,10 +2319,10 @@ void StageSystem_ProcessStage()
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2 & 31) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16;//0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;//0.015625f;
+                    tileUVArray[i] = (float)((i >> 2 & 31) * 16) * 0.0009765625f;
+                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16) * 0.0009765625f;
+                    tileUVArray[i + 2] = tileUVArray[i] + 0.015625f;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 0.015625f;
                 }
             }
             RenderDevice_UpdateHardwareTextures();

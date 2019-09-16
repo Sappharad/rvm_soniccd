@@ -13,7 +13,7 @@ const int MUSIC_READY = 4;
 #define NUM_CHANNELS 8
 int numGlobalSFX;
 int numStageSFX;
-Mix_Chunk* sfxSamples[256];
+//Mix_Chunk* sfxSamples[256];
 bool sfxLoaded[256];
 int channelSfxNum[NUM_CHANNELS];
 int nextChannelPos;
@@ -34,14 +34,14 @@ void InitAudioPlayback()
     musicVolumeSetting = 1.0f;
     sfxVolumeSetting = 1.0f;
     musicStatus = 0;
-    
+    /*
     //Init SDL_Mixer and Audio - Must be done before audio can be loaded.
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) == -1){
         printf("Failed to open audio mixer!");
     }
     else{
         Mix_AllocateChannels(MIX_CHANNELS);
-    }
+    }*/
     
     struct FileData fileData;
     char array[32];
@@ -121,7 +121,7 @@ void InitAudioPlayback()
 }
 void AudioPlayback_ReleaseAudioPlayback()
 {
-    Mix_CloseAudio();
+    //Mix_CloseAudio();
 }
 void AudioPlayback_ReleaseGlobalSFX()
 {
@@ -137,30 +137,30 @@ void AudioPlayback_SetGameVolumes(int bgmVolume, int sfxVolume)
 }
 void AudioPlayback_StopAllSFX()
 {
-    for (int i = 0; i < NUM_CHANNELS; i++)
+    /*for (int i = 0; i < NUM_CHANNELS; i++)
     {
         Mix_HaltChannel(i);
-    }
+    }*/
 }
 void AudioPlayback_PauseSound()
 {
-    Mix_PauseMusic();
+    /*Mix_PauseMusic();
     for (int i = 0; i < NUM_CHANNELS; i++)
     {
         Mix_Pause(i);
-    }
+    }*/
 }
 void AudioPlayback_ResumeSound()
 {
-    Mix_ResumeMusic();
+    /*Mix_ResumeMusic();
     for (int i = 0; i < NUM_CHANNELS; i++)
     {
         Mix_Resume(i);
-    }
+    }*/
 }
 void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack, uint loopPoint)
 {
-    struct FileData fData;
+    /*struct FileData fData;
     char array[] = "Data/Music/";
     int num = (int)strlen(fileName);
     if (num < 0)
@@ -200,11 +200,11 @@ void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack,
         FileIO_ReadByteArray(musicTracks[trackNo].musicData, fData.fileSize);
         musicTracks[trackNo].mixerAudio = Mix_LoadMUSType_RW(SDL_RWFromMem(musicTracks[trackNo].musicData, fData.fileSize), MUS_OGG, SDL_TRUE);
         FileIO_CloseFile();
-    }
+    }*/
 }
 void AudioPlayback_SetMusicVolume(int volume)
 {
-    if (volume < 0)
+    /*if (volume < 0)
     {
         volume = 0;
     }
@@ -214,11 +214,11 @@ void AudioPlayback_SetMusicVolume(int volume)
     }
     musicVolume = volume;
     double sdl_volume = 128.0 * (musicVolume / 100.0);
-    Mix_VolumeMusic((int)sdl_volume);
+    Mix_VolumeMusic((int)sdl_volume);*/
 }
 void AudioPlayback_PlayMusic(int trackNo)
 {
-    if (musicTracks[trackNo].trackName[0] != '\0' && musicTracks[trackNo].mixerAudio)
+    /*if (musicTracks[trackNo].trackName[0] != '\0' && musicTracks[trackNo].mixerAudio)
     {
         currentMusicTrack = trackNo;
         musicVolume = 100;
@@ -226,19 +226,19 @@ void AudioPlayback_PlayMusic(int trackNo)
         double sdl_volume = 128.0 * (musicVolume / 100.0);
         Mix_VolumeMusic((int)sdl_volume);
         Mix_PlayMusic(musicTracks[trackNo].mixerAudio, (musicTracks[trackNo].loop > 0) ? -1 : 0);
-    }
+    }*/
 }
 void AudioPlayback_StopMusic()
 {
-    if (musicTracks[currentMusicTrack].mixerAudio)
+    /*if (musicTracks[currentMusicTrack].mixerAudio)
     {
         Mix_HaltMusic();
-    }
+    }*/
     musicStatus = 0;
 }
 void AudioPlayback_LoadSfx(char* fileName, int sfxNum)
 {
-    struct FileData fData;
+    /*struct FileData fData;
     char filePath[64];
     char array[] = "Data/SoundFX/";
     if (sfxNum > -1 && sfxNum < 256)
@@ -263,11 +263,11 @@ void AudioPlayback_LoadSfx(char* fileName, int sfxNum)
             sfxLoaded[sfxNum] = true;
             FileIO_CloseFile();
         }
-    }
+    }*/
 }
 void AudioPlayback_PlaySfx(int sfxNum, uint8_t sLoop)
 {
-    for (int i = 0; i < NUM_CHANNELS; i++)
+    /*for (int i = 0; i < NUM_CHANNELS; i++)
     {
         if (channelSfxNum[i] == sfxNum)
         {
@@ -283,22 +283,22 @@ void AudioPlayback_PlaySfx(int sfxNum, uint8_t sLoop)
     if (nextChannelPos == 8)
     {
         nextChannelPos = 0;
-    }
+    }*/
 }
 void AudioPlayback_StopSfx(int sfxNum)
 {
-    for (int i = 0; i < NUM_CHANNELS; i++)
+    /*for (int i = 0; i < NUM_CHANNELS; i++)
     {
         if (channelSfxNum[i] == sfxNum)
         {
             channelSfxNum[i] = -1;
             Mix_HaltChannel(i);
         }
-    }
+    }*/
 }
 void AudioPlayback_SetSfxAttributes(int sfxNum, int volume, int pan)
 {
-    for (int i = 0; i < NUM_CHANNELS; i++)
+    /*for (int i = 0; i < NUM_CHANNELS; i++)
     {
         if (channelSfxNum[i] == sfxNum)
         {
@@ -315,5 +315,5 @@ void AudioPlayback_SetSfxAttributes(int sfxNum, int volume, int pan)
     if (nextChannelPos == 8)
     {
         nextChannelPos = 0;
-    }
+    }*/
 }

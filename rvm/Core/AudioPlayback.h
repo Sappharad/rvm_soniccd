@@ -12,11 +12,14 @@
 #include "MusicTrackInfo.h"
 #include "FileData.h"
 #include "FileIO.h"
-#include "SDL_mixer.h"
+//#include "SDL_mixer.h"
 
+//extern Game gameRef;
 extern int numGlobalSFX;
 extern int numStageSFX;
+//extern SoundEffect sfxSamples[256];
 extern bool sfxLoaded[256];
+//extern SoundEffectInstance channelInstance[8];
 extern int channelSfxNum[8];
 extern int nextChannelPos;
 extern bool musicEnabled;

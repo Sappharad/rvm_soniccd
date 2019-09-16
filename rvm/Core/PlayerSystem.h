@@ -8,12 +8,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "GlobalAppDefinitions.h"
 #include "PlayerObject.h"
 #include "CollisionSensor.h"
 #include "StageSystem.h"
 #include "AnimationSystem.h"
 #include "ObjectSystem.h"
-#include "GlobalAppDefinitions.h"
 
 extern unsigned short delayLeft;
 extern unsigned short delayRight;
@@ -30,7 +30,7 @@ extern int collisionTop;
 extern int collisionRight;
 extern int collisionBottom;
 
-void Init_PlayerSystem(void);
+void Init_PlayerSystem();
 void PlayerSystem_FindFloorPosition(struct PlayerObject* playerO, struct CollisionSensor* cSensorRef, int prevCollisionPos);
 void PlayerSystem_FindLWallPosition(struct PlayerObject* playerO, struct CollisionSensor* cSensorRef, int prevCollisionPos);
 void PlayerSystem_FindRoofPosition(struct PlayerObject* playerO, struct CollisionSensor* cSensorRef, int prevCollisionPos);

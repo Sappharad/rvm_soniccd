@@ -7,17 +7,17 @@
 #define Scene3D_h
 
 #include <stdio.h>
+#include "GlobalAppDefinitions.h"
 #include "Vertex3D.h"
 #include "Face3D.h"
 #include "SortList.h"
-#include "GlobalAppDefinitions.h"
 #include "Quad2D.h"
 #include "GraphicsSystem.h"
 
-extern struct Vertex3D vertexBuffer[4096];
-extern struct Vertex3D vertexBufferT[4096];
-extern struct Face3D indexBuffer[1024];
-extern struct SortList drawList[1024];
+extern struct Vertex3D vertexBuffer[256]; //4096
+extern struct Vertex3D vertexBufferT[256]; //4096
+extern struct Face3D indexBuffer[64]; //1024
+extern struct SortList drawList[64]; //1024
 extern int numVertices;
 extern int numFaces;
 extern int projectionX;

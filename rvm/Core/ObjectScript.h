@@ -6,7 +6,6 @@
 #ifndef ObjectScript_h
 #define ObjectScript_h
 
-#include "SDL.h"
 #include "AnimationFileList.h"
 
 struct ObjectScript{

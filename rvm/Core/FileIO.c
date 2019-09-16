@@ -4,6 +4,7 @@
 //
 
 #include "FileIO.h"
+#include <sys/stat.h>
 
 unsigned char fileBuffer[8192];
 uint bufferPosition;

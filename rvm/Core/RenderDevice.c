@@ -4,15 +4,9 @@
 //
 
 #include "RenderDevice.h"
-#if WINDOWS
-#include <Windows.h>
-#include <gl/GL.h>
-#include <gl/glext.h>
-#else
 #include <OpenGL/gl.h>
-#endif
 
-#define NUM_TEXTURES 6
+const int NUM_TEXTURES = 1; //Was 6
 const int TEXTURE_SIZE = 1024*1024*2;
 int orthWidth;
 int viewWidth;
@@ -21,7 +15,7 @@ float viewAspect;
 int bufferWidth;
 int bufferHeight;
 int highResMode;
-GLuint gfxTextureID[NUM_TEXTURES];
+GLuint gfxTextureID[1]; //NUM_TEXTURES
 
 void HandleGlError(){
     GLenum boo = glGetError();
@@ -29,8 +23,7 @@ void HandleGlError(){
         if (boo == GL_INVALID_OPERATION){
             printf("Invalid operation\n");
         }
-#ifndef WINDOWS
-        else if(boo == GL_INVALID_FRAMEBUFFER_OPERATION){
+        /*else if(boo == GL_INVALID_FRAMEBUFFER_OPERATION){
             boo = glCheckFramebufferStatus(GL_FRAMEBUFFER);
             if(boo == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT){
                 printf("Framebuffer attachment missing!");
@@ -38,8 +31,7 @@ void HandleGlError(){
             else{
                 printf("Invalid framebuffer operation\n");
             }
-        }
-#endif
+        }*/
         else{
             printf("An error!\n");
         }
@@ -53,7 +45,6 @@ void InitRenderDevice()
     highResMode = 0;
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glDisable(GL_LIGHTING);
-    glDisable(GL_DITHER);
     glEnable(GL_TEXTURE_2D);
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_MODELVIEW);
@@ -61,20 +52,21 @@ void InitRenderDevice()
     glLoadIdentity();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GraphicsSystem_SetupPolygonLists();
-    
+    printf("Setup textures\n");
     for (int i = 0; i < NUM_TEXTURES; i++)
     {
         glGenTextures(1, &gfxTextureID[i]);
         glBindTexture(GL_TEXTURE_2D, gfxTextureID[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 9728.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 9728.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 33071.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 33071.0f);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer2);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 9728);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 9728);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 33071);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 33071);
     }
+    printf("Done with textures\n");
     glMatrixMode(GL_TEXTURE);
     glLoadIdentity();
-    glScalef(0.0009765625f, 0.0009765625f, 1.0f); //1.0 / 1024.0. Allows for texture locations in pixels instead of from 0.0 to 1.0
+    //glScalef(0.0009765625f, 0.0009765625f, 1.0f); //1.0 / 1024.0. Allows for texture locations in pixels instead of from 0.0 to 1.0
     glMatrixMode(GL_PROJECTION);
     
     glClear(GL_COLOR_BUFFER_BIT);
@@ -91,7 +83,8 @@ void RenderDevice_UpdateHardwareTextures()
     glBindTexture(GL_TEXTURE_2D, gfxTextureID[0]);
     HandleGlError();
     
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 1024, 1024, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer2);
+    //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 1024, 1024, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer);
     HandleGlError();
     
     for (uint8_t b = 1; b < NUM_TEXTURES; b += 1)
@@ -103,7 +96,7 @@ void RenderDevice_UpdateHardwareTextures()
         glBindTexture(GL_TEXTURE_2D, gfxTextureID[b]);
         HandleGlError();
         
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 1024, 1024, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 1024, 1024, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer2);
         HandleGlError();
     }
     GraphicsSystem_SetActivePalette(0, 0, 240);
@@ -119,10 +112,10 @@ void RenderDevice_SetScreenDimensions(int width, int height)
     bufferWidth = (int)num;
     bufferWidth += 8;
     bufferWidth = bufferWidth >> 4 << 4;
-    /*if (bufferWidth > 400)
+    if (bufferWidth > 400)
     {
         bufferWidth = 400;
-    }*/
+    }
     viewAspect = 0.75f;
     if (viewHeight >= 480.0)
     {
@@ -185,31 +178,33 @@ void RenderDevice_FlipScreen()
     glEnableClientState(GL_COLOR_ARRAY);
     HandleGlError();
     if(render3DEnabled){
-        glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-        glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-        glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
+        glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+        glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+        glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
         glDrawElements(GL_TRIANGLES, gfxIndexSizeOpaque, GL_UNSIGNED_SHORT, gfxPolyListIndex);
         glEnable(GL_BLEND);
         HandleGlError();
         
+        //glViewport(viewWidth, 0, viewHeight, bufferWidth);
         glViewport(0, 0, viewWidth, viewHeight);
         glPushMatrix();
-        glLoadIdentity();
-        CalcPerspective(1.8326f, viewAspect, 0.1f, 2000.0f);
-        //glRotatef(0, 0, 0, 1.0f);
-        //glRotatef(180.0f + floor3DAngle, 0, -0.045f, 0);
+        /*glLoadIdentity();
+        CalcPerspective();
+        glRotatef(-90.0, 0, 0, 0);*/
+        //RenderDevice.projection3D = Matrix.CreatePerspectiveFieldOfView(1.83259571f, RenderDevice.viewAspect, 0.1f, 2000f) * Matrix.CreateScale(1f, -1f, 1f) * Matrix.CreateTranslation(0f, -0.045f, 0f);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-       
-        //glScalef(1.0f, -1.0f, 1.0f);
-        glScalef(1.0f, -1.0f, -1.0f);
-        glRotatef(180.0f + floor3DAngle, 0, 1.0f, 0);
-        //glRotatef(0, 3.14159274f * (180.0f + floor3DAngle) / 180.0f, 0, 0);
+        CalcPerspective();
+        /*glScalef(0.0f, 0.0f, -1.0f);
+        glRotatef(floor3DAngle, 180.0, 0, 0);
+        glTranslatef(floor3DPos.X, floor3DPos.Y, floor3DPos.Z);*/
+        /*glScalef(1.0f, -1.0f, 1.0f);
+        glRotatef(0, 3.14159274f * (180.0f + floor3DAngle) / 180.0f, 0, 0);
         glTranslatef(floor3DPos.X, floor3DPos.Y, floor3DPos.Z);
-        glVertexPointer(3, GL_FLOAT, 20, &polyList3D[0].position);
-        glTexCoordPointer(2, GL_SHORT, 20, &polyList3D[0].texCoord);
-        glColorPointer(4, GL_UNSIGNED_BYTE, 20, &polyList3D[0].color);
-        glDrawElements(GL_TRIANGLES, indexSize3D, GL_UNSIGNED_SHORT, gfxPolyListIndex);
+        glVertexPointer(3, GL_FLOAT, 24, &polyList3D[0].position);
+        glTexCoordPointer(2, GL_FLOAT, 24, &polyList3D[0].texCoord);
+        glColorPointer(4, GL_UNSIGNED_BYTE, 24, &polyList3D[0].color);
+        glDrawElements(GL_TRIANGLES, indexSize3D, GL_UNSIGNED_SHORT, gfxPolyListIndex);*/
         glLoadIdentity();
         glMatrixMode(GL_PROJECTION);
         
@@ -218,28 +213,31 @@ void RenderDevice_FlipScreen()
         HandleGlError();
         
         int numBlendedGfx = (int)(gfxIndexSize - gfxIndexSizeOpaque);
-        glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-        glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-        glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
+        glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+        glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+        glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
         glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
         HandleGlError();
     }
     else{
-        glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-        glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-        glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
-        glDrawElements(GL_TRIANGLES, gfxIndexSizeOpaque, GL_UNSIGNED_SHORT, gfxPolyListIndex);
-        HandleGlError();
+        if(gfxIndexSizeOpaque > 0){
+            glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+            glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+            glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
+            glDrawElements(GL_TRIANGLES, gfxIndexSizeOpaque, GL_UNSIGNED_SHORT, gfxPolyListIndex);
+            HandleGlError();
+        }
         
         int numBlendedGfx = (int)(gfxIndexSize - gfxIndexSizeOpaque);
-        
-        glEnable(GL_BLEND);
-        glEnable(GL_TEXTURE_2D);
-        glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-        glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-        glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
-        glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
-        HandleGlError();
+        if(numBlendedGfx > 0){
+            glEnable(GL_BLEND);
+            glEnable(GL_TEXTURE_2D);
+            glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+            glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+            glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
+            glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
+            HandleGlError();
+        }
     }
     
     glDisableClientState(GL_COLOR_ARRAY);
@@ -249,31 +247,34 @@ void RenderDevice_FlipScreenHRes()
 {
     glLoadIdentity();
     
+    texPaletteNum = 0;
+    
     glOrtho(0, orthWidth, 3844.0f, 0.0, 0.0f, 100.0f);
     glViewport(0, 0, bufferWidth, bufferHeight);
     glBindTexture(GL_TEXTURE_2D, gfxTextureID[texPaletteNum]);
     glDisable(GL_BLEND);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
     glEnableClientState(GL_COLOR_ARRAY);
     
-    glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-    glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
+    glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+    glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
     glDrawElements(GL_TRIANGLES, gfxIndexSizeOpaque, GL_UNSIGNED_SHORT, gfxPolyListIndex);
     
     HandleGlError();
     
     glEnable(GL_BLEND);
     int numBlendedGfx = (int)((gfxIndexSize) - (gfxIndexSizeOpaque));
-    glVertexPointer(2, GL_SHORT, 12, &gfxPolyList[0].position);
-    glTexCoordPointer(2, GL_SHORT, 12, &gfxPolyList[0].texCoord);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
+    glVertexPointer(2, GL_FLOAT, 20, &gfxPolyList[0].position);
+    glTexCoordPointer(2, GL_FLOAT, 20, &gfxPolyList[0].texCoord);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 20, &gfxPolyList[0].color);
     glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
     
-    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
     glDisableClientState(GL_COLOR_ARRAY);
     
     HandleGlError();

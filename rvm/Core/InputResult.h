@@ -5,7 +5,6 @@
 
 #ifndef InputResult_h
 #define InputResult_h
-#include "SDL.h"
 
 struct InputResult {
     uint8_t up;

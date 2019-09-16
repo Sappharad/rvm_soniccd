@@ -76,7 +76,7 @@ void InputSystem_ClearTouchData()
 
 void InputSystem_CheckKeyboardInput()
 {
-    Uint8 *keystate = SDL_GetKeyState(NULL);
+    /*Uint8 *keystate = SDL_GetKeyState(NULL);
     if (keystate[SDLK_UP] || keystate[SDLK_w])
     {
         touchData.up = 1;
@@ -140,7 +140,7 @@ void InputSystem_CheckKeyboardInput()
     else
     {
         touchData.start = 0;
-    }
+    }*/
     /*if (keystate[SDLK_SPACE])
     {
         touchControls = true;
@@ -153,13 +153,13 @@ void InputSystem_CheckKeyboardInput()
         }
         touchControls = false;
     }*/
-    if (keystate[SDLK_ESCAPE])
+    /*if (keystate[SDLK_ESCAPE])
     {
         if (activeStageList != 0 && stageMode != 2)
         {
             gameMessage = 2;
         }
-    }
+    }*/
 }
 
 void InputSystem_CheckKeyDown(struct InputResult* gameInput, uint8_t keyFlags)

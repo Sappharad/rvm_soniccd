@@ -5,11 +5,12 @@
 
 #ifndef DrawVertex_h
 #define DrawVertex_h
-#include "SDL.h"
+
+#include <stdint.h>
 
 struct Vector2 {
-    short X;
-    short Y;
+    float X;
+    float Y;
 };
 
 struct Color {

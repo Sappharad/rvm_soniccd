@@ -8,12 +8,20 @@
 
 #include <stdio.h>
 #include "FileIO.h"
+#if DREAMCAST
+#include "AudioPlayback_dc.h"
+#else
 #include "AudioPlayback.h"
+#endif
 #include "GlobalAppDefinitions.h"
 #include "GraphicsSystem.h"
 #include "StageSystem.h"
 #include "ObjectSystem.h"
+#if DREAMCAST
+#include "RenderDevice_dc.h"
+#else
 #include "RenderDevice.h"
+#endif
 
 void EngineCallbacks_PlayVideoFile(char* fileName);
 void EngineCallbacks_OnlineSetAchievement(int achievementID, int achievementDone);

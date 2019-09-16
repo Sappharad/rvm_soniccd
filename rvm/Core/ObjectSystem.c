@@ -375,6 +375,7 @@ void ObjectSystem_ClearScriptData()
     jumpTableDataPos = 0;
     scriptFramesNo = 0;
     NUM_FUNCTIONS = 0;
+    printf("AnimationSystem_ClearAnimationData\n");
     AnimationSystem_ClearAnimationData();
     for (i = 0; i < 2; i++)
     {
@@ -399,7 +400,9 @@ void ObjectSystem_ClearScriptData()
         functionScriptList[i].mainJumpTable = 0x3fff;
         typeNames[i][0] = '\0';
     }
+    printf("ObjectSystem_SetObjectTypeName\n");
     ObjectSystem_SetObjectTypeName(charArray, 0);
+    printf("End of ObjectSystem_ClearScriptData\n");
 }
 
 void ObjectSystem_DrawObjectList(int DrawListNo)
@@ -437,8 +440,8 @@ void ObjectSystem_LoadByteCodeFile(int fileType, int scriptNum)
                 sprintf(scriptText,"%sPS%03d.bin",scriptText,stageListPosition);
             }
             else{
-                FileIO_StrAdd(scriptText, sizeof(scriptText), pStageList[stageListPosition].stageFolderName, sizeof(pStageList[stageListPosition].stageFolderName));
-                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), pStageList[stageListPosition].stageFolderName, sizeof(pStageList[stageListPosition].stageFolderName));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
             }
             break;
         }
@@ -448,8 +451,8 @@ void ObjectSystem_LoadByteCodeFile(int fileType, int scriptNum)
                 sprintf(scriptText,"%sRS%03d.bin",scriptText,stageListPosition);
             }
             else{
-                FileIO_StrAdd(scriptText, sizeof(scriptText), zStageList[stageListPosition].stageFolderName, sizeof(zStageList[stageListPosition].stageFolderName));
-                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), zStageList[stageListPosition].stageFolderName, sizeof(zStageList[stageListPosition].stageFolderName));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
             }
             break;
         }
@@ -465,8 +468,8 @@ void ObjectSystem_LoadByteCodeFile(int fileType, int scriptNum)
                 sprintf(scriptText,"%sSS%03d.bin",scriptText,stageListPosition);
             }
             else{
-                FileIO_StrAdd(scriptText, sizeof(scriptText), sStageList[stageListPosition].stageFolderName, sizeof(sStageList[stageListPosition].stageFolderName));
-                FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), sStageList[stageListPosition].stageFolderName, sizeof(sStageList[stageListPosition].stageFolderName));
+            FileIO_StrAdd(scriptText, sizeof(scriptText), chrArray, sizeof(chrArray));
             }
             break;
         }

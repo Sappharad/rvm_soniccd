@@ -7,6 +7,7 @@
 #define StageSystem_h
 
 #include <stdio.h>
+#include "GlobalAppDefinitions.h"
 #include "InputResult.h"
 #include "Mappings128x128.h"
 #include "LayoutMap.h"
@@ -14,16 +15,28 @@
 #include "LineScrollParallax.h"
 #include "TextMenu.h"
 #include "GraphicsSystem.h"
-#include "GlobalAppDefinitions.h"
 #include "ObjectSystem.h"
 #include "PlayerSystem.h"
+#ifdef DREAMCAST
+#include "AudioPlayback_dc.h"
+#else
 #include "AudioPlayback.h"
+#endif
 #include "AnimationSystem.h"
 #include "TextSystem.h"
+#ifdef DREAMCAST
+#include "RenderDevice_dc.h"
+#else
 #include "RenderDevice.h"
+#endif
+
 #include "FileIO.h"
 #include "Scene3D.h"
+#ifdef DREAMCAST
+#include "InputSystem_dc.h"
+#else
 #include "InputSystem.h"
+#endif
 
 extern struct InputResult gKeyDown;
 extern struct InputResult gKeyPress;
