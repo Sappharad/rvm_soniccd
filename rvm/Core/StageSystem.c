@@ -83,23 +83,16 @@ void Init_StageSystem()
 
 void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
 {
-    int num;
-    int num1;
-    int num2;
-    int num3;
-    int num4;
-    int num5;
-    int sinValue512;
-    int cosValue512;
-    int j;
-    int i;
-    int* numArray = tile128x128.gfxDataPos;
-    uint8_t* numArray1 = tile128x128.direction;
-    int num6 = stageLayouts[activeTileLayers[layerNum]].xSize << 7;
-    int num7 = stageLayouts[activeTileLayers[layerNum]].ySize << 7;
-    unsigned short* numArray2 = stageLayouts[activeTileLayers[layerNum]].tileMap;
+    int tileOffset, tileX, tileY, tileSinBlock, tileCosBlock;
+    int sinValue512, cosValue512;
+    int* gfxData = tile128x128.gfxDataPos;
+    uint8_t* tileDirections = tile128x128.direction;
+    int layerWidth = stageLayouts[activeTileLayers[layerNum]].xSize << 7;
+    int layerHeight = stageLayouts[activeTileLayers[layerNum]].ySize << 7;
+    unsigned short* currentTileMap = stageLayouts[activeTileLayers[layerNum]].tileMap;
     vertexSize3D = 0;
     indexSize3D = 0;
+    //Draw full floor (low detail version)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
@@ -141,6 +134,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].color.A = 0xff;
     vertexSize3D = (ushort)(vertexSize3D + 1);
     indexSize3D = (ushort)(indexSize3D + 2);
+    //Draw nearby detailed floor
     if (HQ3DFloorEnabled)
     {
         sinValue512 = (stageLayouts[activeTileLayers[layerNum]].xPos >> 16) - 0x100;
@@ -149,32 +143,32 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
         cosValue512 = (stageLayouts[activeTileLayers[layerNum]].zPos >> 16) - 0x100;
         cosValue512 = cosValue512 + (CosValue512[stageLayouts[activeTileLayers[layerNum]].angle] >> 1);
         cosValue512 = cosValue512 >> 4 << 4;
-        for (i = 32; i > 0; i--)
+        for (int i = 32; i > 0; i--)
         {
-            for (j = 32; j > 0; j--)
+            for (int j = 32; j > 0; j--)
             {
-                if (sinValue512 > -1 && sinValue512 < num6 && cosValue512 > -1 && cosValue512 < num7)
+                if (sinValue512 > -1 && sinValue512 < layerWidth && cosValue512 > -1 && cosValue512 < layerHeight)
                 {
-                    num1 = sinValue512 >> 7;
-                    num2 = cosValue512 >> 7;
-                    num3 = (sinValue512 & 127) >> 4;
-                    num4 = (cosValue512 & 127) >> 4;
-                    num5 = numArray2[num1 + (num2 << 8)] << 6;
-                    num5 = num5 + num3 + (num4 << 3);
-                    if (numArray[num5] > 0)
+                    tileX = sinValue512 >> 7;
+                    tileY = cosValue512 >> 7;
+                    tileSinBlock = (sinValue512 & 127) >> 4;
+                    tileCosBlock = (cosValue512 & 127) >> 4;
+                    int tileIndex = currentTileMap[tileX + (tileY << 8)] << 6;
+                    tileIndex = tileIndex + tileSinBlock + (tileCosBlock << 3);
+                    if (gfxData[tileIndex] > 0)
                     {
-                        num = 0;
-                        switch (numArray1[num5])
+                        tileOffset = 0;
+                        switch (tileDirections[tileIndex])
                         {
                             case 0:
                             {
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -183,8 +177,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -195,7 +189,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -219,10 +213,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -231,8 +225,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -243,7 +237,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -267,10 +261,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -279,8 +273,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -291,7 +285,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -315,10 +309,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -327,8 +321,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -339,7 +333,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -375,32 +369,32 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
         cosValue512 = (stageLayouts[activeTileLayers[layerNum]].zPos >> 16) - 160;
         cosValue512 = cosValue512 + CosValue512[stageLayouts[activeTileLayers[layerNum]].angle] / 3;
         cosValue512 = cosValue512 >> 4 << 4;
-        for (i = 20; i > 0; i--)
+        for (int i = 20; i > 0; i--)
         {
-            for (j = 20; j > 0; j--)
+            for (int j = 20; j > 0; j--)
             {
-                if (sinValue512 > -1 && sinValue512 < num6 && cosValue512 > -1 && cosValue512 < num7)
+                if (sinValue512 > -1 && sinValue512 < layerWidth && cosValue512 > -1 && cosValue512 < layerHeight)
                 {
-                    num1 = sinValue512 >> 7;
-                    num2 = cosValue512 >> 7;
-                    num3 = (sinValue512 & 127) >> 4;
-                    num4 = (cosValue512 & 127) >> 4;
-                    num5 = numArray2[num1 + (num2 << 8)] << 6;
-                    num5 = num5 + num3 + (num4 << 3);
-                    if (numArray[num5] > 0)
+                    tileX = sinValue512 >> 7;
+                    tileY = cosValue512 >> 7;
+                    tileSinBlock = (sinValue512 & 127) >> 4;
+                    tileCosBlock = (cosValue512 & 127) >> 4;
+                    int tileIndex = currentTileMap[tileX + (tileY << 8)] << 6;
+                    tileIndex = tileIndex + tileSinBlock + (tileCosBlock << 3);
+                    if (gfxData[tileIndex] > 0)
                     {
-                        num = 0;
-                        switch (numArray1[num5])
+                        tileOffset = 0;
+                        switch (tileDirections[tileIndex])
                         {
                             case 0:
                             {
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -409,8 +403,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -421,7 +415,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -445,10 +439,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -457,8 +451,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -469,7 +463,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -493,10 +487,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -505,8 +499,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -517,7 +511,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -541,10 +535,10 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)(sinValue512 + 16);
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)(cosValue512 + 16);
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -553,8 +547,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.X = (float)sinValue512;
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = polyList3D[vertexSize3D - 1].position.Z;
-                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[numArray[num5] + num];
-                                num++;
+                                polyList3D[vertexSize3D].texCoord.X = tileUVArray[gfxData[tileIndex] + tileOffset];
+                                tileOffset++;
                                 polyList3D[vertexSize3D].texCoord.Y = polyList3D[vertexSize3D - 1].texCoord.Y;
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
@@ -565,7 +559,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].position.Y = 0.0f;
                                 polyList3D[vertexSize3D].position.Z = (float)cosValue512;
                                 polyList3D[vertexSize3D].texCoord.X = polyList3D[vertexSize3D - 2].texCoord.X;
-                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[numArray[num5] + num];
+                                polyList3D[vertexSize3D].texCoord.Y = tileUVArray[gfxData[tileIndex] + tileOffset];
                                 polyList3D[vertexSize3D].color.R = 0xff;
                                 polyList3D[vertexSize3D].color.G = 0xff;
                                 polyList3D[vertexSize3D].color.B = 0xff;
@@ -602,205 +596,203 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
 
 void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
 {
-    ushort* numArray;
-    uint8_t* numArray1;
-    int num;
-    int num1;
-    int num2;
-    int num3;
-    int num4;
-    int num5;
-    int num6;
+    ushort* tileMap;
+    uint8_t* lineScrollRef;
+    int parallaxPosX;
+    int parallaxBlockX;
+    int gfxIndex;
+    int parallaxOffsetY;
+    int tileUvOffset;
+    int deformX1;
+    int deformX2;
     int i;
-    int num7;
-    uint8_t num8;
-    int* numArray2;
-    int* numArray3;
-    int num9;
-    int num10;
-    int num11 = 0;
-    int* numArray4 = tile128x128.gfxDataPos;
-    uint8_t* numArray5 = tile128x128.direction;
-    uint8_t* numArray6 = tile128x128.visualPlane;
-    int num12 = stageLayouts[activeTileLayers[layerNum]].xSize;
-    int num13 = stageLayouts[activeTileLayers[layerNum]].ySize;
+    uint8_t highPlane;
+    int* bgDeformationA;
+    int* bgDeformationB;
+    int deformationX;
+    int deformationY;
+    int parallaxIdx = 0;
+    int* gfxDataPos = tile128x128.gfxDataPos;
+    uint8_t* direction = tile128x128.direction;
+    uint8_t* visualPlane = tile128x128.visualPlane;
+    int xSize = stageLayouts[activeTileLayers[layerNum]].xSize;
+    int ySize = stageLayouts[activeTileLayers[layerNum]].ySize;
     int sCREENXSIZE = (SCREEN_XSIZE >> 4) + 3;
     bool flag = false;
-    num8 = (uint8_t)((layerNum < tLayerMidPoint ? 0 : 1));
+    highPlane = (uint8_t)((layerNum < tLayerMidPoint ? 0 : 1));
     if (activeTileLayers[layerNum] != 0)
     {
-        numArray = stageLayouts[activeTileLayers[layerNum]].tileMap;
-        num3 = stageLayouts[activeTileLayers[layerNum]].parallaxFactor * yScrollOffset >> 8;
-        num13 = num13 << 7;
+        tileMap = stageLayouts[activeTileLayers[layerNum]].tileMap;
+        parallaxOffsetY = stageLayouts[activeTileLayers[layerNum]].parallaxFactor * yScrollOffset >> 8;
+        ySize = ySize << 7;
         struct LayoutMap *layoutMap = &stageLayouts[activeTileLayers[layerNum]];
         layoutMap->scrollPosition = layoutMap->scrollPosition + stageLayouts[activeTileLayers[layerNum]].scrollSpeed;
-        if (stageLayouts[activeTileLayers[layerNum]].scrollPosition > num13 << 16)
+        if (stageLayouts[activeTileLayers[layerNum]].scrollPosition > ySize << 16)
         {
             struct LayoutMap* layoutMap1 = &stageLayouts[activeTileLayers[layerNum]];
-            layoutMap1->scrollPosition = layoutMap1->scrollPosition - (num13 << 16);
+            layoutMap1->scrollPosition = layoutMap1->scrollPosition - (ySize << 16);
         }
-        num3 = num3 + (stageLayouts[activeTileLayers[layerNum]].scrollPosition >> 16);
-        num3 = num3 % num13;
-        num13 = num13 >> 7;
-        numArray1 = stageLayouts[activeTileLayers[layerNum]].lineScrollRef;
-        num9 = stageLayouts[activeTileLayers[layerNum]].deformationPos + num3 & 0xff;
-        num10 = stageLayouts[activeTileLayers[layerNum]].deformationPosW + num3 & 0xff;
-        numArray2 = bgDeformationData2;
-        numArray3 = bgDeformationData3;
+        parallaxOffsetY = parallaxOffsetY + (stageLayouts[activeTileLayers[layerNum]].scrollPosition >> 16);
+        parallaxOffsetY = parallaxOffsetY % ySize;
+        ySize = ySize >> 7;
+        lineScrollRef = stageLayouts[activeTileLayers[layerNum]].lineScrollRef;
+        deformationX = stageLayouts[activeTileLayers[layerNum]].deformationPos + parallaxOffsetY & 0xff;
+        deformationY = stageLayouts[activeTileLayers[layerNum]].deformationPosW + parallaxOffsetY & 0xff;
+        bgDeformationA = bgDeformationData2;
+        bgDeformationB = bgDeformationData3;
     }
     else
     {
-        numArray = stageLayouts[0].tileMap;
-        lastXSize = num12;
-        num3 = yScrollOffset;
-        numArray1 = stageLayouts[0].lineScrollRef;
+        tileMap = stageLayouts[0].tileMap;
+        lastXSize = xSize;
+        parallaxOffsetY = yScrollOffset;
+        lineScrollRef = stageLayouts[0].lineScrollRef;
         hParallax.linePos[0] = xScrollOffset;
-        num9 = stageLayouts[0].deformationPos + num3 & 0xff;
-        num10 = stageLayouts[0].deformationPosW + num3 & 0xff;
-        numArray2 = bgDeformationData0;
-        numArray3 = bgDeformationData1;
-        num3 = num3 % (num13 << 7);
+        deformationX = stageLayouts[0].deformationPos + parallaxOffsetY & 0xff;
+        deformationY = stageLayouts[0].deformationPosW + parallaxOffsetY & 0xff;
+        bgDeformationA = bgDeformationData0;
+        bgDeformationB = bgDeformationData1;
+        parallaxOffsetY = parallaxOffsetY % (ySize << 7);
     }
-    uint8_t num14 = stageLayouts[activeTileLayers[layerNum]].type;
-    if (num14 == 1)
+    uint8_t layoutType = stageLayouts[activeTileLayers[layerNum]].type;
+    if (layoutType == 1)
     {
-        if (lastXSize != num12)
+        if (lastXSize != xSize)
         {
-            num12 = num12 << 7;
+            xSize = xSize << 7;
             for (i = 0; i < hParallax.numEntries; i++)
             {
                 hParallax.linePos[i] = hParallax.parallaxFactor[i] * xScrollOffset >> 8;
                 hParallax.scrollPosition[i] = hParallax.scrollPosition[i] + hParallax.scrollSpeed[i];
-                if (hParallax.scrollPosition[i] > num12 << 16)
+                if (hParallax.scrollPosition[i] > xSize << 16)
                 {
-                    hParallax.scrollPosition[i] = hParallax.scrollPosition[i] - (num12 << 16);
+                    hParallax.scrollPosition[i] = hParallax.scrollPosition[i] - (xSize << 16);
                 }
                 hParallax.linePos[i] = hParallax.linePos[i] + (hParallax.scrollPosition[i] >> 16);
-                hParallax.linePos[i] = hParallax.linePos[i] % num12;
+                hParallax.linePos[i] = hParallax.linePos[i] % xSize;
             }
-            num12 = num12 >> 7;
+            xSize = xSize >> 7;
         }
-        lastXSize = num12;
+        lastXSize = xSize;
     }
-    else if (num14 != 5)
+    else if (layoutType != 5)
     {
     }
-    if (num3 < 0)
+    if (parallaxOffsetY < 0)
     {
-        num3 = num3 + (num13 << 7);
+        parallaxOffsetY = parallaxOffsetY + (ySize << 7);
     }
-    int num15 = num3 >> 4 << 4;
-    num11 = num11 + num15;
-    num9 = num9 + (num15 - num3);
-    num10 = num10 + (num15 - num3);
-    if (num9 < 0)
+    int deformY = parallaxOffsetY >> 4 << 4;
+    parallaxIdx = parallaxIdx + deformY;
+    deformationX = deformationX + (deformY - parallaxOffsetY);
+    deformationY = deformationY + (deformY - parallaxOffsetY);
+    if (deformationX < 0)
     {
-        num9 = num9 + 0x100;
+        deformationX = deformationX + 0x100;
     }
-    if (num10 < 0)
+    if (deformationY < 0)
     {
-        num10 = num10 + 0x100;
+        deformationY = deformationY + 0x100;
     }
-    num15 = -(num3 & 15);
-    int num16 = num3 >> 7;
-    int num17 = (num3 & 127) >> 4;
-    num7 = (num15 != 0 ? 0x110 : 0x100);
+    deformY = -(parallaxOffsetY & 15);
+    int parallaxPosY = parallaxOffsetY >> 7;
+    int parallaxBlockY = (parallaxOffsetY & 127) >> 4;
     waterDrawPos = waterDrawPos << 4;
-    num15 = num15 << 4;
-    for (int j = num7; j > 0; j = j - 16)
+    deformY = deformY << 4;
+    for (int j = (deformY != 0 ? 0x110 : 0x100); j > 0; j = j - 16)
     {
-        int num18 = hParallax.linePos[numArray1[num11]] - 16;
-        num11 = num11 + 8;
-        if (num18 != hParallax.linePos[numArray1[num11]] - 16)
+        int parallaxLinePos = hParallax.linePos[lineScrollRef[parallaxIdx]] - 16;
+        parallaxIdx = parallaxIdx + 8;
+        if (parallaxLinePos != hParallax.linePos[lineScrollRef[parallaxIdx]] - 16)
         {
             flag = true;
         }
-        else if (hParallax.deformationEnabled[numArray1[num11]] != 1)
+        else if (hParallax.deformationEnabled[lineScrollRef[parallaxIdx]] != 1)
         {
             flag = false;
         }
         else
         {
-            num5 = (num15 < waterDrawPos ? numArray2[num9] : numArray3[num10]);
-            num9 = num9 + 8;
-            num10 = num10 + 8;
-            num6 = (num15 + 64 <= waterDrawPos ? numArray2[num9] : numArray3[num10]);
-            flag = (num5 != num6 ? true : false);
-            num9 = num9 - 8;
-            num10 = num10 - 8;
+            deformX1 = (deformY < waterDrawPos ? bgDeformationA[deformationX] : bgDeformationB[deformationY]);
+            deformationX = deformationX + 8;
+            deformationY = deformationY + 8;
+            deformX2 = (deformY + 64 <= waterDrawPos ? bgDeformationA[deformationX] : bgDeformationB[deformationY]);
+            flag = (deformX1 != deformX2 ? true : false);
+            deformationX = deformationX - 8;
+            deformationY = deformationY - 8;
         }
-        num11 = num11 - 8;
+        parallaxIdx = parallaxIdx - 8;
         if (!flag)
         {
-            i = num12 << 7;
-            if (num18 < 0)
+            i = xSize << 7;
+            if (parallaxLinePos < 0)
             {
-                num18 = num18 + i;
+                parallaxLinePos = parallaxLinePos + i;
             }
-            if (num18 >= i)
+            if (parallaxLinePos >= i)
             {
-                num18 = num18 - i;
+                parallaxLinePos = parallaxLinePos - i;
             }
-            num = num18 >> 7;
-            num1 = (num18 & 127) >> 4;
-            num5 = -((num18 & 15) << 4);
-            num5 = num5 - 0x100;
-            num6 = num5;
-            if (hParallax.deformationEnabled[numArray1[num11]] != 1)
+            parallaxPosX = parallaxLinePos >> 7;
+            parallaxBlockX = (parallaxLinePos & 127) >> 4;
+            deformX1 = -((parallaxLinePos & 15) << 4);
+            deformX1 = deformX1 - 0x100;
+            deformX2 = deformX1;
+            if (hParallax.deformationEnabled[lineScrollRef[parallaxIdx]] != 1)
             {
-                num9 = num9 + 16;
-                num10 = num10 + 16;
+                deformationX = deformationX + 16;
+                deformationY = deformationY + 16;
             }
             else
             {
-                num5 = (num15 < waterDrawPos ? num5 - numArray2[num9] : num5 - numArray3[num10]);
-                num9 = num9 + 16;
-                num10 = num10 + 16;
-                num6 = (num15 + 128 <= waterDrawPos ? num6 - numArray2[num9] : num6 - numArray3[num10]);
+                deformX1 = (deformY < waterDrawPos ? deformX1 - bgDeformationA[deformationX] : deformX1 - bgDeformationB[deformationY]);
+                deformationX = deformationX + 16;
+                deformationY = deformationY + 16;
+                deformX2 = (deformY + 128 <= waterDrawPos ? deformX2 - bgDeformationA[deformationX] : deformX2 - bgDeformationB[deformationY]);
             }
-            num11 = num11 + 16;
-            num2 = (num <= -1 || num16 <= -1 ? 0 : numArray[num + (num16 << 8)] << 6);
-            num2 = num2 + num1 + (num17 << 3);
+            parallaxIdx = parallaxIdx + 16;
+            gfxIndex = (parallaxPosX <= -1 || parallaxPosY <= -1 ? 0 : tileMap[parallaxPosX + (parallaxPosY << 8)] << 6);
+            gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
             for (i = sCREENXSIZE; i > 0; i--)
             {
-                if (numArray6[num2] == num8 && numArray4[num2] > 0)
+                if (visualPlane[gfxIndex] == highPlane && gfxDataPos[gfxIndex] > 0)
                 {
-                    num4 = 0;
-                    switch (numArray5[num2])
+                    tileUvOffset = 0;
+                    switch (direction[gfxIndex])
                     {
                         case 0:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -814,37 +806,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 1:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -858,37 +850,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 2:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -902,37 +894,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 3:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 0x100);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 0x100);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -946,98 +938,98 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                     }
                 }
-                num5 = num5 + 0x100;
-                num6 = num6 + 0x100;
-                num1++;
-                if (num1 <= 7)
+                deformX1 = deformX1 + 0x100;
+                deformX2 = deformX2 + 0x100;
+                parallaxBlockX++;
+                if (parallaxBlockX <= 7)
                 {
-                    num2++;
+                    gfxIndex++;
                 }
                 else
                 {
-                    num++;
-                    if (num == num12)
+                    parallaxPosX++;
+                    if (parallaxPosX == xSize)
                     {
-                        num = 0;
+                        parallaxPosX = 0;
                     }
-                    num1 = 0;
-                    num2 = numArray[num + (num16 << 8)] << 6;
-                    num2 = num2 + num1 + (num17 << 3);
+                    parallaxBlockX = 0;
+                    gfxIndex = tileMap[parallaxPosX + (parallaxPosY << 8)] << 6;
+                    gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
                 }
             }
-            num15 = num15 + 0x100;
+            deformY = deformY + 0x100;
         }
         else
         {
-            i = num12 << 7;
-            if (num18 < 0)
+            i = xSize << 7;
+            if (parallaxLinePos < 0)
             {
-                num18 = num18 + i;
+                parallaxLinePos = parallaxLinePos + i;
             }
-            if (num18 >= i)
+            if (parallaxLinePos >= i)
             {
-                num18 = num18 - i;
+                parallaxLinePos = parallaxLinePos - i;
             }
-            num = num18 >> 7;
-            num1 = (num18 & 127) >> 4;
-            num5 = -((num18 & 15) << 4);
-            num5 = num5 - 0x100;
-            num6 = num5;
-            if (hParallax.deformationEnabled[numArray1[num11]] != 1)
+            parallaxPosX = parallaxLinePos >> 7;
+            parallaxBlockX = (parallaxLinePos & 127) >> 4;
+            deformX1 = -((parallaxLinePos & 15) << 4);
+            deformX1 = deformX1 - 0x100;
+            deformX2 = deformX1;
+            if (hParallax.deformationEnabled[lineScrollRef[parallaxIdx]] != 1)
             {
-                num9 = num9 + 8;
-                num10 = num10 + 8;
+                deformationX = deformationX + 8;
+                deformationY = deformationY + 8;
             }
             else
             {
-                num5 = (num15 < waterDrawPos ? num5 - numArray2[num9] : num5 - numArray3[num10]);
-                num9 = num9 + 8;
-                num10 = num10 + 8;
-                num6 = (num15 + 64 <= waterDrawPos ? num6 - numArray2[num9] : num6 - numArray3[num10]);
+                deformX1 = (deformY < waterDrawPos ? deformX1 - bgDeformationA[deformationX] : deformX1 - bgDeformationB[deformationY]);
+                deformationX = deformationX + 8;
+                deformationY = deformationY + 8;
+                deformX2 = (deformY + 64 <= waterDrawPos ? deformX2 - bgDeformationA[deformationX] : deformX2 - bgDeformationB[deformationY]);
             }
-            num11 = num11 + 8;
-            num2 = (num <= -1 || num16 <= -1 ? 0 : numArray[num + (num16 << 8)] << 6);
-            num2 = num2 + num1 + (num17 << 3);
+            parallaxIdx = parallaxIdx + 8;
+            gfxIndex = (parallaxPosX <= -1 || parallaxPosY <= -1 ? 0 : tileMap[parallaxPosX + (parallaxPosY << 8)] << 6);
+            gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
             for (i = sCREENXSIZE; i > 0; i--)
             {
-                if (numArray6[num2] == num8 && numArray4[num2] > 0)
+                if (visualPlane[gfxIndex] == highPlane && gfxDataPos[gfxIndex] > 0)
                 {
-                    num4 = 0;
-                    switch (numArray5[num2])
+                    tileUvOffset = 0;
+                    switch (direction[gfxIndex])
                     {
                         case 0:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1051,37 +1043,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 1:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1095,37 +1087,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 2:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] + 8;
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1139,37 +1131,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 3:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] + 8;
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1183,96 +1175,96 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                     }
                 }
-                num5 = num5 + 0x100;
-                num6 = num6 + 0x100;
-                num1++;
-                if (num1 <= 7)
+                deformX1 = deformX1 + 0x100;
+                deformX2 = deformX2 + 0x100;
+                parallaxBlockX++;
+                if (parallaxBlockX <= 7)
                 {
-                    num2++;
+                    gfxIndex++;
                 }
                 else
                 {
-                    num++;
-                    if (num == num12)
+                    parallaxPosX++;
+                    if (parallaxPosX == xSize)
                     {
-                        num = 0;
+                        parallaxPosX = 0;
                     }
-                    num1 = 0;
-                    num2 = numArray[num + (num16 << 8)] << 6;
-                    num2 = num2 + num1 + (num17 << 3);
+                    parallaxBlockX = 0;
+                    gfxIndex = tileMap[parallaxPosX + (parallaxPosY << 8)] << 6;
+                    gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
                 }
             }
-            num15 = num15 + 128;
-            num18 = hParallax.linePos[numArray1[num11]] - 16;
-            i = num12 << 7;
-            if (num18 < 0)
+            deformY = deformY + 128;
+            parallaxLinePos = hParallax.linePos[lineScrollRef[parallaxIdx]] - 16;
+            i = xSize << 7;
+            if (parallaxLinePos < 0)
             {
-                num18 = num18 + i;
+                parallaxLinePos = parallaxLinePos + i;
             }
-            if (num18 >= i)
+            if (parallaxLinePos >= i)
             {
-                num18 = num18 - i;
+                parallaxLinePos = parallaxLinePos - i;
             }
-            num = num18 >> 7;
-            num1 = (num18 & 127) >> 4;
-            num5 = -((num18 & 15) << 4);
-            num5 = num5 - 0x100;
-            num6 = num5;
-            if (hParallax.deformationEnabled[numArray1[num11]] != 1)
+            parallaxPosX = parallaxLinePos >> 7;
+            parallaxBlockX = (parallaxLinePos & 127) >> 4;
+            deformX1 = -((parallaxLinePos & 15) << 4);
+            deformX1 = deformX1 - 0x100;
+            deformX2 = deformX1;
+            if (hParallax.deformationEnabled[lineScrollRef[parallaxIdx]] != 1)
             {
-                num9 = num9 + 8;
-                num10 = num10 + 8;
+                deformationX = deformationX + 8;
+                deformationY = deformationY + 8;
             }
             else
             {
-                num5 = (num15 < waterDrawPos ? num5 - numArray2[num9] : num5 - numArray3[num10]);
-                num9 = num9 + 8;
-                num10 = num10 + 8;
-                num6 = (num15 + 64 <= waterDrawPos ? num6 - numArray2[num9] : num6 - numArray3[num10]);
+                deformX1 = (deformY < waterDrawPos ? deformX1 - bgDeformationA[deformationX] : deformX1 - bgDeformationB[deformationY]);
+                deformationX = deformationX + 8;
+                deformationY = deformationY + 8;
+                deformX2 = (deformY + 64 <= waterDrawPos ? deformX2 - bgDeformationA[deformationX] : deformX2 - bgDeformationB[deformationY]);
             }
-            num11 = num11 + 8;
-            num2 = (num <= -1 || num16 <= -1 ? 0 : numArray[num + (num16 << 8)] << 6);
-            num2 = num2 + num1 + (num17 << 3);
+            parallaxIdx = parallaxIdx + 8;
+            gfxIndex = (parallaxPosX <= -1 || parallaxPosY <= -1 ? 0 : tileMap[parallaxPosX + (parallaxPosY << 8)] << 6);
+            gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
             for (i = sCREENXSIZE; i > 0; i--)
             {
-                if (numArray6[num2] == num8 && numArray4[num2] > 0)
+                if (visualPlane[gfxIndex] == highPlane && gfxDataPos[gfxIndex] > 0)
                 {
-                    num4 = 0;
-                    switch (numArray5[num2])
+                    tileUvOffset = 0;
+                    switch (direction[gfxIndex])
                     {
                         case 0:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] + 8;
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1286,37 +1278,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 1:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] + 8;
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1330,37 +1322,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 2:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1374,37 +1366,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                         case 3:
                         {
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num6 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num6;
-                            gfxPolyList[gfxVertexSize].position.Y = (float)(num15 + 128);
-                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[numArray4[num2] + num4];
-                            num4++;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
+                            gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
+                            gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
+                            tileUvOffset++;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)(num5 + 0x100);
-                            gfxPolyList[gfxVertexSize].position.Y = (float)num15;
+                            gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
+                            gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[numArray4[num2] + num4] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxPolyList[gfxVertexSize].position.X = (float)num5;
+                            gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
                             gfxPolyList[gfxVertexSize].position.Y = gfxPolyList[gfxVertexSize - 1].position.Y;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
                             gfxPolyList[gfxVertexSize].texCoord.Y = gfxPolyList[gfxVertexSize - 1].texCoord.Y;
@@ -1418,37 +1410,37 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                         }
                     }
                 }
-                num5 = num5 + 0x100;
-                num6 = num6 + 0x100;
-                num1++;
-                if (num1 <= 7)
+                deformX1 = deformX1 + 0x100;
+                deformX2 = deformX2 + 0x100;
+                parallaxBlockX++;
+                if (parallaxBlockX <= 7)
                 {
-                    num2++;
+                    gfxIndex++;
                 }
                 else
                 {
-                    num++;
-                    if (num == num12)
+                    parallaxPosX++;
+                    if (parallaxPosX == xSize)
                     {
-                        num = 0;
+                        parallaxPosX = 0;
                     }
-                    num1 = 0;
-                    num2 = numArray[num + (num16 << 8)] << 6;
-                    num2 = num2 + num1 + (num17 << 3);
+                    parallaxBlockX = 0;
+                    gfxIndex = tileMap[parallaxPosX + (parallaxPosY << 8)] << 6;
+                    gfxIndex = gfxIndex + parallaxBlockX + (parallaxBlockY << 3);
                 }
             }
-            num15 = num15 + 128;
+            deformY = deformY + 128;
         }
-        num17++;
-        if (num17 > 7)
+        parallaxBlockY++;
+        if (parallaxBlockY > 7)
         {
-            num16++;
-            if (num16 == num13)
+            parallaxPosY++;
+            if (parallaxPosY == ySize)
             {
-                num16 = 0;
-                num11 = num11 - (num13 << 7);
+                parallaxPosY = 0;
+                parallaxIdx = parallaxIdx - (ySize << 7);
             }
-            num17 = 0;
+            parallaxBlockY = 0;
         }
     }
     waterDrawPos = waterDrawPos >> 4;
@@ -2307,10 +2299,10 @@ void StageSystem_ProcessStage()
                     tileUVArray[i + 2] = tileUVArray[i] + 16; //0.015625f;
                     tileUVArray[i + 3] = tileUVArray[i + 1] + 16;// 0.015625f;
                 }
-                tileUVArray[0xffc] = 0.475585938f;
-                tileUVArray[0xffd] = 0.475585938f;
-                tileUVArray[0xffe] = 0.491210938f;
-                tileUVArray[0xfff] = 0.491210938f;
+                tileUVArray[0xffc] = 487.0f; //0.475585938f;
+                tileUVArray[0xffd] = 487.0f; //0.475585938f;
+                tileUVArray[0xffe] = 503.0f; //0.491210938f;
+                tileUVArray[0xfff] = 503.0f; //0.491210938f;
             }
             else
             {

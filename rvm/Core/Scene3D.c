@@ -308,7 +308,7 @@ void Scene3D_Draw3DScene(int surfaceNum)
                     GraphicsSystem_DrawTexturedQuad(&quad2D, surfaceNum);
                 }
                 break;
-            case 1:
+            case 1: //Used for Special Stage background
                 quad2D.vertex[0].x = vertexBuffer[face3D->a].x;
                 quad2D.vertex[0].y = vertexBuffer[face3D->a].y;
                 quad2D.vertex[1].x = vertexBuffer[face3D->b].x;
