@@ -1230,7 +1230,7 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.G = (uint8_t)g;
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1240,7 +1240,7 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.0f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1248,8 +1248,8 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.G = (uint8_t)g;
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f;
         gfxVertexSize += 1;
         gfxIndexSize += 6;
     }

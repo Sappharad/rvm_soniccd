@@ -96,7 +96,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 512.0f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -106,7 +106,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
+    polyList3D[vertexSize3D].texCoord.X = 1024.0f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -116,8 +116,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 512.0f;
+    polyList3D[vertexSize3D].texCoord.Y = 512.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
@@ -126,8 +126,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 1024.0f;
+    polyList3D[vertexSize3D].texCoord.Y = 512.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
@@ -2294,24 +2294,24 @@ void StageSystem_ProcessStage()
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16; //0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;// 0.015625f;
+                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1);
+                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1);
+                    tileUVArray[i + 2] = tileUVArray[i] + 16;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;
                 }
-                tileUVArray[0xffc] = 487.0f; //0.475585938f;
-                tileUVArray[0xffd] = 487.0f; //0.475585938f;
-                tileUVArray[0xffe] = 503.0f; //0.491210938f;
-                tileUVArray[0xfff] = 503.0f; //0.491210938f;
+                tileUVArray[0xffc] = 487.0f;
+                tileUVArray[0xffd] = 487.0f;
+                tileUVArray[0xffe] = 503.0f;
+                tileUVArray[0xfff] = 503.0f;
             }
             else
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2 & 31) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16;//0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;//0.015625f;
+                    tileUVArray[i] = (float)((i >> 2 & 31) * 16);
+                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16);
+                    tileUVArray[i + 2] = tileUVArray[i] + 16;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;
                 }
             }
             RenderDevice_UpdateHardwareTextures();

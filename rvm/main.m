@@ -71,8 +71,8 @@ static void createSurface (int fullscreen)
         flags |= SDL_FULLSCREEN;
     
     // Create window
-    //gScreen = SDL_SetVideoMode (800, 480, 0, flags);
-    gScreen = SDL_SetVideoMode (864, 480, 0, flags);
+    gScreen = SDL_SetVideoMode (800, 480, 0, flags);
+    //gScreen = SDL_SetVideoMode (864, 480, 0, flags);
     //gScreen = SDL_SetVideoMode (1040, 480, 0, flags);
     if (gScreen == NULL) {
         
@@ -83,8 +83,8 @@ static void createSurface (int fullscreen)
     }
     SDL_WM_SetCaption("RetroVM - Sonic CD", "sonic");
     
-    //glViewport(0, 0, 800, 480);
-    glViewport(0, 0, 864, 480);
+    glViewport(0, 0, 800, 480);
+    //glViewport(0, 0, 864, 480);
     //glViewport(0, 0, 1040, 480);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -189,8 +189,8 @@ void Init_RetroVM(){
     Init_PlayerSystem();
     Init_StageSystem();
     Init_Scene3D();
-    //RenderDevice_SetScreenDimensions(800, 480);
-    RenderDevice_SetScreenDimensions(854, 480);
+    RenderDevice_SetScreenDimensions(800, 480);
+    //RenderDevice_SetScreenDimensions(854, 480);
     //RenderDevice_SetScreenDimensions(1040, 480);
     EngineCallbacks_StartupRetroEngine();
     gameLanguage = RETRO_EN;
