@@ -840,8 +840,8 @@ void GraphicsSystem_DrawSprite(int xPos, int yPos, int xSize, int ySize, int xBe
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -849,7 +849,7 @@ void GraphicsSystem_DrawSprite(int xPos, int yPos, int xSize, int ySize, int xBe
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -859,7 +859,7 @@ void GraphicsSystem_DrawSprite(int xPos, int yPos, int xSize, int ySize, int xBe
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -886,8 +886,8 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
                 gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -895,7 +895,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
                 gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -905,7 +905,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
                 gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -924,8 +924,8 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
                 gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -933,7 +933,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
                 gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -943,7 +943,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
                 gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -962,8 +962,8 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
                 gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -971,7 +971,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
                 gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -981,7 +981,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
                 gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1000,8 +1000,8 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
                 gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1009,7 +1009,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
                 gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1019,7 +1019,7 @@ void GraphicsSystem_DrawSpriteFlipped(int xPos, int yPos, int xSize, int ySize, 
                 gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
                 gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+                gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
                 gfxVertexSize += 1;
                 gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
                 gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1045,8 +1045,8 @@ void GraphicsSystem_DrawBlendedSprite(int xPos, int yPos, int xSize, int ySize, 
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 128;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1054,7 +1054,7 @@ void GraphicsSystem_DrawBlendedSprite(int xPos, int yPos, int xSize, int ySize, 
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 128;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1064,7 +1064,7 @@ void GraphicsSystem_DrawBlendedSprite(int xPos, int yPos, int xSize, int ySize, 
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 128;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1088,8 +1088,8 @@ void GraphicsSystem_DrawAlphaBlendedSprite(int xPos, int yPos, int xSize, int yS
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1097,7 +1097,7 @@ void GraphicsSystem_DrawAlphaBlendedSprite(int xPos, int yPos, int xSize, int yS
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1107,7 +1107,7 @@ void GraphicsSystem_DrawAlphaBlendedSprite(int xPos, int yPos, int xSize, int yS
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1131,8 +1131,8 @@ void GraphicsSystem_DrawAdditiveBlendedSprite(int xPos, int yPos, int xSize, int
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1140,7 +1140,7 @@ void GraphicsSystem_DrawAdditiveBlendedSprite(int xPos, int yPos, int xSize, int
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1150,7 +1150,7 @@ void GraphicsSystem_DrawAdditiveBlendedSprite(int xPos, int yPos, int xSize, int
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1174,8 +1174,8 @@ void GraphicsSystem_DrawSubtractiveBlendedSprite(int xPos, int yPos, int xSize, 
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xSize) << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1183,7 +1183,7 @@ void GraphicsSystem_DrawSubtractiveBlendedSprite(int xPos, int yPos, int xSize, 
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1193,7 +1193,7 @@ void GraphicsSystem_DrawSubtractiveBlendedSprite(int xPos, int yPos, int xSize, 
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1230,7 +1230,7 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.G = (uint8_t)g;
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1240,7 +1240,7 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.0f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
         gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1248,8 +1248,8 @@ void GraphicsSystem_DrawRectangle(int xPos, int yPos, int xSize, int ySize, int 
         gfxPolyList[(int)gfxVertexSize].color.G = (uint8_t)g;
         gfxPolyList[(int)gfxVertexSize].color.B = (uint8_t)b;
         gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)alpha;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxIndexSize += 6;
     }
@@ -1284,8 +1284,8 @@ void GraphicsSystem_DrawScaledSprite(uint8_t direction, int xPos, int yPos, int 
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = (float)((xPos + xScale) << 4);
             gfxPolyList[(int)gfxVertexSize].position.Y = (float)(yPos << 4);
@@ -1293,7 +1293,7 @@ void GraphicsSystem_DrawScaledSprite(uint8_t direction, int xPos, int yPos, int 
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
             gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos << 4);
@@ -1303,7 +1303,7 @@ void GraphicsSystem_DrawScaledSprite(uint8_t direction, int xPos, int yPos, int 
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
             gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
             gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1334,8 +1334,8 @@ void GraphicsSystem_DrawScaledChar(uint8_t direction, int xPos, int yPos, int xP
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = (float)(xPos + xScale);
             gfxPolyList[(int)gfxVertexSize].position.Y = (float)yPos;
@@ -1343,7 +1343,7 @@ void GraphicsSystem_DrawScaledChar(uint8_t direction, int xPos, int yPos, int xP
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
             gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = (float)xPos;
@@ -1353,7 +1353,7 @@ void GraphicsSystem_DrawScaledChar(uint8_t direction, int xPos, int yPos, int xP
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
             gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
             gfxVertexSize += 1;
             gfxPolyList[(int)gfxVertexSize].position.X = gfxPolyList[(int)(gfxVertexSize - 2)].position.X;
             gfxPolyList[(int)gfxVertexSize].position.Y = gfxPolyList[(int)(gfxVertexSize - 1)].position.Y;
@@ -1397,8 +1397,8 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
             gfxVertexSize += 1;
             num3 = xSize - xPivot;
             num4 = -yPivot;
@@ -1408,7 +1408,7 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
             gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
             gfxVertexSize += 1;
             num3 = -xPivot;
@@ -1420,7 +1420,7 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
             gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
             gfxVertexSize += 1;
             num3 = xSize - xPivot;
             num4 = ySize - yPivot;
@@ -1443,8 +1443,8 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         num3 = xPivot - xSize;
         num4 = -yPivot;
@@ -1454,7 +1454,7 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         num4 = ySize - yPivot;
@@ -1465,7 +1465,7 @@ void GraphicsSystem_DrawRotatedSprite(uint8_t direction, int xPos, int yPos, int
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         num3 = xPivot - xSize;
         num4 = ySize - yPivot;
@@ -1511,8 +1511,8 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
             gfxVertexSize += 1;
             num3 = xSize - xPivot;
             num4 = -yPivot;
@@ -1522,7 +1522,7 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
             gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
             gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
             gfxVertexSize += 1;
             num3 = -xPivot;
@@ -1534,7 +1534,7 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
             gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
             gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
             gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+            gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
             gfxVertexSize += 1;
             num3 = xSize - xPivot;
             num4 = ySize - yPivot;
@@ -1557,8 +1557,8 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin) * 0.0009765625f;
         gfxVertexSize += 1;
         num3 = xPivot - xSize;
         num4 = -yPivot;
@@ -1568,7 +1568,7 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + xBegin + xSize) * 0.0009765625f;
         gfxPolyList[(int)gfxVertexSize].texCoord.Y = gfxPolyList[(int)(gfxVertexSize - 1)].texCoord.Y;
         gfxVertexSize += 1;
         num4 = ySize - yPivot;
@@ -1579,7 +1579,7 @@ void GraphicsSystem_DrawRotoZoomSprite(uint8_t direction, int xPos, int yPos, in
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
         gfxPolyList[(int)gfxVertexSize].texCoord.X = gfxPolyList[(int)(gfxVertexSize - 2)].texCoord.X;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize);
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + yBegin + ySize) * 0.0009765625f;
         gfxVertexSize += 1;
         num3 = xPivot - xSize;
         num4 = ySize - yPivot;
@@ -1613,8 +1613,8 @@ void GraphicsSystem_DrawQuad(struct Quad2D* face, int rgbVal)
         {
             gfxPolyList[(int)gfxVertexSize].color.A = (uint8_t)rgbVal;
         }
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[1].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[1].y << 4);
@@ -1622,8 +1622,8 @@ void GraphicsSystem_DrawQuad(struct Quad2D* face, int rgbVal)
         gfxPolyList[(int)gfxVertexSize].color.G = gfxPolyList[(int)(gfxVertexSize - 1)].color.G;
         gfxPolyList[(int)gfxVertexSize].color.B = gfxPolyList[(int)(gfxVertexSize - 1)].color.B;
         gfxPolyList[(int)gfxVertexSize].color.A = gfxPolyList[(int)(gfxVertexSize - 1)].color.A;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[2].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[2].y << 4);
@@ -1631,8 +1631,8 @@ void GraphicsSystem_DrawQuad(struct Quad2D* face, int rgbVal)
         gfxPolyList[(int)gfxVertexSize].color.G = gfxPolyList[(int)(gfxVertexSize - 1)].color.G;
         gfxPolyList[(int)gfxVertexSize].color.B = gfxPolyList[(int)(gfxVertexSize - 1)].color.B;
         gfxPolyList[(int)gfxVertexSize].color.A = gfxPolyList[(int)(gfxVertexSize - 1)].color.A;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[3].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[3].y << 4);
@@ -1640,8 +1640,8 @@ void GraphicsSystem_DrawQuad(struct Quad2D* face, int rgbVal)
         gfxPolyList[(int)gfxVertexSize].color.G = gfxPolyList[(int)(gfxVertexSize - 1)].color.G;
         gfxPolyList[(int)gfxVertexSize].color.B = gfxPolyList[(int)(gfxVertexSize - 1)].color.B;
         gfxPolyList[(int)gfxVertexSize].color.A = gfxPolyList[(int)(gfxVertexSize - 1)].color.A;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = 10.24f; //0.01f;
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 10.24f; //0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = 0.01f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = 0.01f;
         gfxVertexSize += 1;
         gfxIndexSize += 6;
     }
@@ -1656,8 +1656,8 @@ void GraphicsSystem_DrawTexturedQuad(struct Quad2D* face, int surfaceNum)
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[0].u);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[0].v);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[0].u) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[0].v) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[1].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[1].y << 4);
@@ -1665,8 +1665,8 @@ void GraphicsSystem_DrawTexturedQuad(struct Quad2D* face, int surfaceNum)
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[1].u);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[1].v);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[1].u) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[1].v) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[2].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[2].y << 4);
@@ -1674,8 +1674,8 @@ void GraphicsSystem_DrawTexturedQuad(struct Quad2D* face, int surfaceNum)
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[2].u);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[2].v);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[2].u) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[2].v) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxPolyList[(int)gfxVertexSize].position.X = (float)(face->vertex[3].x << 4);
         gfxPolyList[(int)gfxVertexSize].position.Y = (float)(face->vertex[3].y << 4);
@@ -1683,8 +1683,8 @@ void GraphicsSystem_DrawTexturedQuad(struct Quad2D* face, int surfaceNum)
         gfxPolyList[(int)gfxVertexSize].color.G = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.B = 0xFF;
         gfxPolyList[(int)gfxVertexSize].color.A = 0xFF;
-        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[3].u);
-        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[3].v);
+        gfxPolyList[(int)gfxVertexSize].texCoord.X = (float)(gfxSurface[surfaceNum].texStartX + face->vertex[3].u) * 0.0009765625f;
+        gfxPolyList[(int)gfxVertexSize].texCoord.Y = (float)(gfxSurface[surfaceNum].texStartY + face->vertex[3].v) * 0.0009765625f;
         gfxVertexSize += 1;
         gfxIndexSize += 6;
     }

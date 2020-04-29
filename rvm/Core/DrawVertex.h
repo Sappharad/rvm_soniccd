@@ -8,8 +8,8 @@
 #include "SDL.h"
 
 struct Vector2 {
-    short X;
-    short Y;
+    float X;
+    float Y;
 };
 
 struct Color {

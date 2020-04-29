@@ -96,7 +96,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 0.5f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -106,7 +106,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 0.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
+    polyList3D[vertexSize3D].texCoord.X = 1.0f;
     polyList3D[vertexSize3D].texCoord.Y = 0.0f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
@@ -116,8 +116,8 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 0.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 512.0f; //0.5f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 0.5f;
+    polyList3D[vertexSize3D].texCoord.Y = 0.5f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
@@ -126,14 +126,14 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].position.X = 4096.0f;
     polyList3D[vertexSize3D].position.Y = 0.0f;
     polyList3D[vertexSize3D].position.Z = 4096.0f;
-    polyList3D[vertexSize3D].texCoord.X = 1024.0f; //1.0f;
-    polyList3D[vertexSize3D].texCoord.Y = 512.0f; //0.5f;
+    polyList3D[vertexSize3D].texCoord.X = 1.0f;
+    polyList3D[vertexSize3D].texCoord.Y = 0.5f;
     polyList3D[vertexSize3D].color.R = 0xff;
     polyList3D[vertexSize3D].color.G = 0xff;
     polyList3D[vertexSize3D].color.B = 0xff;
     polyList3D[vertexSize3D].color.A = 0xff;
     vertexSize3D = (ushort)(vertexSize3D + 1);
-    indexSize3D = (ushort)(indexSize3D + 2);
+    indexSize3D = (ushort)(indexSize3D + 6);
     //Draw nearby detailed floor
     if (HQ3DFloorEnabled)
     {
@@ -205,7 +205,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 1:
@@ -253,7 +253,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 2:
@@ -301,7 +301,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 3:
@@ -349,7 +349,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                         }
@@ -431,7 +431,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 1:
@@ -479,7 +479,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 2:
@@ -527,7 +527,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 3:
@@ -575,7 +575,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                         }
@@ -1023,7 +1023,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.X = (float)deformX2;
                             gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - (8.0f / 1024.0f);
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
@@ -1067,7 +1067,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.X = (float)(deformX2 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - (8.0f / 1024.0f);
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
@@ -1091,7 +1091,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             tileUvOffset++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + (8.0f / 1024.0f);
                             tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
@@ -1135,7 +1135,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.Y = (float)(deformY + 128);
                             gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             tileUvOffset++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + (8.0f / 1024.0f);
                             tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
@@ -1238,7 +1238,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             tileUvOffset++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + (8.0f / 1024.0f);
                             tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
@@ -1282,7 +1282,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset];
                             tileUvOffset++;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] + (8.0f / 1024.0f);
                             tileUvOffset++;
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
@@ -1317,7 +1317,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
                             gfxPolyList[gfxVertexSize].color.A = 0xff;
                             gfxVertexSize = gfxVertexSize + 1;
-                            gfxIndexSize = (ushort)(gfxIndexSize + 6);
+                            gfxIndexSize = gfxIndexSize + 6;
                             break;
                         }
                         case 2:
@@ -1346,7 +1346,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.X = (float)deformX1;
                             gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - (8.0f / 1024.0f);
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
@@ -1390,7 +1390,7 @@ void StageSystem_DrawHLineScrollLayer8(uint8_t layerNum)
                             gfxPolyList[gfxVertexSize].position.X = (float)(deformX1 + 0x100);
                             gfxPolyList[gfxVertexSize].position.Y = (float)deformY;
                             gfxPolyList[gfxVertexSize].texCoord.X = gfxPolyList[gfxVertexSize - 2].texCoord.X;
-                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - 8;
+                            gfxPolyList[gfxVertexSize].texCoord.Y = tileUVArray[gfxDataPos[gfxIndex] + tileUvOffset] - (8.0f / 1024.0f);
                             gfxPolyList[gfxVertexSize].color.R = 0xff;
                             gfxPolyList[gfxVertexSize].color.G = 0xff;
                             gfxPolyList[gfxVertexSize].color.B = 0xff;
@@ -2294,24 +2294,24 @@ void StageSystem_ProcessStage()
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16; //0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;// 0.015625f;
+                    tileUVArray[i] = (float)((i >> 2) % 28 * 18 + 1) * 0.0009765625f;
+                    tileUVArray[i + 1] = (float)((i >> 2) / 28 * 18 + 1) * 0.0009765625f;
+                    tileUVArray[i + 2] = tileUVArray[i] + 0.015625f;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 0.015625f;
                 }
-                tileUVArray[0xffc] = 487.0f; //0.475585938f;
-                tileUVArray[0xffd] = 487.0f; //0.475585938f;
-                tileUVArray[0xffe] = 503.0f; //0.491210938f;
-                tileUVArray[0xfff] = 503.0f; //0.491210938f;
+                tileUVArray[0xffc] = 0.475585938f;
+                tileUVArray[0xffd] = 0.475585938f;
+                tileUVArray[0xffe] = 0.491210938f;
+                tileUVArray[0xfff] = 0.491210938f;
             }
             else
             {
                 for (i = 0; i < 0x1000; i = i + 4)
                 {
-                    tileUVArray[i] = (float)((i >> 2 & 31) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16);// * 0.0009765625f;
-                    tileUVArray[i + 2] = tileUVArray[i] + 16;//0.015625f;
-                    tileUVArray[i + 3] = tileUVArray[i + 1] + 16;//0.015625f;
+                    tileUVArray[i] = (float)((i >> 2 & 31) * 16.0f) * 0.0009765625f;
+                    tileUVArray[i + 1] = (float)((i >> 2 >> 5) * 16.0f) * 0.0009765625f;
+                    tileUVArray[i + 2] = tileUVArray[i] + 0.015625f;
+                    tileUVArray[i + 3] = tileUVArray[i + 1] + 0.015625f;
                 }
             }
             RenderDevice_UpdateHardwareTextures();

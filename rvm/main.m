@@ -71,8 +71,8 @@ static void createSurface (int fullscreen)
         flags |= SDL_FULLSCREEN;
     
     // Create window
-    //gScreen = SDL_SetVideoMode (800, 480, 0, flags);
-    gScreen = SDL_SetVideoMode (864, 480, 0, flags);
+    gScreen = SDL_SetVideoMode (800, 480, 0, flags);
+    //gScreen = SDL_SetVideoMode (864, 480, 0, flags);
     //gScreen = SDL_SetVideoMode (1040, 480, 0, flags);
     if (gScreen == NULL) {
         
@@ -189,8 +189,8 @@ void Init_RetroVM(){
     Init_PlayerSystem();
     Init_StageSystem();
     Init_Scene3D();
-    //RenderDevice_SetScreenDimensions(800, 480);
-    RenderDevice_SetScreenDimensions(854, 480);
+    RenderDevice_SetScreenDimensions(800, 480); //Game logic expects 800x480, the demos break if wider
+    //RenderDevice_SetScreenDimensions(848, 480);
     //RenderDevice_SetScreenDimensions(1040, 480);
     EngineCallbacks_StartupRetroEngine();
     gameLanguage = RETRO_EN;
