@@ -135,9 +135,11 @@ void EngineCallbacks_RetroEngineCallback(int callbackID)
             break;
         case RESTART_GAME_SELECTED:
             //Display restart prompt
+            EngineCallbacks_ConfirmationScreen(true);
             break;
         case EXIT_GAME_SELECTED:
             //Display exit prompt
+            EngineCallbacks_ConfirmationScreen(true);
             break;
         case UNLOCK_FULL_GAME_SELECTED:
         {
@@ -164,11 +166,22 @@ void EngineCallbacks_RetroEngineCallback(int callbackID)
 void EngineCallbacks_UpsellScreen()
 {
 }
-void EngineCallbacks_ConfirmationScreen()
+void EngineCallbacks_ConfirmationScreen(bool yes)
 {
+    if(yes){
+        //User confirmed restart
+        gameMode = 1;
+        gameMessage = 3;
+    }
+    else{
+        //User said no
+        gameMode = 1;
+        gameMessage = 4;
+    }
 }
-void EngineCallbacks_ExitConfirmation()
+void EngineCallbacks_ExitConfirmation(bool yes)
 {
+    
 }
 void EngineCallbacks_StartupRetroEngine()
 {

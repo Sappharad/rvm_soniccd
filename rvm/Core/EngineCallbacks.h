@@ -22,8 +22,8 @@ void EngineCallbacks_OnlineLoadAchievementsMenu(void);
 void EngineCallbacks_OnlineLoadLeaderboardsMenu(void);
 void EngineCallbacks_RetroEngineCallback(int callbackID);
 void EngineCallbacks_UpsellScreen(void);
-void EngineCallbacks_ConfirmationScreen(void);
-void EngineCallbacks_ExitConfirmation(void);
+void EngineCallbacks_ConfirmationScreen(bool yes);
+void EngineCallbacks_ExitConfirmation(bool yes);
 void EngineCallbacks_StartupRetroEngine(void);
 void EngineCallbacks_ProcessMainLoop(void);
 
