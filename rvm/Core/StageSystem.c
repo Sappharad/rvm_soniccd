@@ -133,7 +133,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
     polyList3D[vertexSize3D].color.B = 0xff;
     polyList3D[vertexSize3D].color.A = 0xff;
     vertexSize3D = (ushort)(vertexSize3D + 1);
-    indexSize3D = (ushort)(indexSize3D + 2);
+    indexSize3D = (ushort)(indexSize3D + 6);
     //Draw nearby detailed floor
     if (HQ3DFloorEnabled)
     {
@@ -205,7 +205,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 1:
@@ -253,7 +253,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 2:
@@ -301,7 +301,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 3:
@@ -349,7 +349,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                         }
@@ -431,7 +431,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 1:
@@ -479,7 +479,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 2:
@@ -527,7 +527,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                             case 3:
@@ -575,7 +575,7 @@ void StageSystem_Draw3DFloorLayer(uint8_t layerNum)
                                 polyList3D[vertexSize3D].color.B = 0xff;
                                 polyList3D[vertexSize3D].color.A = 0xff;
                                 vertexSize3D = (ushort)(vertexSize3D + 1);
-                                indexSize3D = (ushort)(indexSize3D + 2);
+                                indexSize3D = (ushort)(indexSize3D + 6);
                                 break;
                             }
                         }

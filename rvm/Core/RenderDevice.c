@@ -148,28 +148,28 @@ void RenderDevice_SetScreenDimensions(int width, int height)
 
 void CalcPerspective(float fov, float aspectRatio, float nearPlane, float farPlane){
     GLfloat matrix[16];
-    float w = 1.0 / tanf(fov * 0.5f); //Probably correct
-    float h = 1.0 / (w*aspectRatio); //Probably correct
-    float q = (nearPlane+farPlane)/(farPlane - nearPlane); //Questionable, but probably right
+    float w = 1.0 / tanf(fov * 0.5f);
+    float h = 1.0 / (w*aspectRatio);
+    float q = (nearPlane+farPlane)/(farPlane - nearPlane);
     
     matrix[0] = w;
-    matrix[1] = 0; //All 0s are correct
+    matrix[1] = 0;
     matrix[2] = 0;
     matrix[3] = 0;
     
     matrix[4] = 0;
-    matrix[5] = h;
+    matrix[5] = h/2;
     matrix[6] = 0;
     matrix[7] = 0;
     
     matrix[8] = 0;
     matrix[9] = 0;
     matrix[10] = q;
-    matrix[11] = 1.0; //Correct
+    matrix[11] = 1.0;
     
     matrix[12] = 0;
     matrix[13] = 0;
-    matrix[14] = (((farPlane*-2.0f)*nearPlane)/(farPlane-nearPlane)); //Probably correct
+    matrix[14] = (((farPlane*-2.0f)*nearPlane)/(farPlane-nearPlane));
     matrix[15] = 0;
     
     glMultMatrixf(matrix);
@@ -195,16 +195,12 @@ void RenderDevice_FlipScreen()
         glViewport(0, 0, viewWidth, viewHeight);
         glPushMatrix();
         glLoadIdentity();
-        CalcPerspective(1.8326f, viewAspect, 0.1f, 2000.0f);
-        //glRotatef(0, 0, 0, 1.0f);
-        //glRotatef(180.0f + floor3DAngle, 0, -0.045f, 0);
+        CalcPerspective(1.8326f, viewAspect, 0.1f, 1000.0f);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
        
-        //glScalef(1.0f, -1.0f, 1.0f);
         glScalef(1.0f, -1.0f, -1.0f);
         glRotatef(180.0f + floor3DAngle, 0, 1.0f, 0);
-        //glRotatef(0, 3.14159274f * (180.0f + floor3DAngle) / 180.0f, 0, 0);
         glTranslatef(floor3DPos.X, floor3DPos.Y, floor3DPos.Z);
         glVertexPointer(3, GL_FLOAT, 20, &polyList3D[0].position);
         glTexCoordPointer(2, GL_SHORT, 20, &polyList3D[0].texCoord);
