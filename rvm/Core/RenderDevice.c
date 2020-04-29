@@ -181,7 +181,14 @@ void RenderDevice_FlipScreen()
     HandleGlError();
     
     glOrtho(0, orthWidth, 3844.0f, 0.0, 0.0f, 100.0f);
-    glBindTexture(GL_TEXTURE_2D, gfxTextureID[texPaletteNum]);
+    if(texPaletteNum >= NUM_TEXTURES){
+        //This is a stage that requires the software renderer for correct water palettes.
+        //Only happens if using the PC / Console Data.rsdk file
+        glBindTexture(GL_TEXTURE_2D, gfxTextureID[texPaletteNum % NUM_TEXTURES]);
+    }
+    else{
+        glBindTexture(GL_TEXTURE_2D, gfxTextureID[texPaletteNum]);
+    }
     glEnableClientState(GL_COLOR_ARRAY);
     HandleGlError();
     if(render3DEnabled){
@@ -268,8 +275,6 @@ void RenderDevice_FlipScreenHRes()
     glColorPointer(4, GL_UNSIGNED_BYTE, 12, &gfxPolyList[0].color);
     glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
     
-    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glDisableClientState(GL_COLOR_ARRAY);
     
     HandleGlError();
