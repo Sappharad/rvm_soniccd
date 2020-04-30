@@ -132,16 +132,15 @@ void RenderDevice_SetScreenDimensions(int width, int height)
     {
         HQ3DFloorEnabled = false;
     }
+    GraphicsSystem_SetScreenRenderSize(bufferWidth, bufferWidth);
     if (viewHeight >= 480)
     {
-        GraphicsSystem_SetScreenRenderSize(bufferWidth, bufferWidth);
         bufferWidth *= 2;
         bufferHeight = 480;
     }
     else
     {
         bufferHeight = 240;
-        GraphicsSystem_SetScreenRenderSize(bufferWidth, bufferWidth);
     }
     orthWidth = SCREEN_XSIZE * 16;
 }

@@ -76,8 +76,8 @@ void InputSystem_ClearTouchData()
 
 void InputSystem_CheckKeyboardInput()
 {
-    Uint8 *keystate = SDL_GetKeyState(NULL);
-    if (keystate[SDLK_UP] || keystate[SDLK_w])
+    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+    if (keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_W])
     {
         touchData.up = 1;
     }
@@ -85,7 +85,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.up = 0;
     }
-    if (keystate[SDLK_DOWN] || keystate[SDLK_s])
+    if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_S])
     {
         touchData.down = 1;
     }
@@ -93,7 +93,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.down = 0;
     }
-    if (keystate[SDLK_LEFT] || keystate[SDLK_a])
+    if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A])
     {
         touchData.left = 1;
     }
@@ -101,7 +101,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.left = 0;
     }
-    if (keystate[SDLK_RIGHT] || keystate[SDLK_d])
+    if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_D])
     {
         touchData.right = 1;
     }
@@ -109,7 +109,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.right = 0;
     }
-    if (keystate[SDLK_1] || keystate[SDLK_j])
+    if (keystate[SDL_SCANCODE_1] || keystate[SDL_SCANCODE_J])
     {
         touchData.buttonA = 1;
     }
@@ -117,7 +117,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.buttonA = 0;
     }
-    if (keystate[SDLK_2] || keystate[SDLK_k])
+    if (keystate[SDL_SCANCODE_2] || keystate[SDL_SCANCODE_K])
     {
         touchData.buttonB = 1;
     }
@@ -125,7 +125,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.buttonB = 0;
     }
-    if (keystate[SDLK_3] || keystate[SDLK_l])
+    if (keystate[SDL_SCANCODE_3] || keystate[SDL_SCANCODE_L])
     {
         touchData.buttonC = 1;
     }
@@ -133,7 +133,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.buttonC = 0;
     }
-    if (keystate[SDLK_RETURN] || keystate[SDLK_KP_ENTER] || keystate[SDLK_v])
+    if (keystate[SDL_SCANCODE_RETURN] || keystate[SDL_SCANCODE_KP_ENTER] || keystate[SDL_SCANCODE_V])
     {
         touchData.start = 1;
     }
@@ -141,7 +141,7 @@ void InputSystem_CheckKeyboardInput()
     {
         touchData.start = 0;
     }
-    /*if (keystate[SDLK_SPACE])
+    /*if (keystate[SDL_SCANCODE_SPACE])
     {
         touchControls = true;
     }
@@ -153,7 +153,7 @@ void InputSystem_CheckKeyboardInput()
         }
         touchControls = false;
     }*/
-    if (keystate[SDLK_ESCAPE])
+    if (keystate[SDL_SCANCODE_ESCAPE])
     {
         if (activeStageList != 0 && stageMode != 2)
         {

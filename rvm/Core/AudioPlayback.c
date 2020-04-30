@@ -195,7 +195,7 @@ void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack,
     }
     else if (FileIO_LoadFile(musicTracks[trackNo].trackName, &fData))
     {
-        //Todo: Use the loop point
+        //Todo: Use the loop point - SDL Mixer will use OGG Loop tags, maybe we can just inject those in memory.
         musicTracks[trackNo].musicData = malloc(fData.fileSize);
         FileIO_ReadByteArray(musicTracks[trackNo].musicData, fData.fileSize);
         musicTracks[trackNo].mixerAudio = Mix_LoadMUSType_RW(SDL_RWFromMem(musicTracks[trackNo].musicData, fData.fileSize), MUS_OGG, SDL_TRUE);
