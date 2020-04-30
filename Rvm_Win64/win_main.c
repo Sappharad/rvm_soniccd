@@ -8,7 +8,7 @@
 #include <gl/GL.h>
 #include "GraphicsSystem.h"
 
-static SDL_Surface *gScreen;
+static SDL_Window* gWindow;
 
 static void initAttributes()
 {
@@ -59,25 +59,23 @@ static void createSurface(int fullscreen)
 {
 	Uint32 flags = 0;
 
-	flags = SDL_OPENGL;
+	flags = SDL_WINDOW_OPENGL;
 	if (fullscreen)
-		flags |= SDL_FULLSCREEN;
+		flags |= SDL_WINDOW_FULLSCREEN;
 
 	// Create window
-	//gScreen = SDL_SetVideoMode (800, 480, 0, flags);
-	gScreen = SDL_SetVideoMode(864, 480, 0, flags);
-	//gScreen = SDL_SetVideoMode (1040, 480, 0, flags);
-	if (gScreen == NULL) {
-
-		fprintf(stderr, "Couldn't set 800x480 OpenGL video mode: %s\n",
-			SDL_GetError());
+	gWindow = SDL_CreateWindow("RetroVM - Sonic CD",
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		800, 480, flags);
+	if (gWindow == NULL) {
+		fprintf(stderr, "Couldn't set 800x480 OpenGL video mode: %s\n", SDL_GetError());
 		SDL_Quit();
 		exit(2);
 	}
-	SDL_WM_SetCaption("RetroVM - Sonic CD", "sonic");
+	SDL_GL_CreateContext(gWindow);
 
-	//glViewport(0, 0, 800, 480);
-	glViewport(0, 0, 864, 480);
+	glViewport(0, 0, 800, 480);
+	//glViewport(0, 0, 864, 480);
 	//glViewport(0, 0, 1040, 480);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -152,7 +150,7 @@ static void mainLoop()
 		//     use time-based animation and run as fast as possible
 		UpdateIO();
 		HandleNextFrame();
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(gWindow);
 
 		// Time how long each draw-swap-delay cycle takes
 		// and adjust delay to get closer to target framerate
@@ -182,8 +180,8 @@ void Init_RetroVM() {
 	Init_PlayerSystem();
 	Init_StageSystem();
 	Init_Scene3D();
-	//RenderDevice_SetScreenDimensions(800, 480);
-	RenderDevice_SetScreenDimensions(864, 480);
+	RenderDevice_SetScreenDimensions(800, 480);
+	//RenderDevice_SetScreenDimensions(864, 480);
 	//RenderDevice_SetScreenDimensions(1040, 480);
 	EngineCallbacks_StartupRetroEngine();
 	gameLanguage = 0;
