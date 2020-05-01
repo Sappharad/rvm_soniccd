@@ -24,15 +24,15 @@
 #define SPECIAL_STAGE 3
 
 extern unsigned char fileBuffer[8192];
-extern uint bufferPosition;
-extern uint fileSize;
-extern uint readSize;
-extern uint readPos;
+extern uint32_t bufferPosition;
+extern uint32_t fileSize;
+extern uint32_t readSize;
+extern uint32_t readPos;
 extern bool useRSDKFile;
 extern bool useByteCode;
 extern bool useOldSdkLayout;
-extern uint vFileSize;
-extern uint virtualFileOffset;
+extern uint32_t vFileSize;
+extern uint32_t virtualFileOffset;
 extern int saveRAM[8192];
 extern uint8_t eStringPosA;
 extern uint8_t eStringPosB;
@@ -73,8 +73,8 @@ void FileIO_ReadCharArray(char* charP, int numBytes);
 void FileIO_FillFileBuffer(void);
 void FileIO_GetFileInfo(struct FileData *fData);
 void FileIO_SetFileInfo(struct FileData *fData);
-uint FileIO_GetFilePosition(void);
-void FileIO_SetFilePosition(uint newFilePos);
+uint32_t FileIO_GetFilePosition(void);
+void FileIO_SetFilePosition(uint32_t newFilePos);
 bool FileIO_ReachedEndOfFile(void);
 uint8_t FileIO_ReadSaveRAMData(void);
 uint8_t FileIO_WriteSaveRAMData(void);

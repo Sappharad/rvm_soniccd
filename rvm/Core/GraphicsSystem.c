@@ -19,7 +19,7 @@ unsigned char texBufferMode;
 unsigned char tileGfx[0x40000];
 unsigned char graphicData[GRAPHIC_DATASIZE];
 struct GfxSurfaceDesc gfxSurface[NUM_SPRITESHEETS];
-uint gfxDataPosition;
+uint32_t gfxDataPosition;
 struct DrawVertex gfxPolyList[VERTEX_LIMIT];
 struct DrawVertex3D polyList3D[6404];
 unsigned short gfxPolyListIndex[INDEX_LIMIT];
@@ -102,7 +102,7 @@ void GraphicsSystem_LoadPalette(char* fileName, int paletteNum, int destPoint, i
     unsigned char array2[3];
     if (FileIO_LoadFile(filePath, &fData))
     {
-        FileIO_SetFilePosition((uint)(startPoint * 3));
+        FileIO_SetFilePosition((uint32_t)(startPoint * 3));
         if (paletteNum < 0 || paletteNum > 7)
         {
             paletteNum = 0;
@@ -193,19 +193,19 @@ void GraphicsSystem_RemoveGraphicsFile(char* fileName, int surfaceNum)
     }
     FileIO_StrClear(gfxSurface[surfaceNum].fileName, (int)strlen(gfxSurface[surfaceNum].fileName));
     num = gfxSurface[surfaceNum].dataStart;
-    uint num2 = (uint)((unsigned long)gfxSurface[surfaceNum].dataStart + (unsigned long)((long)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height)));
+    uint32_t num2 = (uint32_t)((unsigned long)gfxSurface[surfaceNum].dataStart + (unsigned long)((long)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height)));
     for (unsigned int num3 = GRAPHIC_DATASIZE - num2; num3 > 0; num3 -= 1)
     {
         graphicData[num] = graphicData[num2];
         num += 1u;
         num2 += 1u;
     }
-    gfxDataPosition -= (uint)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
+    gfxDataPosition -= (uint32_t)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
     for (num = 0u; num < NUM_SPRITESHEETS; num += 1u)
     {
         if (gfxSurface[num].dataStart > gfxSurface[surfaceNum].dataStart)
         {
-            gfxSurface[num].dataStart -= (uint)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
+            gfxSurface[num].dataStart -= (uint32_t)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
         }
     }
 }
@@ -633,7 +633,7 @@ void GraphicsSystem_LoadBMPFile(char* fileName, int surfaceNum)
         gfxSurface[surfaceNum].height += (int)b << 16;
         b = FileIO_ReadByte();
         gfxSurface[surfaceNum].height += (int)b << 24;
-        FileIO_SetFilePosition((uint)(fileData.fileSize - (gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height)));
+        FileIO_SetFilePosition((uint32_t)(fileData.fileSize - (gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height)));
         gfxSurface[surfaceNum].dataStart = gfxDataPosition;
         int num = (int)gfxSurface[surfaceNum].dataStart;
         num += gfxSurface[surfaceNum].width * (gfxSurface[surfaceNum].height - 1);
@@ -647,7 +647,7 @@ void GraphicsSystem_LoadBMPFile(char* fileName, int surfaceNum)
             }
             num -= gfxSurface[surfaceNum].width << 1;
         }
-        gfxDataPosition += (uint)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
+        gfxDataPosition += (uint32_t)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
         if (gfxDataPosition >= 0x400000)
         {
             gfxDataPosition = 0u;
@@ -705,7 +705,7 @@ void GraphicsSystem_LoadGIFFile(char* fileName, int surfaceNum)
             gfxSurface[surfaceNum].width = num;
             gfxSurface[surfaceNum].height = num2;
             gfxSurface[surfaceNum].dataStart = gfxDataPosition;
-            gfxDataPosition += (uint)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
+            gfxDataPosition += (uint32_t)(gfxSurface[surfaceNum].width * gfxSurface[surfaceNum].height);
             if (gfxDataPosition >= 0x400000)
             {
                 gfxDataPosition = 0u;
@@ -1731,9 +1731,9 @@ void GraphicsSystem_SetLimitedFade(uint8_t paletteNum, uint8_t clrR, uint8_t clr
         }
         for (int i = fStart; i < fEnd; i++)
         {
-            array[0] = (uint8_t)(((ushort)tilePalette[i].red * (255 - clrA) + clrA * (ushort)clrR) >> 8);
-            array[1] = (uint8_t)(((ushort)tilePalette[i].green * (255 - clrA) + clrA * (ushort)clrG) >> 8);
-            array[2] = (uint8_t)(((ushort)tilePalette[i].blue * (255 - clrA) + clrA * (ushort)clrB) >> 8);
+            array[0] = (uint8_t)(((uint16_t)tilePalette[i].red * (255 - clrA) + clrA * (uint16_t)clrR) >> 8);
+            array[1] = (uint8_t)(((uint16_t)tilePalette[i].green * (255 - clrA) + clrA * (uint16_t)clrG) >> 8);
+            array[2] = (uint8_t)(((uint16_t)tilePalette[i].blue * (255 - clrA) + clrA * (uint16_t)clrB) >> 8);
             tilePalette16_Data[0][i] = GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 1);
         }
         tilePalette16_Data[0][0] = GraphicsSystem_RGB_16BIT5551(array[0], array[1], array[2], 0);
@@ -1762,7 +1762,7 @@ void GraphicsSystem_RotatePalette(uint8_t pStart, uint8_t pEnd, uint8_t pDirecti
     {
         case 0:
         {
-            ushort num = tilePalette16_Data[texPaletteNum][(int)pStart];
+            uint16_t num = tilePalette16_Data[texPaletteNum][(int)pStart];
             for (uint8_t b = pStart; b < pEnd; b += 1)
             {
                 tilePalette16_Data[texPaletteNum][(int)b] = tilePalette16_Data[texPaletteNum][(int)(b + 1)];
@@ -1772,7 +1772,7 @@ void GraphicsSystem_RotatePalette(uint8_t pStart, uint8_t pEnd, uint8_t pDirecti
         }
         case 1:
         {
-            ushort num = tilePalette16_Data[texPaletteNum][(int)pEnd];
+            uint16_t num = tilePalette16_Data[texPaletteNum][(int)pEnd];
             for (uint8_t b = pEnd; b > pStart; b -= 1)
             {
                 tilePalette16_Data[texPaletteNum][(int)b] = tilePalette16_Data[texPaletteNum][(int)(b - 1)];

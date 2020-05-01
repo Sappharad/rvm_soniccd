@@ -158,7 +158,7 @@ void AudioPlayback_ResumeSound()
         Mix_Resume(i);
     }
 }
-void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack, uint loopPoint)
+void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack, uint32_t loopPoint)
 {
     struct FileData fData;
     char array[] = "Data/Music/";

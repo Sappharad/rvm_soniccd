@@ -6,15 +6,15 @@
 #include "FileIO.h"
 
 unsigned char fileBuffer[8192];
-uint bufferPosition;
-uint fileSize;
-uint readSize;
-uint readPos;
+uint32_t bufferPosition;
+uint32_t fileSize;
+uint32_t readSize;
+uint32_t readPos;
 bool useRSDKFile;
 bool useByteCode;
 bool useOldSdkLayout;
-uint vFileSize;
-uint virtualFileOffset;
+uint32_t vFileSize;
+uint32_t virtualFileOffset;
 int saveRAM[8192];
 const char encryptionStringA[] = "4RaS9D7KaEbxcp2o5r6t";
 const char encryptionStringB[] = "3tRaUxLmEaSn";
@@ -270,6 +270,7 @@ bool FileIO_CheckRSDKFile()
     fileReader = fopen("Data.rsdk","rb");
     if (fileReader == NULL)
     {
+        printf("Could not load Data.rsdk!\n");
         useRSDKFile = false;
         useByteCode = false;
         return false;
@@ -581,7 +582,7 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
     bufferPosition = 0u;
     readSize = 0u;
     readPos = 0u;
-    virtualFileOffset = (uint)(num + num2);
+    virtualFileOffset = (uint32_t)(num + num2);
     j = 0;
     num = 0; //Using this for number of attempts tracking
     while (j < 1)
@@ -608,7 +609,7 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
             b = FileIO_ReadByte();
             i += (int)b << 24;
             virtualFileOffset += 4u;
-            vFileSize = (uint)i;
+            vFileSize = (uint32_t)i;
             if(fseek(fileReader, (long)(virtualFileOffset), SEEK_SET) != 0){
                 return false; //FAILED
             }
@@ -627,7 +628,7 @@ bool FileIO_ParseVirtualFileSystem(char* filePath)
             b = FileIO_ReadByte();
             i += (int)b << 24;
             virtualFileOffset += 4u;
-            virtualFileOffset += (uint)i;
+            virtualFileOffset += (uint32_t)i;
             if(fseek(fileReader, (long)(virtualFileOffset), SEEK_SET) != 0){
                 return false; //FAILED
             }
@@ -915,7 +916,7 @@ void FileIO_SetFileInfo(struct FileData *fData)
         }
     }
 }
-uint FileIO_GetFilePosition()
+uint32_t FileIO_GetFilePosition()
 {
     if (useRSDKFile)
     {
@@ -923,7 +924,7 @@ uint FileIO_GetFilePosition()
     }
     return readPos - readSize + bufferPosition;
 }
-void FileIO_SetFilePosition(uint newFilePos)
+void FileIO_SetFilePosition(uint32_t newFilePos)
 {
     if (useRSDKFile)
     {

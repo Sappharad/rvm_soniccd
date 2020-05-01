@@ -1615,18 +1615,18 @@ void PlayerSystem_ProcessPlayerControl(struct PlayerObject* playerO)
     {
         case -1:
         {
-            delayUp = (ushort)(delayUp << 1);
-            delayUp = (ushort)(delayUp | playerO->up);
-            delayDown = (ushort)(delayDown << 1);
-            delayDown = (ushort)(delayDown | playerO->down);
-            delayLeft = (ushort)(delayLeft << 1);
-            delayLeft = (ushort)(delayLeft | playerO->left);
-            delayRight = (ushort)(delayRight << 1);
-            delayRight = (ushort)(delayRight | playerO->right);
-            delayJumpPress = (ushort)(delayJumpPress << 1);
-            delayJumpPress = (ushort)(delayJumpPress | playerO->jumpPress);
-            delayJumpHold = (ushort)(delayJumpHold << 1);
-            delayJumpHold = (ushort)(delayJumpHold | playerO->jumpHold);
+            delayUp = (uint16_t)(delayUp << 1);
+            delayUp = (uint16_t)(delayUp | playerO->up);
+            delayDown = (uint16_t)(delayDown << 1);
+            delayDown = (uint16_t)(delayDown | playerO->down);
+            delayLeft = (uint16_t)(delayLeft << 1);
+            delayLeft = (uint16_t)(delayLeft | playerO->left);
+            delayRight = (uint16_t)(delayRight << 1);
+            delayRight = (uint16_t)(delayRight | playerO->right);
+            delayJumpPress = (uint16_t)(delayJumpPress << 1);
+            delayJumpPress = (uint16_t)(delayJumpPress | playerO->jumpPress);
+            delayJumpHold = (uint16_t)(delayJumpHold << 1);
+            delayJumpHold = (uint16_t)(delayJumpHold | playerO->jumpHold);
             return;
         }
         case 0:
@@ -1645,18 +1645,18 @@ void PlayerSystem_ProcessPlayerControl(struct PlayerObject* playerO)
             }
             playerO->jumpHold = (uint8_t)(gKeyDown.buttonA | gKeyDown.buttonB | gKeyDown.buttonC);
             playerO->jumpPress = (uint8_t)(gKeyPress.buttonA | gKeyPress.buttonB | gKeyPress.buttonC);
-            delayUp = (ushort)(delayUp << 1);
-            delayUp = (ushort)(delayUp | playerO->up);
-            delayDown = (ushort)(delayDown << 1);
-            delayDown = (ushort)(delayDown | playerO->down);
-            delayLeft = (ushort)(delayLeft << 1);
-            delayLeft = (ushort)(delayLeft | playerO->left);
-            delayRight = (ushort)(delayRight << 1);
-            delayRight = (ushort)(delayRight | playerO->right);
-            delayJumpPress = (ushort)(delayJumpPress << 1);
-            delayJumpPress = (ushort)(delayJumpPress | playerO->jumpPress);
-            delayJumpHold = (ushort)(delayJumpHold << 1);
-            delayJumpHold = (ushort)(delayJumpHold | playerO->jumpHold);
+            delayUp = (uint16_t)(delayUp << 1);
+            delayUp = (uint16_t)(delayUp | playerO->up);
+            delayDown = (uint16_t)(delayDown << 1);
+            delayDown = (uint16_t)(delayDown | playerO->down);
+            delayLeft = (uint16_t)(delayLeft << 1);
+            delayLeft = (uint16_t)(delayLeft | playerO->left);
+            delayRight = (uint16_t)(delayRight << 1);
+            delayRight = (uint16_t)(delayRight | playerO->right);
+            delayJumpPress = (uint16_t)(delayJumpPress << 1);
+            delayJumpPress = (uint16_t)(delayJumpPress | playerO->jumpPress);
+            delayJumpHold = (uint16_t)(delayJumpHold << 1);
+            delayJumpHold = (uint16_t)(delayJumpHold | playerO->jumpHold);
             return;
         }
         case 1:

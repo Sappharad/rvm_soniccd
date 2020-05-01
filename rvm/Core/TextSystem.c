@@ -100,10 +100,10 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
             while (!flag)
             {
                 b = FileIO_ReadByte();
-                ushort num = (ushort)b;
+                uint16_t num = (uint16_t)b;
                 b = FileIO_ReadByte();
-                num += (ushort)(b << 8);
-                ushort num2 = num;
+                num += (uint16_t)(b << 8);
+                uint16_t num2 = num;
                 if (num2 != 10)
                 {
                     if (num2 == 13)
@@ -128,7 +128,7 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
                             {
                                 if (fontCharacterList[i].id == (int)num)
                                 {
-                                    num = (ushort)i;
+                                    num = (uint16_t)i;
                                     i = 1025;
                                 }
                                 else
@@ -158,8 +158,8 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
         }
         else
         {
-            ushort num = (ushort)b;
-            ushort num3 = num;
+            uint16_t num = (uint16_t)b;
+            uint16_t num3 = num;
             if (num3 != 10)
             {
                 if (num3 == 13)
@@ -177,7 +177,7 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
                         {
                             if (fontCharacterList[i].id == (int)num)
                             {
-                                num = (ushort)i;
+                                num = (uint16_t)i;
                                 i = 1025;
                             }
                             else
@@ -198,8 +198,8 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
             while (!flag)
             {
                 b = FileIO_ReadByte();
-                num = (ushort)b;
-                ushort num4 = num;
+                num = (uint16_t)b;
+                uint16_t num4 = num;
                 if (num4 != 10)
                 {
                     if (num4 == 13)
@@ -224,7 +224,7 @@ void TextSystem_LoadTextFile(struct TextMenu* tMenu, char* fileName, uint8_t map
                             {
                                 if (fontCharacterList[i].id == (int)num)
                                 {
-                                    num = (ushort)i;
+                                    num = (uint16_t)i;
                                     i = 1025;
                                 }
                                 else
@@ -288,7 +288,7 @@ void TextSystem_DrawBitmapText(struct TextMenu* tMenu, int xPos, int yPos, int s
 void TextSystem_SetupTextMenu(struct TextMenu* tMenu, int numRows)
 {
     tMenu->textDataPos = 0;
-    tMenu->numRows = (ushort)numRows;
+    tMenu->numRows = (uint16_t)numRows;
 }
 void TextSystem_AddTextMenuEntry(struct TextMenu* tMenu, char* inputTxt)
 {
@@ -320,13 +320,13 @@ void TextSystem_AddTextMenuEntryMapped(struct TextMenu* tMenu, char* inputTxt)
     {
         if (inputTxt[i] != '\0')
         {
-            ushort num = (ushort)inputTxt[i];
+            uint16_t num = (uint16_t)inputTxt[i];
             int j = 0;
             while (j < 1024)
             {
                 if (fontCharacterList[j].id == (int)num)
                 {
-                    num = (ushort)j;
+                    num = (uint16_t)j;
                     j = 1025;
                 }
                 else

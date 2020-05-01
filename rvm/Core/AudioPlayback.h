@@ -35,7 +35,7 @@ void AudioPlayback_SetGameVolumes(int bgmVolume, int sfxVolume);
 void AudioPlayback_StopAllSFX(void);
 void AudioPlayback_PauseSound(void);
 void AudioPlayback_ResumeSound(void);
-void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack, uint loopPoint);
+void AudioPlayback_SetMusicTrack(char* fileName, int trackNo, uint8_t loopTrack, uint32_t loopPoint);
 void AudioPlayback_SetMusicVolume(int volume);
 void AudioPlayback_PlayMusic(int trackNo);
 void AudioPlayback_StopMusic(void);

@@ -34,7 +34,7 @@ int codeMasks[] = {
 
 int GifLoader_ReadGifCode(void);
 uint8_t GifLoader_ReadGifByte(void);
-uint8_t GifLoader_TracePrefix(uint* prefix, int code, int clearCode);
+uint8_t GifLoader_TracePrefix(uint32_t* prefix, int code, int clearCode);
 
 void Init_GifDecoder()
 {
@@ -185,7 +185,7 @@ void GifLoader_ReadGifLine(uint8_t* line, int length, int offset)
                     {
                         return;
                     }
-                    gifDecoder.prefix[gifDecoder.runningCode - 2] = (uint)num2;
+                    gifDecoder.prefix[gifDecoder.runningCode - 2] = (uint32_t)num2;
                     if (num3 == gifDecoder.runningCode - 2)
                     {
                         gifDecoder.suffix[gifDecoder.runningCode - 2] = GifLoader_TracePrefix(gifDecoder.prefix, num2, clearCode);
@@ -208,7 +208,7 @@ int GifLoader_ReadGifCode()
     while (gifDecoder.shiftState < gifDecoder.runningBits)
     {
         uint8_t b = GifLoader_ReadGifByte();
-        gifDecoder.shiftData |= (uint)((uint)b << gifDecoder.shiftState);
+        gifDecoder.shiftData |= (uint32_t)((uint32_t)b << gifDecoder.shiftState);
         gifDecoder.shiftState += 8;
     }
     int result = (int)((unsigned long)gifDecoder.shiftData & (unsigned long)(codeMasks[gifDecoder.runningBits]));
@@ -249,7 +249,7 @@ uint8_t GifLoader_ReadGifByte()
     }
     return b;
 }
-uint8_t GifLoader_TracePrefix(uint* prefix, int code, int clearCode)
+uint8_t GifLoader_TracePrefix(uint32_t* prefix, int code, int clearCode)
 {
     int num = 0;
     while (code > clearCode && num++ <= LZ_MAX_CODE)

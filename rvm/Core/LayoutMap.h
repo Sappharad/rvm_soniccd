@@ -10,7 +10,7 @@
 #endif
 
 struct LayoutMap {
-    ushort tileMap[0x10000];
+    uint16_t tileMap[0x10000];
     uint8_t lineScrollRef[0x8000];
     int parallaxFactor;
     int scrollSpeed;

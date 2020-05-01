@@ -48,13 +48,13 @@ void Scene3D_SetIdentityMatrix(int* m)
 void Scene3D_MatrixMultiply(int* a, int* b)
 {
     int array[16];
-    for (uint num = 0u; num < 16u; num += 1u)
+    for (uint32_t num = 0u; num < 16u; num += 1u)
     {
-        uint num2 = num & 3u;
-        uint num3 = num & 12u;
+        uint32_t num2 = num & 3u;
+        uint32_t num3 = num & 12u;
         array[(int)(num)] = (b[(int)(num2)] * a[(int)(num3)] >> 8) + (b[(int)((num2 + 4u))] * a[(int)((num3 + 1u))] >> 8) + (b[(int)((num2 + 8u))] * a[(int)((num3 + 2u))] >> 8) + (b[(int)((num2 + 12u))] * a[(int)((num3 + 3u))] >> 8);
     }
-    for (uint num = 0u; num < 16u; num += 1u)
+    for (uint32_t num = 0u; num < 16u; num += 1u)
     {
         a[(int)(num)] = array[(int)(num)];
     }

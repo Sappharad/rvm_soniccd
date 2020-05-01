@@ -8,6 +8,9 @@
 #include <Windows.h>
 #include <gl/GL.h>
 #include <gl/glext.h>
+#elif LINUX
+#include <gl/GL.h>
+#include <gl/glext.h>
 #else
 #include <OpenGL/gl.h>
 #endif
@@ -29,7 +32,7 @@ void HandleGlError(){
         if (boo == GL_INVALID_OPERATION){
             printf("Invalid operation\n");
         }
-#ifndef WINDOWS
+#if !defined(WINDOWS) && !defined(LINUX)
         else if(boo == GL_INVALID_FRAMEBUFFER_OPERATION){
             boo = glCheckFramebufferStatus(GL_FRAMEBUFFER);
             if(boo == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT){

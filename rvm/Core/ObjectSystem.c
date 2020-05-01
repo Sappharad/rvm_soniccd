@@ -3598,7 +3598,7 @@ void ObjectSystem_ProcessScript(int scriptCodePtr, int jumpTablePtr, int scriptS
             case 60:
             {
                 num5 = 0;
-                GraphicsSystem_SetFade((uint8_t)scriptEng.operands[0], (uint8_t)scriptEng.operands[1], (uint8_t)scriptEng.operands[2], (ushort)scriptEng.operands[3]);
+                GraphicsSystem_SetFade((uint8_t)scriptEng.operands[0], (uint8_t)scriptEng.operands[1], (uint8_t)scriptEng.operands[2], (uint16_t)scriptEng.operands[3]);
                 break;
             }
             case 61:
@@ -3609,7 +3609,7 @@ void ObjectSystem_ProcessScript(int scriptCodePtr, int jumpTablePtr, int scriptS
             }
             case 62:
             {
-                GraphicsSystem_SetLimitedFade((uint8_t)scriptEng.operands[0], (uint8_t)scriptEng.operands[1], (uint8_t)scriptEng.operands[2], (uint8_t)scriptEng.operands[3], (ushort)scriptEng.operands[4], scriptEng.operands[5], scriptEng.operands[6]);
+                GraphicsSystem_SetLimitedFade((uint8_t)scriptEng.operands[0], (uint8_t)scriptEng.operands[1], (uint8_t)scriptEng.operands[2], (uint8_t)scriptEng.operands[3], (uint16_t)scriptEng.operands[4], scriptEng.operands[5], scriptEng.operands[6]);
                 break;
             }
             case 63:
@@ -4012,7 +4012,7 @@ void ObjectSystem_ProcessScript(int scriptCodePtr, int jumpTablePtr, int scriptS
                 }
                 else
                 {
-                    AudioPlayback_SetMusicTrack(scriptText, scriptEng.operands[1], 1, (uint)scriptEng.operands[2]);
+                    AudioPlayback_SetMusicTrack(scriptText, scriptEng.operands[1], 1, (uint32_t)scriptEng.operands[2]);
                     break;
                 }
             }
@@ -4463,7 +4463,7 @@ void ObjectSystem_ProcessScript(int scriptCodePtr, int jumpTablePtr, int scriptS
                 {
                     break;
                 }
-                stageLayouts[scriptEng.operands[1]].tileMap[scriptEng.operands[2] + (scriptEng.operands[3] << 8)] = (ushort)scriptEng.operands[0];
+                stageLayouts[scriptEng.operands[1]].tileMap[scriptEng.operands[2] + (scriptEng.operands[3] << 8)] = (uint16_t)scriptEng.operands[0];
                 break;
             }
             case 111:
@@ -4607,7 +4607,7 @@ void ObjectSystem_ProcessScript(int scriptCodePtr, int jumpTablePtr, int scriptS
                 {
                     case 0:
                     {
-                        tile128x128.tile16x16[scriptEng.operands[6]] = (ushort)scriptEng.operands[0];
+                        tile128x128.tile16x16[scriptEng.operands[6]] = (uint16_t)scriptEng.operands[0];
                         tile128x128.gfxDataPos[scriptEng.operands[6]] = tile128x128.tile16x16[scriptEng.operands[6]] << 2;
                         break;
                     }
