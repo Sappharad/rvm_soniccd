@@ -4,3 +4,4 @@ Rvm_Win64/x64
 /x64*
 *.o
 webOut/*
+rvm.xcodeproj/project.xcworkspace/xcuserdata

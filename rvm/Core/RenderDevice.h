@@ -23,6 +23,7 @@ extern bool useFBTexture;
 void InitRenderDevice(void);
 void RenderDevice_UpdateHardwareTextures(void);
 void RenderDevice_SetScreenDimensions(int width, int height);
+void RenderDevice_ScaleViewport(int width, int height);
 void RenderDevice_FlipScreen(void);
 void RenderDevice_FlipScreenHRes(void);
 void drawGLTest(void);

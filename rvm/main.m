@@ -62,11 +62,25 @@ static void printAttributes ()
     }
 }
 
+static int onWindowEvent(void* data, SDL_Event* event) {
+  if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESIZED) {
+    SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
+    if (win == (SDL_Window*)data) {
+        int width, height;
+        SDL_GetWindowSize(win, &width, &height);
+        RenderDevice_ScaleViewport(width, height);
+    }
+  }
+  return 0;
+}
+
+
 static void createSurface (int fullscreen)
 {
     Uint32 flags = 0;
     
     flags = SDL_WINDOW_OPENGL;
+    flags |= SDL_WINDOW_RESIZABLE;
     if (fullscreen)
         flags |= SDL_WINDOW_FULLSCREEN;
     
@@ -79,6 +93,7 @@ static void createSurface (int fullscreen)
         SDL_Quit();
         exit(2);
     }
+    SDL_AddEventWatch(onWindowEvent, gWindow);
     SDL_GL_CreateContext(gWindow);
     
     glViewport(0, 0, 800, 480);

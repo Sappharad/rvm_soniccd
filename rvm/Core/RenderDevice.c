@@ -24,7 +24,35 @@ float viewAspect;
 int bufferWidth;
 int bufferHeight;
 int highResMode;
+int virtualX;
+int virtualY;
+int virtualWidth;
+int virtualHeight;
 GLuint gfxTextureID[NUM_TEXTURES];
+GLuint framebufferId;
+GLuint fbTextureId;
+short screenVerts[] = {
+    0, 0,
+    6400, 0,
+    0, 3844,
+    6400, 0,
+    0, 3844,
+    6400, 3844
+};
+float fbTexVerts[] = {
+    -1024, 1024,
+    0, 1024,
+    -1024, 0,
+    0, 1024,
+    -1024, 0,
+    0, 0,
+};
+float pureLight[] = {
+    1.0, 1.0,
+    1.0, 1.0,
+    1.0, 1.0,
+    1.0, 1.0
+};
 
 void HandleGlError(){
     GLenum boo = glGetError();
@@ -70,10 +98,10 @@ void InitRenderDevice()
         glGenTextures(1, &gfxTextureID[i]);
         glBindTexture(GL_TEXTURE_2D, gfxTextureID[i]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, texBuffer);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 9728.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 9728.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 33071.0f);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 33071.0f);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     }
     glMatrixMode(GL_TEXTURE);
     glLoadIdentity();
@@ -84,6 +112,9 @@ void InitRenderDevice()
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glClear(GL_COLOR_BUFFER_BIT);
+    
+    framebufferId = 0;
+    fbTextureId = 0;
 }
 void RenderDevice_UpdateHardwareTextures()
 {
@@ -146,6 +177,54 @@ void RenderDevice_SetScreenDimensions(int width, int height)
         bufferHeight = 240;
     }
     orthWidth = SCREEN_XSIZE * 16;
+    
+    //You should never change screen dimensions, so we should not need to do this, but I'll do it anyway.
+    if(framebufferId > 0){
+        glDeleteFramebuffers(1, &framebufferId);
+    }
+    if(fbTextureId > 0){
+        glDeleteTextures(1, &fbTextureId);
+    }
+    //Setup framebuffer texture
+    glGenFramebuffers(1, &framebufferId);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferId);
+    glGenTextures(1, &fbTextureId);
+    glBindTexture(GL_TEXTURE_2D, fbTextureId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewWidth, viewHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbTextureId, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    int newWidth = width * 8;
+    int newHeight = (height * 8)+4;
+    
+    screenVerts[2] = newWidth;
+    screenVerts[6] = newWidth;
+    screenVerts[10] = newWidth;
+    screenVerts[5] = newHeight;
+    screenVerts[9] = newHeight;
+    screenVerts[11] = newHeight;
+    RenderDevice_ScaleViewport(width, height);
+}
+
+void RenderDevice_ScaleViewport(int width, int height){
+    virtualWidth = width;
+    virtualHeight = height;
+    virtualX = 0;
+    virtualY = 0;
+    
+    float virtualAspect = (float)width / height;
+    float realAspect = (float)viewWidth / viewHeight;
+    if(virtualAspect < realAspect){
+        virtualHeight = viewHeight * ((float)width/viewWidth);
+        virtualY = (height - virtualHeight) >> 1;
+    }
+    else{
+        virtualWidth = viewWidth * ((float)height/viewHeight);
+        virtualX = (width - virtualWidth) >> 1;
+    }
 }
 
 void CalcPerspective(float fov, float aspectRatio, float nearPlane, float farPlane){
@@ -179,6 +258,8 @@ void CalcPerspective(float fov, float aspectRatio, float nearPlane, float farPla
 
 void RenderDevice_FlipScreen()
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferId);
+    
     glLoadIdentity();
     HandleGlError();
     
@@ -246,12 +327,27 @@ void RenderDevice_FlipScreen()
         glDrawElements(GL_TRIANGLES, numBlendedGfx, GL_UNSIGNED_SHORT, &gfxPolyListIndex[gfxIndexSizeOpaque]);
         HandleGlError();
     }
-    
     glDisableClientState(GL_COLOR_ARRAY);
+    
+    //Render the framebuffer now
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    glViewport(virtualX, virtualY, virtualWidth, virtualHeight);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, fbTextureId);
+    glVertexPointer(2, GL_SHORT, 0, &screenVerts);
+    glTexCoordPointer(2, GL_FLOAT, 0, &fbTexVerts);
+    glColorPointer(2, GL_FLOAT, 0, &pureLight);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glViewport(0, 0, bufferWidth, bufferHeight);
 }
 
 void RenderDevice_FlipScreenHRes()
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferId);
+    
     glLoadIdentity();
     
     glOrtho(0, orthWidth, 3844.0f, 0.0, 0.0f, 100.0f);
@@ -280,4 +376,18 @@ void RenderDevice_FlipScreenHRes()
     glDisableClientState(GL_COLOR_ARRAY);
     
     HandleGlError();
+    
+    //Render the framebuffer now
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    glViewport(virtualX, virtualY, virtualWidth, virtualHeight);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, fbTextureId);
+    glVertexPointer(2, GL_SHORT, 0, &screenVerts);
+    glTexCoordPointer(2, GL_FLOAT, 0, &fbTexVerts);
+    glColorPointer(2, GL_FLOAT, 0, &pureLight);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glViewport(0, 0, bufferWidth, bufferHeight);
 }

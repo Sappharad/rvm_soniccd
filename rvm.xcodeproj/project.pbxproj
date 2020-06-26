@@ -25,11 +25,11 @@
 		9EA237521D976AD1008F03ED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EA237501D976AD1008F03ED /* MainMenu.xib */; };
 		9EB48A691F19956900374654 /* GraphicsSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C1C1DD429ED000E73F6 /* GraphicsSystem.c */; };
 		9EB48A6A1F19956D00374654 /* RenderDevice.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C301DD429ED000E73F6 /* RenderDevice.c */; };
-		9ED028741DD80C1100BC41EF /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED028731DD80C1100BC41EF /* SDL.framework */; };
-		9ED028751DD80C1100BC41EF /* SDL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED028731DD80C1100BC41EF /* SDL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9EC34949245B18A4004DA133 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34945245B1895004DA133 /* SDL2_mixer.framework */; };
+		9EC3494A245B18A4004DA133 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34945245B1895004DA133 /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9EC3494B245B18A5004DA133 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34946245B1895004DA133 /* SDL2.framework */; };
+		9EC3494C245B18A5004DA133 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34946245B1895004DA133 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9ED028791DD80F5A00BC41EF /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED028781DD80F5A00BC41EF /* SDLMain.m */; };
-		9EF877831DFFB4F900230430 /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF877821DFFB4F900230430 /* SDL_mixer.framework */; };
-		9EF877841DFFB4F900230430 /* SDL_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF877821DFFB4F900230430 /* SDL_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,8 +39,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9EF877841DFFB4F900230430 /* SDL_mixer.framework in Embed Frameworks */,
-				9ED028751DD80C1100BC41EF /* SDL.framework in Embed Frameworks */,
+				9EC3494A245B18A4004DA133 /* SDL2_mixer.framework in Embed Frameworks */,
+				9EC3494C245B18A5004DA133 /* SDL2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,10 +114,10 @@
 		9EA2374E1D976AD1008F03ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EA237511D976AD1008F03ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9EA237531D976AD1008F03ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9ED028731DD80C1100BC41EF /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../SDL.framework; sourceTree = "<group>"; };
+		9EC34945245B1895004DA133 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = SOURCE_ROOT; };
+		9EC34946245B1895004DA133 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = SOURCE_ROOT; };
 		9ED028771DD80F5A00BC41EF /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
 		9ED028781DD80F5A00BC41EF /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
-		9EF877821DFFB4F900230430 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = ../SDL_mixer.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,8 +125,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF877831DFFB4F900230430 /* SDL_mixer.framework in Frameworks */,
-				9ED028741DD80C1100BC41EF /* SDL.framework in Frameworks */,
+				9EC34949245B18A4004DA133 /* SDL2_mixer.framework in Frameworks */,
+				9EC3494B245B18A5004DA133 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,11 +232,11 @@
 		9EA2374B1D976AD1008F03ED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9EC34945245B1895004DA133 /* SDL2_mixer.framework */,
+				9EC34946245B1895004DA133 /* SDL2.framework */,
 				9ED028771DD80F5A00BC41EF /* SDLMain.h */,
 				9ED028781DD80F5A00BC41EF /* SDLMain.m */,
 				9EA2374C1D976AD1008F03ED /* main.m */,
-				9EF877821DFFB4F900230430 /* SDL_mixer.framework */,
-				9ED028731DD80C1100BC41EF /* SDL.framework */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -461,8 +461,8 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/SDL.framework/Headers/",
-					"$(PROJECT_DIR)/SDL_mixer.framework/Headers/",
+					"$(PROJECT_DIR)/SDL2.framework/Headers/",
+					"$(PROJECT_DIR)/SDL2_mixer.framework/Headers/",
 				);
 				INFOPLIST_FILE = rvm/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -482,8 +482,8 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/SDL.framework/Headers/",
-					"$(PROJECT_DIR)/SDL_mixer.framework/Headers/",
+					"$(PROJECT_DIR)/SDL2.framework/Headers/",
+					"$(PROJECT_DIR)/SDL2_mixer.framework/Headers/",
 				);
 				INFOPLIST_FILE = rvm/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
