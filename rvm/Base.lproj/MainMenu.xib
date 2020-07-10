@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -12,7 +13,17 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="SDLMain"/>
+        <viewController id="rhl-6h-nN9" customClass="SetupViewController">
+            <connections>
+                <outlet property="wndSetup" destination="a4U-7U-EDG" id="SRm-YY-U4z"/>
+            </connections>
+        </viewController>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+            <connections>
+                <outlet property="SetupVC" destination="rhl-6h-nN9" id="dY5-w6-hbp"/>
+                <outlet property="wndSetup" destination="a4U-7U-EDG" id="QzR-of-05h"/>
+            </connections>
+        </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
@@ -676,5 +687,48 @@
             </items>
             <point key="canvasLocation" x="139" y="154"/>
         </menu>
+        <window title="First time setup" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="a4U-7U-EDG">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" texturedBackground="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="236" y="621" width="480" height="272"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="3Ew-QC-LgX">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vp2-jn-oCX">
+                        <rect key="frame" x="18" y="60" width="444" height="192"/>
+                        <textFieldCell key="cell" selectable="YES" id="OGI-D0-Pyw">
+                            <font key="font" usesAppearanceFont="YES"/>
+                            <string key="title">This application requires game data from the 2011 version of Sonic CD to run. Please locate the folder that contains the file "Data.rsdk" from Sonic CD for iOS, Android or Steam.
+
+While all versions of this file should be supported, the latest iOS or Android version is preferred as the game recieved several bug fix updates on mobile devices that were never released on Steam. Please refer to the instructions on how to extract this file from your phone backup.
+
+The location you select will be saved. You will not need to select the game data again unless the file can no longer be located in the future.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Mu-8L-e8u">
+                        <rect key="frame" x="170" y="13" width="141" height="32"/>
+                        <buttonCell key="cell" type="push" title="Select Data.rsdk" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xuj-D8-Nmf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="btnSelectData:" target="rhl-6h-nN9" id="ed8-OP-aNO"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="6Mu-8L-e8u" secondAttribute="bottom" constant="20" symbolic="YES" id="7ly-I8-bpO"/>
+                    <constraint firstItem="Vp2-jn-oCX" firstAttribute="centerX" secondItem="6Mu-8L-e8u" secondAttribute="centerX" id="bUM-fX-yy7"/>
+                    <constraint firstItem="6Mu-8L-e8u" firstAttribute="top" secondItem="Vp2-jn-oCX" secondAttribute="bottom" constant="19" id="mXl-Wy-pVM"/>
+                    <constraint firstItem="6Mu-8L-e8u" firstAttribute="centerX" secondItem="3Ew-QC-LgX" secondAttribute="centerX" id="o3F-81-lTh"/>
+                    <constraint firstItem="Vp2-jn-oCX" firstAttribute="leading" secondItem="3Ew-QC-LgX" secondAttribute="leading" constant="20" symbolic="YES" id="yS2-gw-lK1"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="139" y="383"/>
+        </window>
     </objects>
 </document>

@@ -78,5 +78,6 @@ void FileIO_SetFilePosition(uint32_t newFilePos);
 bool FileIO_ReachedEndOfFile(void);
 uint8_t FileIO_ReadSaveRAMData(void);
 uint8_t FileIO_WriteSaveRAMData(void);
+bool FileIO_IsValidDataRsdk(const char* filePath);
 
 #endif /* FileIO_h */

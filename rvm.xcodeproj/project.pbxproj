@@ -20,6 +20,7 @@
 		9E126C4C1DD429ED000E73F6 /* StageSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C391DD429ED000E73F6 /* StageSystem.c */; };
 		9E126C4D1DD429ED000E73F6 /* TextSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C3C1DD429ED000E73F6 /* TextSystem.c */; };
 		9E3868161DD95C0F00695597 /* Data.rsdk in Resources */ = {isa = PBXBuildFile; fileRef = 9E3868151DD95C0F00695597 /* Data.rsdk */; };
+		9E9F4EE224AC300D00D65CB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F4EE124AC300D00D65CB4 /* AppDelegate.m */; };
 		9EA2374D1D976AD1008F03ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2374C1D976AD1008F03ED /* main.m */; };
 		9EA2374F1D976AD1008F03ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA2374E1D976AD1008F03ED /* Assets.xcassets */; };
 		9EA237521D976AD1008F03ED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EA237501D976AD1008F03ED /* MainMenu.xib */; };
@@ -29,7 +30,7 @@
 		9EC3494A245B18A4004DA133 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34945245B1895004DA133 /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EC3494B245B18A5004DA133 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34946245B1895004DA133 /* SDL2.framework */; };
 		9EC3494C245B18A5004DA133 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34946245B1895004DA133 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9ED028791DD80F5A00BC41EF /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED028781DD80F5A00BC41EF /* SDLMain.m */; };
+		9EF5DDD124B40CFC00826C73 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5DDD024B40CFC00826C73 /* SetupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -109,6 +110,8 @@
 		9E126C3E1DD429ED000E73F6 /* Vertex2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vertex2D.h; path = Core/Vertex2D.h; sourceTree = "<group>"; };
 		9E126C3F1DD429ED000E73F6 /* Vertex3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vertex3D.h; path = Core/Vertex3D.h; sourceTree = "<group>"; };
 		9E3868151DD95C0F00695597 /* Data.rsdk */ = {isa = PBXFileReference; lastKnownFileType = file; name = Data.rsdk; path = ../Data.rsdk; sourceTree = "<group>"; };
+		9E9F4EE024AC300D00D65CB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MacUI/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		9E9F4EE124AC300D00D65CB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MacUI/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		9EA237451D976AD1008F03ED /* rvm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rvm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EA2374C1D976AD1008F03ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9EA2374E1D976AD1008F03ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -116,8 +119,8 @@
 		9EA237531D976AD1008F03ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EC34945245B1895004DA133 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = SOURCE_ROOT; };
 		9EC34946245B1895004DA133 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = SOURCE_ROOT; };
-		9ED028771DD80F5A00BC41EF /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
-		9ED028781DD80F5A00BC41EF /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
+		9EF5DDCF24B40CFC00826C73 /* SetupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SetupViewController.h; path = MacUI/SetupViewController.h; sourceTree = SOURCE_ROOT; };
+		9EF5DDD024B40CFC00826C73 /* SetupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SetupViewController.m; path = MacUI/SetupViewController.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +203,17 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		9E9F4EDF24AC2BDA00D65CB4 /* MacUI */ = {
+			isa = PBXGroup;
+			children = (
+				9E9F4EE024AC300D00D65CB4 /* AppDelegate.h */,
+				9E9F4EE124AC300D00D65CB4 /* AppDelegate.m */,
+				9EF5DDCF24B40CFC00826C73 /* SetupViewController.h */,
+				9EF5DDD024B40CFC00826C73 /* SetupViewController.m */,
+			);
+			name = MacUI;
+			sourceTree = "<group>";
+		};
 		9EA2373C1D976AD1008F03ED = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +238,7 @@
 				9EA237501D976AD1008F03ED /* MainMenu.xib */,
 				9EA237531D976AD1008F03ED /* Info.plist */,
 				9E126C031DD429E2000E73F6 /* Core */,
+				9E9F4EDF24AC2BDA00D65CB4 /* MacUI */,
 				9EA2374B1D976AD1008F03ED /* Supporting Files */,
 			);
 			path = rvm;
@@ -234,8 +249,6 @@
 			children = (
 				9EC34945245B1895004DA133 /* SDL2_mixer.framework */,
 				9EC34946245B1895004DA133 /* SDL2.framework */,
-				9ED028771DD80F5A00BC41EF /* SDLMain.h */,
-				9ED028781DD80F5A00BC41EF /* SDLMain.m */,
 				9EA2374C1D976AD1008F03ED /* main.m */,
 			);
 			name = "Supporting Files";
@@ -315,7 +328,6 @@
 				9E126C421DD429ED000E73F6 /* EngineCallbacks.c in Sources */,
 				9E126C491DD429ED000E73F6 /* PlayerSystem.c in Sources */,
 				9E126C481DD429ED000E73F6 /* ObjectSystem.c in Sources */,
-				9ED028791DD80F5A00BC41EF /* SDLMain.m in Sources */,
 				9EA2374D1D976AD1008F03ED /* main.m in Sources */,
 				9EB48A691F19956900374654 /* GraphicsSystem.c in Sources */,
 				9E126C471DD429ED000E73F6 /* InputSystem.c in Sources */,
@@ -326,7 +338,9 @@
 				9E126C4B1DD429ED000E73F6 /* Scene3D.c in Sources */,
 				9E126C441DD429ED000E73F6 /* GifLoader.c in Sources */,
 				9E126C451DD429ED000E73F6 /* GlobalAppDefinitions.c in Sources */,
+				9E9F4EE224AC300D00D65CB4 /* AppDelegate.m in Sources */,
 				9E126C401DD429ED000E73F6 /* AnimationSystem.c in Sources */,
+				9EF5DDD124B40CFC00826C73 /* SetupViewController.m in Sources */,
 				9EB48A6A1F19956D00374654 /* RenderDevice.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

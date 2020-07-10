@@ -1009,3 +1009,21 @@ uint8_t FileIO_WriteSaveRAMData()
     fclose(sramWriter);
     return 1;
 }
+bool FileIO_IsValidDataRsdk(const char* filePath){
+    FILE* file = fopen(filePath,"rb");
+    if(file){
+        fseek(file, 0L, SEEK_END); //Move to end
+        long fileSize = ftell(file);
+        fseek(file, SEEK_SET, 0); //Move back to start
+        unsigned char buffer[4];
+        fread(buffer, 1, 4, file);
+        fclose(file);
+        if(fileSize > 20*1024*1024 && buffer[1] < 0x10 && buffer[2] == 0 && buffer[3]==0){
+            //This is a very basic check, but there's no proper header on this RSDK version.
+            //We will use the file count to tell if this is a valid data file. iOS 2.0 had 2644 files so accept anything under 4096.
+            //Later RSDK versions have a header that begins with RSDK so we'll properly be able to reject those.
+            return true;
+        }
+    }
+    return false;
+}
