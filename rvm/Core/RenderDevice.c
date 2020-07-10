@@ -48,10 +48,8 @@ float fbTexVerts[] = {
     0, 0,
 };
 float pureLight[] = {
-    1.0, 1.0,
-    1.0, 1.0,
-    1.0, 1.0,
-    1.0, 1.0
+    1.0, 1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0, 1.0
 };
 
 void HandleGlError(){
@@ -339,7 +337,7 @@ void RenderDevice_FlipScreen()
     glBindTexture(GL_TEXTURE_2D, fbTextureId);
     glVertexPointer(2, GL_SHORT, 0, &screenVerts);
     glTexCoordPointer(2, GL_FLOAT, 0, &fbTexVerts);
-    glColorPointer(2, GL_FLOAT, 0, &pureLight);
+    glColorPointer(4, GL_FLOAT, 0, &pureLight);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glViewport(0, 0, bufferWidth, bufferHeight);
 }
@@ -387,7 +385,7 @@ void RenderDevice_FlipScreenHRes()
     glBindTexture(GL_TEXTURE_2D, fbTextureId);
     glVertexPointer(2, GL_SHORT, 0, &screenVerts);
     glTexCoordPointer(2, GL_FLOAT, 0, &fbTexVerts);
-    glColorPointer(2, GL_FLOAT, 0, &pureLight);
+    glColorPointer(4, GL_FLOAT, 0, &pureLight);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glViewport(0, 0, bufferWidth, bufferHeight);
 }
