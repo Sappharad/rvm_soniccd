@@ -117,6 +117,7 @@ static void createSurface (int fullscreen)
 
 void UpdateIO(){
     InputSystem_CheckKeyboardInput();
+    InputSystem_CheckGamepadInput();
     InputSystem_ClearTouchData();
     
     if (stageMode != 2)
@@ -291,9 +292,7 @@ NSMutableDictionary* _appSettings;
 }
 
 -(void)startGame:(NSString*)romPath{
-    // Init SDL video subsystem
-    if ( SDL_Init (SDL_INIT_VIDEO) < 0 ) {
-        
+    if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0 ) {
         fprintf(stderr, "Couldn't initialize SDL: %s\n",
                 SDL_GetError());
         exit(1);
@@ -317,6 +316,7 @@ NSMutableDictionary* _appSettings;
     mainLoop ();
     
     // Cleanup
+    InputSystem_Dispose();
     SDL_Quit();
     
     //The execute call is blocking, so if we reach this point the user closed the game and we should kill the UI too.
