@@ -6,8 +6,8 @@
 #include "RenderDevice.h"
 #if WINDOWS
 #include <Windows.h>
-#include <gl/GL.h>
-#include <gl/glext.h>
+#include <GL/glew.h>
+#pragma comment(lib, "glew32s.lib")
 #elif LINUX
 #include <gl/GL.h>
 #include <gl/glext.h>

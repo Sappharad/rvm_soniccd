@@ -5,7 +5,7 @@
 #include "SDL.h"
 #include "GlobalAppDefinitions.h"
 #include <Windows.h>
-#include <gl/GL.h>
+#include <GL/glew.h>
 #include "GraphicsSystem.h"
 
 static SDL_Window* gWindow;
@@ -55,11 +55,24 @@ static void printAttributes()
 	}
 }
 
+static int onWindowEvent(void* data, SDL_Event* event) {
+	if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESIZED) {
+		SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
+		if (win == (SDL_Window*)data) {
+			int width, height;
+			SDL_GetWindowSize(win, &width, &height);
+			RenderDevice_ScaleViewport(width, height);
+		}
+		return 0;
+	}
+}
+
 static void createSurface(int fullscreen)
 {
 	Uint32 flags = 0;
 
 	flags = SDL_WINDOW_OPENGL;
+	flags |= SDL_WINDOW_RESIZABLE;
 	if (fullscreen)
 		flags |= SDL_WINDOW_FULLSCREEN;
 
@@ -72,7 +85,13 @@ static void createSurface(int fullscreen)
 		SDL_Quit();
 		exit(2);
 	}
+	SDL_AddEventWatch(onWindowEvent, gWindow);
 	SDL_GL_CreateContext(gWindow);
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+	}
 
 	glViewport(0, 0, 800, 480);
 	//glViewport(0, 0, 864, 480);
@@ -94,6 +113,7 @@ static void createSurface(int fullscreen)
 
 void UpdateIO() {
 	InputSystem_CheckKeyboardInput();
+	InputSystem_CheckGamepadInput();
 	InputSystem_ClearTouchData();
 
 	if (stageMode != 2)
@@ -191,7 +211,7 @@ void Init_RetroVM() {
 int SDL_main(int argc, char *argv[])
 {
 	// Init SDL video subsystem
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
 
 		fprintf(stderr, "Couldn't initialize SDL: %s\n",
 			SDL_GetError());
@@ -213,6 +233,7 @@ int SDL_main(int argc, char *argv[])
 	mainLoop();
 
 	// Cleanup
+	InputSystem_Dispose();
 	SDL_Quit();
 
 	return 0;
