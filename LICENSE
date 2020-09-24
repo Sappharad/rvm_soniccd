@@ -1,0 +1,5 @@
+This repository is an attempt to recreate the original 2011 Retro Engine Sonic CD code as closely as possible.
+
+Since it tries to be a clone rather than a compatible recreation, you absolutely should not use this code for anything other than unofficial ports of the game. Do not bundle it with game data.
+
+You can learn from it and change it, but don't try to use it for developing a new project.
