@@ -86,7 +86,7 @@ static void createSurface (int fullscreen)
         flags |= SDL_WINDOW_FULLSCREEN;
     
     // Create window
-    gWindow = SDL_CreateWindow("RetroVM - Sonic CD",
+    gWindow = SDL_CreateWindow("RVM - Sonic CD",
     SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
     800, 480, flags);
     if (gWindow == NULL) {

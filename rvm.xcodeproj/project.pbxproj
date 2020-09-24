@@ -19,7 +19,6 @@
 		9E126C4B1DD429ED000E73F6 /* Scene3D.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C321DD429ED000E73F6 /* Scene3D.c */; };
 		9E126C4C1DD429ED000E73F6 /* StageSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C391DD429ED000E73F6 /* StageSystem.c */; };
 		9E126C4D1DD429ED000E73F6 /* TextSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 9E126C3C1DD429ED000E73F6 /* TextSystem.c */; };
-		9E3868161DD95C0F00695597 /* Data.rsdk in Resources */ = {isa = PBXBuildFile; fileRef = 9E3868151DD95C0F00695597 /* Data.rsdk */; };
 		9E9F4EE224AC300D00D65CB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F4EE124AC300D00D65CB4 /* AppDelegate.m */; };
 		9EA2374D1D976AD1008F03ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2374C1D976AD1008F03ED /* main.m */; };
 		9EA2374F1D976AD1008F03ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA2374E1D976AD1008F03ED /* Assets.xcassets */; };
@@ -109,7 +108,6 @@
 		9E126C3D1DD429ED000E73F6 /* TextSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSystem.h; path = Core/TextSystem.h; sourceTree = "<group>"; };
 		9E126C3E1DD429ED000E73F6 /* Vertex2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vertex2D.h; path = Core/Vertex2D.h; sourceTree = "<group>"; };
 		9E126C3F1DD429ED000E73F6 /* Vertex3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vertex3D.h; path = Core/Vertex3D.h; sourceTree = "<group>"; };
-		9E3868151DD95C0F00695597 /* Data.rsdk */ = {isa = PBXFileReference; lastKnownFileType = file; name = Data.rsdk; path = ../Data.rsdk; sourceTree = "<group>"; };
 		9E9F4EE024AC300D00D65CB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MacUI/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		9E9F4EE124AC300D00D65CB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MacUI/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		9EA237451D976AD1008F03ED /* rvm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rvm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,7 +215,6 @@
 		9EA2373C1D976AD1008F03ED = {
 			isa = PBXGroup;
 			children = (
-				9E3868151DD95C0F00695597 /* Data.rsdk */,
 				9EA237471D976AD1008F03ED /* rvm */,
 				9EA237461D976AD1008F03ED /* Products */,
 			);
@@ -314,7 +311,6 @@
 			files = (
 				9EA2374F1D976AD1008F03ED /* Assets.xcassets in Resources */,
 				9EA237521D976AD1008F03ED /* MainMenu.xib in Resources */,
-				9E3868161DD95C0F00695597 /* Data.rsdk in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +466,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -480,6 +477,7 @@
 				);
 				INFOPLIST_FILE = rvm/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 0.7.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sappharad.rvm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -491,6 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -501,6 +500,7 @@
 				);
 				INFOPLIST_FILE = rvm/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 0.7.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sappharad.rvm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
