@@ -16,7 +16,7 @@ extern int touchWidth;
 extern int touchHeight;
 
 void Init_InputSystem(void);
-void InputSystem_Dispose();
+void InputSystem_Dispose(void);
 void InputSystem_AddTouch(float touchX, float touchY, int pointerID);
 void InputSystem_SetTouch(float touchX, float touchY, int pointerID);
 void InputSystem_RemoveTouch(int pointerID);
