@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		sC07CBQyns8khV3Fh/hh4E2hc74=
+		nhLicIaCoeLGgPzBhrrRrvLSYk4=
 		</data>
 		<key>Resources/License.txt</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Resources/default.metallib</key>
 		<data>
-		dF9gKJnv0WdQs57PRAzLo+EyGAA=
+		l12IgzQ0sAC7l9N8Z2O9JsTs5+I=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -27,10 +27,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			CEGTuNjduzlouV6B5JJVr1uRoeM=
+			g8CpKC/Wrgyy9E574eHpVcUeuiY=
 			</data>
 			<key>requirement</key>
-			<string>identifier "org.libsdl.hidapi" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
+			<string>identifier "org.libsdl.hidapi" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Paul Kratt (Q3M8JA55AP)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Headers/SDL.h</key>
 		<dict>
@@ -718,11 +718,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			sC07CBQyns8khV3Fh/hh4E2hc74=
+			nhLicIaCoeLGgPzBhrrRrvLSYk4=
 			</data>
 			<key>hash2</key>
 			<data>
-			hYHPEldddc/Esgtnkp9sv1UExiAdPCcgJLF3QFJI2Ak=
+			FOAYjqh/zD6jPUaNz28cB1kkMRbFE6ufMUEgFyTqN1c=
 			</data>
 		</dict>
 		<key>Resources/License.txt</key>
@@ -751,11 +751,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dF9gKJnv0WdQs57PRAzLo+EyGAA=
+			l12IgzQ0sAC7l9N8Z2O9JsTs5+I=
 			</data>
 			<key>hash2</key>
 			<data>
-			A5lFX3lFIAtu4Lxgjh7TXdIVDe0n6G1iPofA+3H+xMA=
+			IU4h/X85xjChA7FjfbaCuZV4/ixbWmC1SxTOHp0ycdQ=
 			</data>
 		</dict>
 	</dict>

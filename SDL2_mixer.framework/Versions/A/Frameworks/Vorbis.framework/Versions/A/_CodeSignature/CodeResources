@@ -4,108 +4,55 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/AUTHORS.txt</key>
-		<data>
-		MKG+c/Ng8ZXbj7p1G5WReTJm06Y=
-		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		f/k0XE0Zve5eJRhG71V3SS1/bcc=
-		</data>
-		<key>Resources/LICENSE-bsd.txt</key>
-		<data>
-		fd5CtMb9r65yLY0HVWttnbpNKWM=
-		</data>
-		<key>Resources/LICENSE-gpl3.txt</key>
-		<data>
-		hiS82uVbru8AzRHV38+mD2hxCgI=
-		</data>
-		<key>Resources/LICENSE-orig.txt</key>
-		<data>
-		ZgR9vPP9aJyZRyJm9a0UHFPW8sY=
-		</data>
-		<key>Resources/LICENSE.txt</key>
-		<data>
-		9VS7iq5RUyXd9/XSbbwcYpQMum4=
+		vXUEwWbaUyddDelvXKsbTAKLj8g=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/hidapi.h</key>
+		<key>Headers/codec.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			k64XAQ+3r97nmyIHwE8OT8womds=
+			Zia/0KG5hxGZ0Z8ldiPBOZt+yP8=
 			</data>
 			<key>hash2</key>
 			<data>
-			lVEZqQL+xakdQRDnxHo2VwkisMieptRP2Im3DPsMMAs=
+			c4Jl8rliq/2foWI3gDkQkqRle6B2kEXSppxb+2zBpYg=
 			</data>
 		</dict>
-		<key>Resources/AUTHORS.txt</key>
+		<key>Headers/vorbisenc.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MKG+c/Ng8ZXbj7p1G5WReTJm06Y=
+			xbzTdwQn3DPd4xaDCTvUwlPOU5k=
 			</data>
 			<key>hash2</key>
 			<data>
-			syens6RZflkCVW7D6EB8vdHiiKvUYjt7S1bRTUnoTss=
+			xUt2QNvsHcS6BNT7lCdONgArWJKBLJImfa2Vd0HtmRg=
+			</data>
+		</dict>
+		<key>Headers/vorbisfile.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gAP1ftcpRbktEcccQW+nzji4RLw=
+			</data>
+			<key>hash2</key>
+			<data>
+			0m+bjHrSZzddUFscqIupViXhRlCq/UzRAchhBC6vDzg=
 			</data>
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			f/k0XE0Zve5eJRhG71V3SS1/bcc=
+			vXUEwWbaUyddDelvXKsbTAKLj8g=
 			</data>
 			<key>hash2</key>
 			<data>
-			fK9ymFfc89Phob/AV4/D6gAsbn4AxAHKVzMLbxBJHm4=
-			</data>
-		</dict>
-		<key>Resources/LICENSE-bsd.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			fd5CtMb9r65yLY0HVWttnbpNKWM=
-			</data>
-			<key>hash2</key>
-			<data>
-			MOsb7ym0b4unq4tBYDXb2TywNKRUgd2XgVuUQoRYLNI=
-			</data>
-		</dict>
-		<key>Resources/LICENSE-gpl3.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			hiS82uVbru8AzRHV38+mD2hxCgI=
-			</data>
-			<key>hash2</key>
-			<data>
-			jOtLnuWt7d5Hsx6XXB2QxzrSe2sWWh3NgMfFRetluQM=
-			</data>
-		</dict>
-		<key>Resources/LICENSE-orig.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ZgR9vPP9aJyZRyJm9a0UHFPW8sY=
-			</data>
-			<key>hash2</key>
-			<data>
-			+1Q2qmPRtxqN+/dOyvGltOHsTff4AHTRH+yZKE9pyl8=
-			</data>
-		</dict>
-		<key>Resources/LICENSE.txt</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9VS7iq5RUyXd9/XSbbwcYpQMum4=
-			</data>
-			<key>hash2</key>
-			<data>
-			fTsIfDTzXU1TjjvN3R/49m6S+e8zaIGZlIKADd+ECRM=
+			BLEMTtfpoqGcUKE6N86jmC84LjgMKflChgdHFLpLMAg=
 			</data>
 		</dict>
 	</dict>
