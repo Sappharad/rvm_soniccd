@@ -85,6 +85,13 @@
     <ClInclude Include="..\rvm\Core\Vertex3D.h" />
     <ClInclude Include="include\SDL.h" />
     <ClInclude Include="include\SDL_main.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Rvm_Win64.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -224,6 +231,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;glew32s.lib;opengl32.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Version>0.75</Version>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
