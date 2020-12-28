@@ -3,8 +3,13 @@
 #include <string.h>
 #include <math.h>
 #include <SDL2/SDL.h>
+#ifdef __SWITCH__
+#define GLEW_NO_GLU
+#include <GL/glew.h>
+#include <switch.h>
+#else
 #include <SDL2/SDL_opengl.h>
-#include <GL/gl.h>
+#endif
 #include "GlobalAppDefinitions.h"
 #include "GraphicsSystem.h"
 #ifdef __EMSCRIPTEN__
@@ -34,6 +39,10 @@ static void initAttributes()
 	//     on OpenGL double buffering.
 	value = 1;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, value);
+
+#ifdef __SWITCH__
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+#endif
 }
 
 static void printAttributes()
@@ -77,6 +86,14 @@ static void createSurface(int fullscreen)
 		exit(2);
 	}
 	SDL_GL_CreateContext(gWindow);
+#ifdef __SWITCH__
+	GLenum err = glewInit();
+	if (err != GLEW_OK) {
+		fprintf(stderr, "glewInit() failed: %s\n", glewGetErrorString(err));
+		SDL_Quit();
+		return;
+	}
+#endif
 
 	glViewport(0, 0, 800, 480);
 	//glViewport(0, 0, 864, 480);
@@ -98,6 +115,7 @@ static void createSurface(int fullscreen)
 
 void UpdateIO() {
 	InputSystem_CheckKeyboardInput();
+	InputSystem_CheckGamepadInput();
 	InputSystem_ClearTouchData();
 
 	if (stageMode != 2)
@@ -216,8 +234,12 @@ void loop_func(void *arg) {
 
 int main (int argc, char **argv)
 {
+#ifdef __SWITCH__
+	socketInitializeDefault();
+	nxlinkStdio();
+#endif
 	// Init SDL video subsystem
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
 
 		fprintf(stderr, "Couldn't initialize SDL: %s\n",
 			SDL_GetError());
@@ -248,6 +270,9 @@ int main (int argc, char **argv)
 	// Cleanup
 	SDL_Quit();
 
+#ifdef __SWITCH__
+	socketExit();
+#endif
+
 	return 0;
 }
- 
