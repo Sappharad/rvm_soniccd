@@ -189,11 +189,19 @@ void InputSystem_CheckGamepadInput(){
         {
             touchData.right = 1;
         }
+#ifdef __SWITCH__
+        if(SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_B))
+#else
         if(SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_A))
+#endif
         {
             touchData.buttonA = 1;
         }
+#ifdef __SWITCH__
+        if(SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_A))
+#else
         if(SDL_GameControllerGetButton(sdlController, SDL_CONTROLLER_BUTTON_B))
+#endif
         {
             touchData.buttonB = 1;
         }
