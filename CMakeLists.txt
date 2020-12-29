@@ -8,6 +8,7 @@ set(CMAKE_C_FLAGS "-g -DLINUX -DSDL_DISABLE_IMMINTRIN_H -DSDL_DISABLE_MMINTRIN_H
 
 pkg_check_modules(SDL2 sdl2 REQUIRED)
 if(NSWITCH)
+  set(CMAKE_C_FLAGS "-DGLEW_NO_GLU ${CMAKE_C_FLAGS}")
   find_package(GLEW REQUIRED)
   find_library(GLEW_LIBRARY NAMES GLEW)
   set(EXTRA_LIBS mpg123 modplug mikmod vorbisfile vorbis ogg FLAC fluidsynth opusfile opus ${GLEW_LIBRARY} stdc++)
@@ -38,7 +39,7 @@ if(NSWITCH)
   add_definitions(-D__SWITCH__)
   add_custom_target(${CMAKE_PROJECT_NAME}.nro
     DEPENDS ${CMAKE_PROJECT_NAME}
-    COMMAND nacptool --create "Sonic CD" "usineur" "0.7.5" ${CMAKE_PROJECT_NAME}.nacp
+    COMMAND nacptool --create "Sonic CD" "Sappharad, usineur" "0.7.5" ${CMAKE_PROJECT_NAME}.nacp
     COMMAND elf2nro ${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}.nro --icon=${CMAKE_SOURCE_DIR}/icon.jpg --nacp=${CMAKE_PROJECT_NAME}.nacp
   )
   add_custom_target(nxlink

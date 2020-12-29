@@ -4,7 +4,6 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 #ifdef __SWITCH__
-#define GLEW_NO_GLU
 #include <GL/glew.h>
 #include <switch.h>
 #else

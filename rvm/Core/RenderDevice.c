@@ -9,7 +9,6 @@
 #include <GL/glew.h>
 #pragma comment(lib, "glew32s.lib")
 #elif __SWITCH__
-#define GLEW_NO_GLU
 #include <GL/glew.h>
 #elif LINUX
 #include <GL/gl.h>
