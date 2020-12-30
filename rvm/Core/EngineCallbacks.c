@@ -19,6 +19,7 @@
 #define TRIAL_ENDED 11
 #define SETTINGS_SELECTED 12
 #define FULL_VERSION_ONLY 14
+#define AGE_GATE 100
 
 int prevMessage;
 bool engineInit;
@@ -159,7 +160,12 @@ void EngineCallbacks_RetroEngineCallback(int callbackID)
         case FULL_VERSION_ONLY:
             //Upsell the full game
             break;
+        case AGE_GATE:
+            //Shows a native 'enter your age' screen on 3.0
+            globalVariables[135] = 1; //Game sets this flag when age accepted.
+            break;
         default:
+            printf("Unhandled engine callback: %d\n", callbackID);
             return;
     }
 }
