@@ -87,7 +87,7 @@ void AnimationSystem_LoadAnimationFile(char* filePath)
                 animationFrames[animationFramesNo].xSize = (int)b2;
                 b2 = FileIO_ReadByte();
                 animationFrames[animationFramesNo].ySize = (int)b2;
-                char b3 = (char)FileIO_ReadByte();
+                signed char b3 = (signed char)FileIO_ReadByte();
                 animationFrames[animationFramesNo].xPivot = (int)b3;
                 b3 = (char)FileIO_ReadByte();
                 animationFrames[animationFramesNo].yPivot = (int)b3;

@@ -278,6 +278,7 @@ bool FileIO_CheckRSDKFile()
     useRSDKFile = true;
     useByteCode = false;
     fclose(fileReader);
+    fileReader = NULL;
     
     if (FileIO_LoadFile("Data/Scripts/ByteCode/GlobalCode.bin", &fData))
     {

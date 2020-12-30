@@ -1,5 +1,6 @@
 rvm.xcodeproj/project.xcworkspace/xcuserdata
 .vs
+.vscode
 Rvm_Win64/x64
 /x64*
 *.o

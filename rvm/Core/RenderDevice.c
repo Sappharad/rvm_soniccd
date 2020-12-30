@@ -8,9 +8,11 @@
 #include <Windows.h>
 #include <GL/glew.h>
 #pragma comment(lib, "glew32s.lib")
+#elif __SWITCH__
+#include <GL/glew.h>
 #elif LINUX
-#include <gl/GL.h>
-#include <gl/glext.h>
+#include <GL/gl.h>
+#include <GL/glext.h>
 #else
 #include <OpenGL/gl.h>
 #endif
