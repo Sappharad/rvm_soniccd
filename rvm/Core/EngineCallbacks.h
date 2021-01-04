@@ -14,6 +14,9 @@
 #include "StageSystem.h"
 #include "ObjectSystem.h"
 #include "RenderDevice.h"
+#ifdef ENABLE_MPV
+#include "MpvPlayer.h"
+#endif
 
 void EngineCallbacks_PlayVideoFile(char* fileName);
 void EngineCallbacks_OnlineSetAchievement(int achievementID, int achievementDone);

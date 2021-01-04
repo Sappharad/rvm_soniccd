@@ -4,18 +4,28 @@ cmake_minimum_required(VERSION 3.0)
 
 include(FindPkgConfig)
 
+option(ENABLE_MPV "Enable MPV support" OFF)
+
 set(CMAKE_C_FLAGS "-g -DLINUX -DSDL_DISABLE_IMMINTRIN_H -DSDL_DISABLE_MMINTRIN_H -std=c99 ${CMAKE_C_FLAGS}")
 
 pkg_check_modules(SDL2 sdl2 REQUIRED)
+pkg_check_modules(SDL2_mixer SDL2_mixer REQUIRED)
+
+if(ENABLE_MPV)
+  pkg_check_modules(MPV mpv REQUIRED)
+  set(CMAKE_C_FLAGS "-DENABLE_MPV ${CMAKE_C_FLAGS}")
+  set(EXTRA_LIBS ${MPV_LIBRARIES})
+endif(ENABLE_MPV)
+
 if(NSWITCH)
   set(CMAKE_C_FLAGS "-DGLEW_NO_GLU ${CMAKE_C_FLAGS}")
   find_package(GLEW REQUIRED)
   find_library(GLEW_LIBRARY NAMES GLEW)
-  set(EXTRA_LIBS mpg123 modplug mikmod vorbisfile vorbis ogg FLAC fluidsynth opusfile opus ${GLEW_LIBRARY} stdc++)
+  set(EXTRA_LIBS ${GLEW_LIBRARY} ${EXTRA_LIBS})
 else()
   set(OpenGL_GL_PREFERENCE LEGACY)
   find_package(OpenGL REQUIRED)
-  set(EXTRA_LIBS ${OPENGL_gl_LIBRARY})
+  set(EXTRA_LIBS ${OPENGL_gl_LIBRARY} ${EXTRA_LIBS})
 endif(NSWITCH)
 
 include_directories(
@@ -29,8 +39,7 @@ add_executable(${CMAKE_PROJECT_NAME}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-  SDL2_mixer
-  ${SDL2_LIBRARIES}
+  ${SDL2_mixer_LIBRARIES}
   ${EXTRA_LIBS}
   m
 )
