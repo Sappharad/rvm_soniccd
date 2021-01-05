@@ -31,6 +31,10 @@ void EngineCallbacks_PlayVideoFile(char* fileName)
     
     //Show video here
     
+#ifdef ENABLE_MPV
+    MpvPlayer(fileName);
+#endif
+
     waitValue = 0;
     gameMode = 9;
 }
